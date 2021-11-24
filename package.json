@@ -1,0 +1,27 @@
+{
+    "name": "tinker-bell-garden",
+    "version": "1.0.0",
+    "description": "introduction to software engineering project",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sonnguyenhong/tinker-bell-garden.git"
+    },
+    "author": "team3",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/sonnguyenhong/tinker-bell-garden/issues"
+    },
+    "homepage": "https://github.com/sonnguyenhong/tinker-bell-garden#readme",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.15"
+    }
+}
