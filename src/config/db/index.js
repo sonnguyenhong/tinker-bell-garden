@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 async function connect() {
 
@@ -7,9 +7,9 @@ async function connect() {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        console.log('Connected successfully');
+        console.log('Connected successfully')
     } catch (err) {
-        console.log('Connected Failed');
+        console.log('Connected Failed')
     }
 
 }
