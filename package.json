@@ -21,6 +21,7 @@
     "dependencies": {
         "express": "^4.17.1",
         "express-handlebars": "^6.0.1",
+        "mongoose": "^6.0.13",
         "node-sass": "^6.0.1"
     },
     "devDependencies": {
