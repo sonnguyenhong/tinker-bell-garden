@@ -5,57 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TinkerBellGarden</title>
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <div class="app">
-        {{> header}}
-        
-        {{{body}}}  
-    
-        {{> footer}}
-    </div>
-    <script>
-        const itemHover = document.querySelectorAll(".item-hover");
-        const navItem = document.querySelectorAll(".nav-item");
-
-        navItem[0].addEventListener("mouseover", function() {
-            itemHover[0].classList.remove("hide");
-        });
-        navItem[0].addEventListener("mouseout", function() {
-            itemHover[0].classList.add("hide");
-        });
-
-        navItem[1].addEventListener("mouseover", function() {
-            itemHover[1].classList.remove("hide");
-        });
-        navItem[1].addEventListener("mouseout", function() {
-            itemHover[1].classList.add("hide");
-        });
-
-        navItem[2].addEventListener("mouseover", function() {
-            itemHover[2].classList.remove("hide");
-        });
-        navItem[2].addEventListener("mouseout", function() {
-            itemHover[2].classList.add("hide");
-        });
-
-        navItem[3].addEventListener("mouseover", function() {
-            itemHover[3].classList.remove("hide");
-        });
-        navItem[3].addEventListener("mouseout", function() {
-            itemHover[3].classList.add("hide");
-        });
-
-        navItem[4].addEventListener("mouseover", function() {
-            itemHover[4].classList.remove("hide");
-        });
-        navItem[4].addEventListener("mouseout", function() {
-            itemHover[4].classList.add("hide");
-        });
-    </script>
+    {{{body}}}      
 </body>
 </html>

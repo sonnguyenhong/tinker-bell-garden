@@ -1,1 +1,47 @@
+<link rel="stylesheet" href="/css/app.css">
+
+{{>header}}
+
 <h1>HOME PAGE</h1>
+
+{{> footer}}
+
+<script>
+    const itemHover = document.querySelectorAll(".item-hover");
+    const navItem = document.querySelectorAll(".nav-item");
+
+    navItem[0].addEventListener("mouseover", function() {
+        itemHover[0].classList.remove("hide");
+    });
+    navItem[0].addEventListener("mouseout", function() {
+        itemHover[0].classList.add("hide");
+    });
+
+    navItem[1].addEventListener("mouseover", function() {
+        itemHover[1].classList.remove("hide");
+    });
+    navItem[1].addEventListener("mouseout", function() {
+        itemHover[1].classList.add("hide");
+    });
+
+    navItem[2].addEventListener("mouseover", function() {
+        itemHover[2].classList.remove("hide");
+    });
+    navItem[2].addEventListener("mouseout", function() {
+        itemHover[2].classList.add("hide");
+    });
+
+    navItem[3].addEventListener("mouseover", function() {
+        itemHover[3].classList.remove("hide");
+    });
+    navItem[3].addEventListener("mouseout", function() {
+        itemHover[3].classList.add("hide");
+    });
+
+    navItem[4].addEventListener("mouseover", function() {
+        itemHover[4].classList.remove("hide");
+    });
+    navItem[4].addEventListener("mouseout", function() {
+        itemHover[4].classList.add("hide");
+    });
+</script>
