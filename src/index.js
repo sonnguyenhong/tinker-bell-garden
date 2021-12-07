@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'resources', 'views'))
 console.log(path.join(__dirname, 'resources', 'views'))
 
 app.get('/', (req, res, next) => {
-    res.render('ql-khachhang-vip/chitiet-kh-vip')
+    res.render('ql-khachhang-vip/lichsu-kh-vip')
 })
 
 app.listen(port, () => {

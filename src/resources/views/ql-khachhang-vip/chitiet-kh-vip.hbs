@@ -1,155 +1,278 @@
-        <link rel="stylesheet" href="./css/style.css">
-        {{>header}}
-        <style>
-            .button {
-                display: inline-block;
-                cursor: pointer;
-                text-align: center;       
-            }
-            .button:hover {
-                opacity: 0.8;
-            }
-            .button:active {
-                background-color: #3e8e41;
-                border-radius: 30px;
-                transform: translateY(2px);
-                opacity: 1;   
-            }
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/csvc.css">
 
-            h3 {
-                margin-top: 30px;
-                margin-right: 150px;
-                margin-left: 150px;
-            }
+{{>header}}
+<!--
+<style>
+    .button {
+        display: inline-block;
+        cursor: pointer;
+        text-align: center;       
+    }
+    .button:hover {
+        opacity: 0.8;
+    }
+    .button:active {
+        background-color: #3e8e41;
+        border-radius: 30px;
+        transform: translateY(2px);
+        opacity: 1;   
+    }
 
-            .clearfix::after {
-                content: "";
-                clear: both;
-                display: table;
-            }
+    h3 {
+        margin-top: 30px;
+        margin-right: 150px;
+        margin-left: 150px;
+    }
 
-            input {
-                margin-top: 22px;
-                font-size: x-large;
-                padding-right: 200px;
-            }
-            
-        </style>
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
 
-        <div class="container">
-            <h1 id="h1">CHI TIẾT KHÁCH HÀNG VIP</h1> 
+    input {
+        margin-top: 22px;
+        font-size: x-large;
+        padding-right: 200px;
+    }
+
+</style>
+
+
+<div class="container">
+    <h1 id="h1">CHI TIẾT KHÁCH HÀNG VIP</h1> 
+</div>
+
+
+<div class="container clearfix">
+    <div style="float: left;" class="column menu">
+        <div style="display:block;">
+            <h3>Tên khách hàng</h3>
+            <h3>Số điện thoại</h3>
+            <h3>Địa chỉ</h3>
+            <h3>Email</h3>
+            <h3>Điểm tích lũy</h3>
+            <h3>Ngày gia hạn</h3>
+            <h3>Số ngày còn lại</h3>
         </div>
-
-        <div class="container clearfix">
-            <div style="float: left;" class="column menu">
-                <div style="display:block;">
-                    <h3>Tên khách hàng</h3>
-                    <h3>Số điện thoại</h3>
-                    <h3>Địa chỉ</h3>
-                    <h3>Email</h3>
-                    <h3>Điểm tích lũy</h3>
-                    <h3>Ngày gia hạn</h3>
-                    <h3>Số ngày còn lại</h3>
+    </div>
+-->
+    <div class="container-fluid my-4" style="width: 80%">
+        <h2 class="my-4" style="color: red;">CHI TIẾT KHÁCH HÀNG VIP</h2>
+        <form>
+            <div class="row">
+            <div class="col-3">
+                <div class="label">
+                    Tên khách hàng
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="label">
+                    Số điện thoại
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="label">
+                    Địa chỉ
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="label">
+                    Email
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="label">
+                    Điểm tích luỹ
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="label">
+                    Ngày gia hạn
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="label">
+                    Số ngày còn lại
+                    <span></span>
+                    <small></small>
                 </div>
             </div>
-          
-            <div style="display:block;" class="column content">
-                <ul class="list-unstyled">
-                    <li>
-                        <input type="text">
-                    </li>
-                    <li>
-                        <input type="text">
-                    </li>
-                    <li>
-                        <input type="text">
-                    </li>
-                    <li>
-                        <input type="text">
-                    </li>
-                    <li>
-                        <input type="text">
-                    </li>
-                    <li>
-                        <input type="text">
-                    </li>
-                    <li>
-                        <input type="text">
-                    </li>
-                </ul>
+            <div class="col-9">
+                <div class="form-control">
+                    <input type="text" class="infor" disabled value="101">
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="form-control">
+                    <input type="text" class="infor" disabled value="Bóng đèn">
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="form-control">
+                    <input type="text" class="infor" disabled value="Tốt">
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="form-control">
+                    <input type="text" class="infor" disabled value="Khu A">
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="form-control">
+                    <input type="text" class="infor" disabled value="Khu A">
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="form-control">
+                    <input type="text" class="infor" disabled value="Khu A">
+                    <span></span>
+                    <small></small>
+                </div>
+                <div class="form-control">
+                    <input type="text" class="infor" disabled value="Khu A">
+                    <span></span>
+                    <small></small>
+                </div>
+            </div>
+
+            </div>
+        </form>
+    </div>      
+
+    <div class="row mb-2" id="page1">
+        <div class="col-4">
+            <div class="container-fluid btn-option" id="back" style="width: 60%">Quay lại</div>
+        </div>
+        <div class="col-4">
+            <div class="container-fluid btn-option" id="update" style="width: 60%">Sửa thông tin</div>
+        </div>
+        <div class="col-4">
+            <div class="container-fluid btn-option" id="delete" style="width: 60%">Xoá khách hàng</div>
+        </div>
+    </div>
+
+    <div class="container-fluid btn-option hide mb-2" id="save" style="width: 40%">Lưu thông tin</div>
+
+    <script>
+        const updateBtn = document.querySelector('#update');
+        
+        const saveBtn = document.querySelector('#save');
+        
+        const page1 = document.querySelector('#page1');
+
+        const infor = document.querySelectorAll('.infor');
+
+        updateBtn.addEventListener('click', function() {
+            page1.classList.add('hide');
+            saveBtn.classList.remove('hide');
+            for(var i = 0; i < 7; i++) {
+                infor[i].removeAttribute("disabled");
+            }
+        })
+    </script>
+<!--
+    <div style="display:block;" class="column content">
+        <ul class="list-unstyled">
+            <li>
+                <input type="text">
+            </li>
+            <li>
+                <input type="text">
+            </li>
+            <li>
+                <input type="text">
+            </li>
+            <li>
+                <input type="text">
+            </li>
+            <li>
+                <input type="text">
+            </li>
+            <li>
+                <input type="text">
+            </li>
+            <li>
+                <input type="text">
+            </li>
+        </ul>
+    </div>
+</div>
+-->
+<!--
+<div style="margin-top: 30px;" class="container">
+    <a href="#" class="setcolor">
+        <button style="float: right; margin-right: 350px;" id="myBtn" 
+        class="button_luu_kh_vip button">Xóa khách hàng</button>
+    </a>
+    <a href="http://127.0.0.1:5500/Sua_KH_Vip.html" class="setcolor">
+        <button style="float: right;" class="button_luu_kh_vip button">Sửa thông tin KH</button>
+    </a>
+    <a href="http://127.0.0.1:5500/QuanLy_KH_Vip.html" class="setcolor">
+        <button class="button_them_kh_vip button">Quay lại</button>
+    </a>
+</div>
+<script>
+    function delete_info() {
+        alert("Đã xóa thông tin khách hàng!");  
+    }
+</script>
+-->
+
+<!-- modal_xac nhan -->
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
-
-        <div style="margin-top: 30px;" class="container">
-            <a href="#" class="setcolor">
-                <button style="float: right; margin-right: 350px;" id="myBtn" 
-                class="button_luu_kh_vip button">Xóa khách hàng</button>
-            </a>
-            <a href="http://127.0.0.1:5500/Sua_KH_Vip.html" class="setcolor">
-                <button style="float: right;" class="button_luu_kh_vip button">Sửa thông tin KH</button>
-            </a>
-            <a href="http://127.0.0.1:5500/QuanLy_KH_Vip.html" class="setcolor">
-                <button class="button_them_kh_vip button">Quay lại</button>
-            </a>
-        </div>
-        <script>
-            function delete_info() {
-                alert("Đã xóa thông tin khách hàng!");  
-            }
-        </script>
-
-        <!-- modal_xac nhan -->
-        <div id="myModal" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
     </div>
-  </div>
 </div>
-        <script type="text/javascript">  
-            function delete_info(){  
-                alert("Đã xóa thông tin khách hàng!");  
-            }  
-        </script>
-        <script>
-            // lấy phần Modal
-            var modal = document.getElementById('myModal');
-          
-            // Lấy phần button mở Modal
-            var btn = document.getElementById("myBtn");
-            var btn_cancel = document.getElementById("zBtn");
-          
-            // Lấy phần span đóng Modal
-            var span = document.getElementsByClassName("btn_cancel")[0];
-          
-            // Khi button được click thi mở Modal
-            btn.onclick = function() {
-                modal.style.display = "block";
-            }
-          
-            // Khi span được click thì đóng Modal
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-          
-            // Khi click ngoài Modal thì đóng Modal
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        </script>
-        
-        {{> footer}}
+<!--
+<script type="text/javascript">  
+function delete_info(){  
+    alert("Đã xóa thông tin khách hàng!");  
+}  
+</script>
+<script>
+// lấy phần Modal
+var modal = document.getElementById('myModal');
+
+// Lấy phần button mở Modal
+var btn = document.getElementById("myBtn");
+var btn_cancel = document.getElementById("zBtn");
+
+// Lấy phần span đóng Modal
+var span = document.getElementsByClassName("btn_cancel")[0];
+
+// Khi button được click thi mở Modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// Khi span được click thì đóng Modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Khi click ngoài Modal thì đóng Modal
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+-->
+{{> footer}}
