@@ -134,7 +134,7 @@ input[type='submit'] {
     margin-bottom: 20px;
 }
 
-img {
+.img-upload {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;

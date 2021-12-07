@@ -1,6 +1,5 @@
-{{>header}}
-
-<link rel="stylesheet" href="./css/csvc.css">
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/csvc.css">
 <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
@@ -8,6 +7,9 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
 >
+
+{{>header}}
+
 <div class="container-fluid my-4" style="width: 80%">
     <h2 class="my-4" style="color: red;">Sửa thông tin cơ sở vật chất</h2>
     <form>
@@ -95,6 +97,7 @@
 
         let img = document.createElement('img');
         img.src = URL.createObjectURL(file);
+        img.classList.add('img-upload');
 
         document.querySelector('#preview').appendChild(img);
     })
