@@ -220,59 +220,53 @@
 </script>
 -->
 
-<!-- modal_xac nhan -->
-<div id="myModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <!-- modal_xac nhan -->
+    <div id="myModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div style="margin: 50px 0px 50px;">
+                    <h5 style="text-align: center;" class="modal-title">Bạn có chắc chắn muốn xóa khách hàng này?</h5>
+                </div>                
+                <div  class="modal-footer">
+                    <a href="http://127.0.0.1:5500/QuanLy_KH_Vip.html">
+                        <button type="button" class="btn btn-primary" onclick="delete_info()">Lưu thay đổi</button>
+                    </a>  
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!--
-<script type="text/javascript">  
-function delete_info(){  
-    alert("Đã xóa thông tin khách hàng!");  
-}  
-</script>
-<script>
-// lấy phần Modal
-var modal = document.getElementById('myModal');
-
-// Lấy phần button mở Modal
-var btn = document.getElementById("myBtn");
-var btn_cancel = document.getElementById("zBtn");
-
-// Lấy phần span đóng Modal
-var span = document.getElementsByClassName("btn_cancel")[0];
-
-// Khi button được click thi mở Modal
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-// Khi span được click thì đóng Modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// Khi click ngoài Modal thì đóng Modal
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script>
+    <script type="text/javascript">  
+        function delete_info(){  
+            alert("Đã xóa thông tin khách hàng!");  
+        }  
+    </script>
+    <script>
+            // lấy phần Modal
+        var modal = document.getElementById('myModal');
+          
+            // Lấy phần button mở Modal
+        var btn = document.getElementById("myBtn");
+          
+            // Lấy phần span đóng Modal
+        var span = document.getElementsByClassName("btn-secondary")[0];
+          
+            // Khi button được click thi mở Modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+            }
+          
+            // Khi span được click thì đóng Modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+          
+            // Khi click ngoài Modal thì đóng Modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 -->
 {{> footer}}
