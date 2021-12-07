@@ -1,0 +1,98 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+<link rel="stylesheet" href="css/app.css">
+    <title>Document</title>
+</head>
+
+{{>header}}
+
+    <!-- BODY start here -->
+
+    <div class="row">
+        <div class="col-1 col-lg-2"></div>
+        <h2 class="text-danger col">Chi tiết khu vui chơi</h2>
+    </div class="row">
+    <div class="row">
+        <div class="col-1 col-lg-2"></div>
+        <h3 class="text-dark col text-md ms-5">Tên khu vui chơi: Tên khu vui chơi</h3>
+    </div>
+    <div class="row">
+        <div class="col-1 col-lg-2"></div>
+        <h3 class="text-dark col text-md ms-5">Hoạt động chính: Tên hoạt động</h3>
+    </div>
+    <div class="row">
+        <div class="col-1 col-lg-2"></div>
+        <div class="col-8 row">
+            <button class="btn-success col-sm-3 col-lg-2 ms-5 text-md-center pt-2 pb-2">Sửa thông tin</button>
+            <button class="btn-danger col-sm-3 col-lg-2 ms-5 text-md-center pt-2 pb-2">Xóa khu vui chơi</button>
+        </div>
+        <div class="col-1 col-lg-2"></div>
+    </div>
+
+    <div class="row mt-1 mt-lg-2">
+        <div class="col-1 col-lg-2"></div>
+        <h2 class="text-danger col">Danh sách cơ sở vật chất</h2>
+    </div class="row">
+    <div class="row mt-1 mt-lg-2">
+        <div class="col-1 col-lg-2"></div>
+        <div class="col-8 row">
+            <button class="btn-success col-2 ms-5 pt-2 pb-2 mb-3" id="btnThemCSVC">Thêm CSVC</button>
+        </div>
+    </div class="row">
+    <div class="row">
+        <div class="col-lg-2 col-1"></div>
+        <table class="table table-bordered col">
+            <thead class="thead table-danger text-dark text-lg-center">
+              <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Mã dụng cụ</th>
+                <th scope="col">Tên dụng cụ</th>
+                <th scope="col">Tình trạng</th>
+                <th scope="col">Chức năng</th>
+              </tr>
+            </thead>
+            <tbody class="tbody table-light text-md-center text-dark" id="danhSachCSVC">
+                <!-- Body hien gio khong co gi ca -->
+                <!-- <tr>
+                    <th scope="col">STT</th>
+                    <th>Mã dụng cụ</th>
+                    <th>Tên dụng cụ</th>
+                    <th>Tình trạng</th>
+                    <th>
+                        <button class="btn-danger pt-1 pb-1">Xem chi tiết</button>
+                    </th>
+                </tr> -->
+            </tbody>
+        </table>
+        <div class="col-2"></div>
+    </div>
+     <!--  Them event listener cho Them CSVC -->
+     <script>
+        const btnThemCSVC = document.getElementById("btnThemCSVC");
+        btnThemCSVC.addEventListener("click", () => {
+            console.log("Hello world");
+            // html Example
+            let html = '<th scope="row">1</th><td>T01</td><td>Tuan dep trai</td><td>Bt</td><th><button class="btn-danger pt-1 pb-1 btnXemChiTiet">Xem chi tiết</button></th>';
+            const danhSachCSVC = document.getElementById("danhSachCSVC");
+            let row = danhSachCSVC.insertRow(danhSachCSVC.rows.length);
+            row.innerHTML = html;
+
+            const btnXemChiTiet = document.getElementsByClassName("btnXemChiTiet");
+            // Them event listener cho xem chi tiet
+            btnXemChiTiet[btnXemChiTiet.length - 1].addEventListener("click", () => {
+                console.log("Xem chi tiet xin chao")
+            })
+        })
+    </script>
+
+
+    <!-- BODY end here -->
+
+
+{{>footer}}
