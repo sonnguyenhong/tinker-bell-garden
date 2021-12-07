@@ -1,0 +1,54 @@
+/* .banhang{
+    clear: both;
+} */
+
+.member-item{
+    float: left;
+    width: 16.666666%;
+   text-align: center;
+   margin-top: 48px;
+}
+
+.cuahang{
+    padding-left: 50px;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.member-anh{
+    width: 154px;
+    border-radius: 4px;
+}
+
+.anhthanhvien{
+    margin-top: 48px;
+}
+
+.themvaogio{
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+}
+
+/* .table{
+    width: 90%;
+} */
+
+.clear{
+    clear: both;
+}
+
+.xemhang{
+    text-align: center;
+    clear: both;
+    padding-top: 50px;
+}
+
+.xemgiohang{
+    background-color:  green;
+    color: white;
+    cursor: pointer;
+    font-size: 28px;
+    border: 1px solid;
+}

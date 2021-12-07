@@ -1,0 +1,54 @@
+.head{
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 50px;
+}
+.mt-50{
+    margin-top: 50px;
+}
+
+.giohang{
+    width: 60% !important ;
+    margin-top: 50px;
+}
+
+.col{
+    float: left;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.col-half{
+    width: 50%;
+}
+
+.row{
+    margin-left: -8px;
+    margin-right: -8px;
+}
+.sdt{
+    text-align: right;
+    margin-right: 20px;
+}
+
+
+.sotien{
+    text-align: right;
+    margin-right: 28px;
+}
+
+.huythanhtoan{
+    float: right;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.thanhtoan{
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
