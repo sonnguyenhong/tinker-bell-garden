@@ -24,8 +24,7 @@ app.set('views', path.join(__dirname, 'resources', 'views'))
 console.log(path.join(__dirname, 'resources', 'views'))
 
 app.get('/', (req, res, next) => {
-    // res.render('home')
-    res.render('csvc/chi-tiet-csvc')
+    res.render('banhang/trangchu')
 })
 
 app.listen(port, () => {
