@@ -58,7 +58,7 @@
         </div>
     </div>
 -->
-    <div class="container-fluid my-4" style="width: 80%">
+    <div class="container-fluid my-4" style="width: 70%">
         <h2 class="my-4" style="color: red;">CHI TIẾT KHÁCH HÀNG VIP</h2>
         <form>
             <div class="row">
@@ -149,11 +149,47 @@
             <div class="container-fluid btn-option" id="update" style="width: 60%">Sửa thông tin</div>
         </div>
         <div class="col-4">
-            <div class="container-fluid btn-option" id="delete" style="width: 60%">Xoá khách hàng</div>
+            <div class="container-fluid btn-option open-modal-btn" id="delete" style="width: 60%">Xoá khách hàng</div>
         </div>
     </div>
 
     <div class="container-fluid btn-option hide mb-2" id="save" style="width: 40%">Lưu thông tin</div>
+
+    <!--<button class="open-modal-btn">Open Modal</button>-->
+    <div class="my-modal hide">
+      <div class="modal__inner">
+        <div class="modal__header">
+            <h5>Tinker Bell Garden</h5>
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="modal__body">
+            <h4>Bạn có chắc chắn muốn xoá?</h4>
+        </div>
+        <div class="modal__footer">
+            <button>Quay lại</button>
+            <button>Xoá</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector(".my-modal");
+        const openModalBtn = document.querySelector(".open-modal-btn");
+        const iconCloseModal = document.querySelector(".modal__header i");
+        const buttonCloseModal = document.querySelector(".modal__footer button");
+
+        function toggleModal() {
+            modal.classList.toggle("hide");
+        }
+
+        openModalBtn.addEventListener("click", toggleModal);
+        iconCloseModal.addEventListener("click", toggleModal);
+        buttonCloseModal.addEventListener("click", toggleModal);
+
+        modal.addEventListener("click", (e) => {
+        if (e.target == e.currentTarget) toggleModal();
+        });
+    </script>
 
     <script>
         const updateBtn = document.querySelector('#update');
