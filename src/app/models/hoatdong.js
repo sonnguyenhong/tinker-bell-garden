@@ -22,6 +22,10 @@ const hoatdongSchema = new Schema({
         type: Number,
         required
     },
+    imageUrl: {
+        type: String,
+        required
+    },
     discountCode: [{
         type: Schema.Types.ObjectId,
         ref: 'Makhuyenmai',

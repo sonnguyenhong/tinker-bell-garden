@@ -13,6 +13,10 @@ const mathangSchema = new Schema({
     quantity: {
         type: Number,
         required
+    },
+    imageUrl: {
+        type: String,
+        required
     }
 }, {
     timestamps: true
