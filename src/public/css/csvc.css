@@ -7,11 +7,12 @@
 	font-family: 'Poppins', sans-serif;
 }
 
-/*
-.hide-body {
+
+
+.hide {
     display: none !important;
 }
-*/
+
 
 .container-fluid h2 {
 	text-align: center;
@@ -147,6 +148,7 @@ input[type='submit'] {
 	z-index: 1;
 }
 
+
 /*
 .open-modal-btn {
     position: fixed;
@@ -237,3 +239,4 @@ i {
     cursor: pointer;
     font-size: 18px;
 }
+
