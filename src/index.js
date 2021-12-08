@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'resources', 'views'))
 console.log(path.join(__dirname, 'resources', 'views'))
 
 app.get('/', (req, res, next) => {
-    res.render('chi-tiet-csvc')
+    res.render('khu-vui-choi/danh-sach-khu-vui-choi')
 })
 
 app.listen(port, () => {
