@@ -6,6 +6,14 @@ const db = require('./config/db/index')
 const app = express()
 const port = 3000
 
+const router = require('./routes/index')
+const bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser');
+const { Router } = require('express')
+app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
 // Connect to db
 db.connect()
 
@@ -23,6 +31,7 @@ app.set('views', path.join(__dirname, 'resources', 'views'))
 
 console.log(path.join(__dirname, 'resources', 'views'))
 
+router(app)
 app.get('/', (req, res, next) => {
     // res.render('ql-khachhang-vip/them-kh-vip')
     res.render('banhang/trangchu')

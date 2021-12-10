@@ -19,8 +19,12 @@
     },
     "homepage": "https://github.com/sonnguyenhong/tinker-bell-garden#readme",
     "dependencies": {
+        "bcrypt": "^5.0.1",
+        "body-parser": "^1.19.0",
+        "cookie-parser": "^1.4.6",
         "express": "^4.17.1",
         "express-handlebars": "^6.0.1",
+        "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.0.13",
         "node-sass": "^6.0.1"
     },
