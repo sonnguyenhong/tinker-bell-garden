@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const bcrypt = require('bcrypt')
-
 const account = new Schema({
     username:{
         type: String,
@@ -14,6 +13,9 @@ const account = new Schema({
     name:{
         type: String,
     },
+    changePasswordToken:{
+        type: String,
+    }
 });
      
 account.pre('save', function(next) {
@@ -34,5 +36,25 @@ account.pre('save', function(next) {
         });
     });
 });
+// exports.updateRefreshToken = async (username, refreshToken) => {
+//             account.findOne({
+//                 username : username
+//             })
+//             .then(data=>{
+//                 if(data){
+//                         account.updateOne({_id: data.id},{
+//                             username : data.username,
+//                             password : data.password,
+//                             name : data.name,
+//                             //refreshToken: refreshToken,
+//                         })
+//                     return true;
+//                 }
+//             })
+//             .catch(er=>{
+//                 console.log(er);
+//                 return false;
+//             })
 
+// };
 module.exports = mongoose.model('account', account)
