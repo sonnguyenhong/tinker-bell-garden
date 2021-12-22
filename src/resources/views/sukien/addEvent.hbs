@@ -1,0 +1,123 @@
+
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/event.css">
+<link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+>
+
+{{>header}}
+
+<div class="container-fluid my-4" style="width: 80%">
+    <h2 class="my-4" style="color: red;">Thêm sự kiện</h2>
+    <form action="/admin/event/addEvent" method="Post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-7">
+            <div class="row">
+                <div class="col-4">
+                    <div class="label">
+                        Tên sự kiện
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="label">
+                        Thời gian bắt đầu
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="label">
+                        Thời gian kết thúc
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="label">
+                        Số lượng mã
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="label">
+                        Thông tin chi tiết
+                        <span></span>
+                        <small></small>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="form-control">
+                        <input type="text" class="infor" name="name">
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="form-control">
+                        <input type="date" class="infor" name="startDate" >
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="form-control">
+                        <input type="date" class="infor"  name="endDate">
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="form-control">
+                        <input type="number" class="infor" name="numberOfDiscountCode" >
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="form-control">
+                        <input type="text" class="infor" name="eventInfo">
+                        <span></span>
+                        <small></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="img-upload" style="margin-top: 20px;">
+                <label for="input-img" class="preview" id="preview">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Tải lên ảnh</span>
+                </label>
+                <input type="file" class="infor" hidden id="input-img" name="image">
+            </div>
+        </div>
+    </div>
+    <div class="row" id="page1">
+        <div class="col">
+            {{!-- <div class="container-fluid btn-option" id="update" style="width: 60%">Them su kien</div>
+            <div class="container-fluid hide" id="save" style="width: 68%">
+                <input type="submit" value="them su kien">
+            </div> --}}
+            <input type="submit" value="them su kien">
+        </div>
+        <div class="col">
+            
+        </div>
+    </div>
+    </form>
+</div>
+
+<script>
+    const inputImg1 = document.querySelector('#input-img')
+
+    inputImg1.addEventListener('change', (e) => {
+        let file = e.target.files[0];
+
+        if (!file) return;
+
+        let img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.classList.add('img-upload');
+
+        document.querySelector('#preview').appendChild(img);
+    })
+</script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{{>footer}}
