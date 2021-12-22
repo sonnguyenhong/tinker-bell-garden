@@ -21,12 +21,12 @@ class ChangePasswordController{
             if(isValidPassword){
                 data.password = req.body.nextPassword;
                 data.save();
-                return res.render('/');
+                return res.redirect('/');
             }
-            else return res.redirect('/changepassword');
+            else return res.render('change-password', {success : "false"});
         })
         .catch(err=>{
-            res.redirect('/changepassword')
+            return res.render('change-password', {success : "false"});
         })
     }
 }

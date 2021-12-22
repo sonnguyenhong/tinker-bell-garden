@@ -47,6 +47,14 @@ form .form-control {
 	background: none;
 	outline: none;
 }
+.form-control button {
+	width: 100%;
+	height: 40px;
+	font-size: 16px;
+	border: none;
+	background: none;
+	outline: none;
+}
 
 small {
 	position: absolute;
@@ -81,7 +89,7 @@ input[type='submit'] {
 	font-size: 18px;
 	color: #e9f4fb;
 	font-weight: 700;
-	cursor: pointer;
+	cursor: not-allowed;
 	outline: none;
 	transition: 0.5s;
 }

@@ -8,7 +8,7 @@ class LoginController{
     //[POST] Login
     login(req, res){
         // var form = req.body
-         console.log(req.body)
+        //console.log(req.body)
         // form.name = 'admin1'
         // form.refreshToken = 'refreshToken'
         // var acc = new account(form);
@@ -25,6 +25,9 @@ class LoginController{
         })
         .then(data=>{
             if(data) {
+                // data.password = 'tinkerbellgarden'
+                // data.save();
+                // return res.json('changed')
                 //console.log("data:" + data)
                 const isValidPassword = bcrypt.compareSync(password, data.password);
                 if(isValidPassword){
