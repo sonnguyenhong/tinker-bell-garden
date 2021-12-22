@@ -1,0 +1,37 @@
+{{> header}}
+
+<div class="container">
+    <h4 class="my-4" style="color: red;">QUẢN LÝ MẶT HÀNG</h4>
+    <button onclick="location.href='/admin/banhang/themmathang'" class="btn btn-primary col-3 mb-5">THÊM MẶT HÀNG</button>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên mặt hàng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Số lượng còn lại</th>
+                <th scope="col">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                    <tr>
+                    <th scope="row">1</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td><button class="btn btn-success" type="submit" onclick="location.href='/admin/banhang/quanlymathang/{{this._id}}'">Chi tiết</button></td>
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">
+                            Bạn chưa có mặt hàng nào. <a href="/admin/banhang/themmathang">Thêm mặt hàng mới</a>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{> footer}}
