@@ -1,6 +1,8 @@
 const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
+const route=require('./routes')
+const fileUpload=require('express-fileupload')
 const { engine } = require('express-handlebars')
 const multer = require('multer')
 
@@ -35,25 +37,35 @@ const fileFilter = (req, file, cb) => {
 }
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.urlencoded())
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
+app.use(fileUpload()) 
+
+// app.use(express.urlencoded())
+// app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
+// app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+  
 // HTTP Logger
 app.use(morgan('combined'))
 
 // Template Engine
 app.engine('hbs', engine({
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers : {
+        sum: (a,b) => a+b,
+        toDateString: (a)=> Date(a),
+        toString: (a)=>{
+            return a.getFullYear()+'-'+(a.getMonth()+1)+'-'+ String(a.getDate()).padStart(2,'0')
+        }
+    }
 }))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resources', 'views'))
 
 // console.log(path.join(__dirname, 'resources', 'views'))
 
-// Route init
 route(app)
 
 app.listen(port, () => {
     console.log(`TinkerBellGarden is listening at http://localhost:${port}`)
 })
+
