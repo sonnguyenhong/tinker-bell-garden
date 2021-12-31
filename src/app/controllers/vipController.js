@@ -1,4 +1,5 @@
 const transform = require('../../util/mongoose')
+const mongoose = require('mongoose')
 const Khachhangvip = require('../models/khachhangvip.js')
 const lichSu = require('../models/lichsucapnhat.js')
 
@@ -40,7 +41,29 @@ class vipController {
             expiryDate: d
         })
         khvip.save()
-        
+            .then(()=> {
+                var today = new Date();
+                var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+                const ls=new lichSu({
+                    updateAt: date,
+                    newName: req.body.name,
+                    newAddress: req.body.address,
+                    newPoints: 0,
+                    newExpiryDate: d,
+                    describe: "Khách hàng VIP mới",
+                    khachhang: khvip._id
+                })
+                ls.save();
+                res.render('ql-khachhang-vip/them-kh-vip', {
+                    success: true,
+                })
+            })
+            .catch(next=>{
+            res.render('ql-khachhang-vip/them-kh-vip', {
+                err: true,
+            })
+        })
+        /*
         var today = new Date();
         var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
         const ls=new lichSu({
@@ -54,7 +77,60 @@ class vipController {
         })
         ls.save()
             .then(()=> res.redirect('/admin/vip'))
-            .catch(next)
+        */
+    }
+
+    vipInfo(req, res){
+        Khachhangvip.findOne({_id: req.params.id}).lean()
+            .then(khvip =>{
+                res.render('ql-khachhang-vip/chitiet-kh-vip', {
+                    khvip: khvip,
+                    remainTime: ((khvip.expiryDate.getTime()-Date.now())/86400000).toFixed()
+                })
+            })
+    }
+
+    update(req, res, next) {
+        Khachhangvip.findOne({_id: req.params.id})
+            .then(khvip => {
+                var today = new Date();
+                var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+                const ls=new lichSu({
+                    updateAt: date,
+                    oldName: khvip.name,
+                    newName: req.body.name,
+                    oldAddress: khvip.address,
+                    newAddress: req.body.address,
+                    oldPoints: khvip.points,
+                    newPoints: req.body.points,
+                    oldExpiryDate: khvip.expiryDate,
+                    newExpiryDate: Date.now()+req.body.remainTime*86400000,
+                    describe: "",
+                    khachhang: khvip._id
+                })
+
+                if(ls.newName!=ls.oldName) ls.describe=ls.describe+"Tên mới: "+ls.newName+". "
+                if(ls.newAddress!=ls.oldAddress) ls.describe=ls.describe+"Địa chỉ mới: "+ls.newAddress+". "
+                if(ls.newPoints!=ls.oldPoints) ls.describe=ls.describe+"Số điểm mới: "+ls.newPoints+". "
+
+                ls.save();
+                
+                khvip.name=req.body.name;
+                khvip.address=req.body.address;
+                khvip.points=req.body.points;
+                khvip.expiryDate=Date.now()+req.body.remainTime*86400000;
+
+                khvip.save()
+                    .then(() =>{
+                        res.redirect('/admin/vip/'+khvip._id)
+                    })
+            })
+    }
+
+    terminate(req, res, next){
+        Khachhangvip.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('/admin/vip'))
+            .catch(next);
     }
 }
 

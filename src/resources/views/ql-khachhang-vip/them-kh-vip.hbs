@@ -51,13 +51,34 @@
                     <small></small>
                 </div>
             </div>
-
             </div>
+            {{#if err}}
+            <p style="text-align: center; color: red;">Số điện thoại hoặc email đã được sử dụng</p>
+            {{/if}}
             <div style="text-align: center;">
                 <input type="submit" value="Thêm khách hàng" style="width: 20%;"></input>
             </div>
         </form>
     </div>
+
+    {{#if success}}
+        <div class="my-modal">
+            <div class="modal__inner sticky-top">
+                <div class="modal__header">
+                    <h5>Tinker Bell Garden</h5>
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="modal__body">
+                    <h4>Đăng ký khách hàng VIP thành công</h4>
+                </div>
+                <div class="modal__footer">
+                    <a href="/admin/vip" style="text-decoration: none;">
+                        <button>Tiếp tục</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {{/if}}
       
  {{>footer}}
 

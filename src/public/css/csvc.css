@@ -6,6 +6,10 @@
     /* font-family: 'Poppins', sans-serif; */
 }
 
+body {
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
 .hide {
     display: none !important;
 }
@@ -173,7 +177,7 @@ input[type='submit'] {
     top: 0;
     left: 0;
     width: 100vw;
-    min-height: 200vh;
+    min-height: 150vh;
     background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -184,7 +188,8 @@ input[type='submit'] {
     overflow: hidden;
     animation: showModal linear 0.2s;
     position: relative;
-    margin: 450px auto;
+    margin: 200px auto;
+    z-index: 5;
 }
 
 @keyframes showModal {
