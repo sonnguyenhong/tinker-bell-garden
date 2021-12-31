@@ -9,27 +9,25 @@ const khachhangvipSchema = new Schema({
     phoneNumber: {
         type: String,
         required: true,
+        unique: true
     },
     address: {
         type: String,
+        required: true,
     },
     email: {
         type: String,
         required: true,
+        unique: true
     },
     points: {
         type: Number,
         required: true,
     },
-    regisDate: {
+    expiryDate: {
         type: Date,
         required: true,
-    },
-    lichsu: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Lichsucapnhat',
-        required: true,
-    }]
+    }
 }, {
     timestamps: true
 })

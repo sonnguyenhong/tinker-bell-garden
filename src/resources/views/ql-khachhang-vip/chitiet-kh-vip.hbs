@@ -2,196 +2,128 @@
 <link rel="stylesheet" href="/css/csvc.css">
 
 {{>header}}
-<!--
-<style>
-    .button {
-        display: inline-block;
-        cursor: pointer;
-        text-align: center;       
-    }
-    .button:hover {
-        opacity: 0.8;
-    }
-    .button:active {
-        background-color: #3e8e41;
-        border-radius: 30px;
-        transform: translateY(2px);
-        opacity: 1;   
-    }
-
-    h3 {
-        margin-top: 30px;
-        margin-right: 150px;
-        margin-left: 150px;
-    }
-
-    .clearfix::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-
-    input {
-        margin-top: 22px;
-        font-size: x-large;
-        padding-right: 200px;
-    }
-
-</style>
-
-
-<div class="container">
-    <h1 id="h1">CHI TIẾT KHÁCH HÀNG VIP</h1> 
-</div>
-
-
-<div class="container clearfix">
-    <div style="float: left;" class="column menu">
-        <div style="display:block;">
-            <h3>Tên khách hàng</h3>
-            <h3>Số điện thoại</h3>
-            <h3>Địa chỉ</h3>
-            <h3>Email</h3>
-            <h3>Điểm tích lũy</h3>
-            <h3>Ngày gia hạn</h3>
-            <h3>Số ngày còn lại</h3>
+    <div class="row">
+        <div class="col-8">
+        
+        </div>
+        <div class="col-4">
+            <a href="/admin/vip/{{khvip._id}}/history" style="text-decoration: none;">
+                <div class="container-fluid btn-option" style="width: 60%">Lịch sử cập nhật</div>
+            </a>
         </div>
     </div>
--->
     <div class="container">
-        <div class="container-fluid my-4" style="width: 70%">
-            <h2 class="my-4" style="color: red;">CHI TIẾT KHÁCH HÀNG VIP</h2>
-            <form>
-                <div class="row">
-                <div class="col-3">
-                    <div class="label">
-                        Tên khách hàng
-                        <span></span>
-                        <small></small>
+        <form method="post" action="/admin/vip/{{khvip._id}}/update">
+            <div class="container-fluid my-4" style="width: 70%">
+                <h2 class="my-4" style="color: red;">CHI TIẾT KHÁCH HÀNG VIP</h2>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="label">
+                                Tên khách hàng
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="label">
+                                Số điện thoại
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="label">
+                                Địa chỉ
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="label">
+                                Email
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="label">
+                                Điểm tích luỹ
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="label">
+                                Số ngày còn lại
+                                <span></span>
+                                <small></small>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-control">
+                                <input type="text" class="infor" name="name" disabled value="{{khvip.name}}">
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" class="disabled-infor" name="phoneNumber" disabled value="{{khvip.phoneNumber}}">
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" class="infor" name="address" disabled value="{{khvip.address}}">
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" class="disabled-infor" name="email" disabled value="{{khvip.email}}">
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" class="infor" name="points" disabled value="{{khvip.points}}">
+                                <span></span>
+                                <small></small>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" class="infor" name="remainTime" disabled value="{{remainTime}}">
+                                <span></span>
+                                <small></small>
+                            </div>
+                        </div>
                     </div>
-                    <div class="label">
-                        Số điện thoại
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="label">
-                        Địa chỉ
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="label">
-                        Email
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="label">
-                        Điểm tích luỹ
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="label">
-                        Ngày gia hạn
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="label">
-                        Số ngày còn lại
-                        <span></span>
-                        <small></small>
-                    </div>
-                </div>
-                <div class="col-9">
-                    <div class="form-control">
-                        <input type="text" class="infor" disabled value="101">
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="form-control">
-                        <input type="text" class="infor" disabled value="Bóng đèn">
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="form-control">
-                        <input type="text" class="infor" disabled value="Tốt">
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="form-control">
-                        <input type="text" class="infor" disabled value="Khu A">
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="form-control">
-                        <input type="text" class="infor" disabled value="Khu A">
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="form-control">
-                        <input type="text" class="infor" disabled value="Khu A">
-                        <span></span>
-                        <small></small>
-                    </div>
-                    <div class="form-control">
-                        <input type="text" class="infor" disabled value="Khu A">
-                        <span></span>
-                        <small></small>
-                    </div>
-                </div>
+            </div>      
 
+            <div class="row mb-2" id="page1">
+                <div class="col-4">
+                    <a href="/admin/vip" style="text-decoration: none;">
+                        <div class="container-fluid btn-option" id="back" style="width: 60%">Quay lại</div>
+                    </a>
                 </div>
-            </form>
-        </div>      
+                <div class="col-4">
+                    <div class="container-fluid btn-option" id="update" style="width: 60%">Sửa thông tin</div>
+                </div>
+                <div class="col-4">
+                    <div class="container-fluid btn-option open-modal-btn" id="delete" data-toggle="modal" data-target="#exampleModal" style="width: 60%">Xoá khách hàng</div>
+                </div>
+            </div>
 
-        <div class="row mb-2" id="page1">
-            <div class="col-4">
-                <div class="container-fluid btn-option" id="back" style="width: 60%">Quay lại</div>
+            <div class="container-fluid hide mb-2" id="save" style="width: 40%; text-align: center;">
+                <input type="submit" value="Lưu thông tin" style="width: 80%;"></input>
             </div>
-            <div class="col-4">
-                <div class="container-fluid btn-option" id="update" style="width: 60%">Sửa thông tin</div>
-            </div>
-            <div class="col-4">
-                <div class="container-fluid btn-option open-modal-btn" id="delete" style="width: 60%">Xoá khách hàng</div>
-            </div>
-        </div>
-
-        <div class="container-fluid btn-option hide mb-2" id="save" style="width: 40%">Lưu thông tin</div>
+        </form>
     </div>
 
-    <!--<button class="open-modal-btn">Open Modal</button>-->
-    <div class="my-modal hide">
-      <div class="modal__inner">
-        <div class="modal__header">
-            <h5>Tinker Bell Garden</h5>
-            <i class="fas fa-times"></i>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa khách hàng vip</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có muốn xoá khách hàng này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <button type="submit" class="btn btn-danger" form="deleteForm">Xóa</button>
+            </div>
+            </div>
         </div>
-        <div class="modal__body">
-            <h4>Bạn có chắc chắn muốn xoá?</h4>
-        </div>
-        <div class="modal__footer">
-            <button>Quay lại</button>
-            <button>Xoá</button>
-        </div>
-      </div>
+        <form id="deleteForm" method="post" action="/admin/vip/{{khvip._id}}/delete" type="hidden"></form>
     </div>
-
-    <script>
-        const modal = document.querySelector(".my-modal");
-        const openModalBtn = document.querySelector(".open-modal-btn");
-        const iconCloseModal = document.querySelector(".modal__header i");
-        const buttonCloseModal = document.querySelector(".modal__footer button");
-
-        function toggleModal() {
-            modal.classList.toggle("hide");
-        }
-
-        openModalBtn.addEventListener("click", toggleModal);
-        iconCloseModal.addEventListener("click", toggleModal);
-        buttonCloseModal.addEventListener("click", toggleModal);
-
-        modal.addEventListener("click", (e) => {
-        if (e.target == e.currentTarget) toggleModal();
-        });
-    </script>
 
     <script>
         const updateBtn = document.querySelector('#update');
@@ -205,106 +137,10 @@
         updateBtn.addEventListener('click', function() {
             page1.classList.add('hide');
             saveBtn.classList.remove('hide');
-            for(var i = 0; i < 7; i++) {
+            for(var i = 0; i < 5; i++) {
                 infor[i].removeAttribute("disabled");
             }
         })
     </script>
-<!--
-    <div style="display:block;" class="column content">
-        <ul class="list-unstyled">
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-        </ul>
-    </div>
-</div>
--->
-<!--
-<div style="margin-top: 30px;" class="container">
-    <a href="#" class="setcolor">
-        <button style="float: right; margin-right: 350px;" id="myBtn" 
-        class="button_luu_kh_vip button">Xóa khách hàng</button>
-    </a>
-    <a href="http://127.0.0.1:5500/Sua_KH_Vip.html" class="setcolor">
-        <button style="float: right;" class="button_luu_kh_vip button">Sửa thông tin KH</button>
-    </a>
-    <a href="http://127.0.0.1:5500/QuanLy_KH_Vip.html" class="setcolor">
-        <button class="button_them_kh_vip button">Quay lại</button>
-    </a>
-</div>
-<script>
-    function delete_info() {
-        alert("Đã xóa thông tin khách hàng!");  
-    }
-</script>
--->
 
-    <!-- modal_xac nhan -->
-    <div id="myModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div style="margin: 50px 0px 50px;">
-                    <h5 style="text-align: center;" class="modal-title">Bạn có chắc chắn muốn xóa khách hàng này?</h5>
-                </div>                
-                <div  class="modal-footer">
-                    <a href="http://127.0.0.1:5500/QuanLy_KH_Vip.html">
-                        <button type="button" class="btn btn-primary" onclick="delete_info()">Lưu thay đổi</button>
-                    </a>  
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">  
-        function delete_info(){  
-            alert("Đã xóa thông tin khách hàng!");  
-        }  
-    </script>
-    <script>
-            // lấy phần Modal
-        var modal = document.getElementById('myModal');
-          
-            // Lấy phần button mở Modal
-        var btn = document.getElementById("myBtn");
-          
-            // Lấy phần span đóng Modal
-        var span = document.getElementsByClassName("btn-secondary")[0];
-          
-            // Khi button được click thi mở Modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-            }
-          
-            // Khi span được click thì đóng Modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-          
-            // Khi click ngoài Modal thì đóng Modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
--->
 {{> footer}}

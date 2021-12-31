@@ -6,10 +6,6 @@
     /* font-family: 'Poppins', sans-serif; */
 }
 
-body {
-    overflow-x: hidden; /* Hide horizontal scrollbar */
-}
-
 .hide {
     display: none !important;
 }
@@ -108,7 +104,7 @@ input[type='submit'] {
 
 .btn-option:hover,
 [type='submit']:hover {
-    opacity: 0.6;
+    background-color: #c90b0b;
 }
 
 .img-upload {
@@ -173,14 +169,12 @@ input[type='submit'] {
 */
 
 .my-modal {
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
     top: 0;
-    right: 0;
-    bottom: 0;
     left: 0;
-    z-index: 999;
-    transition: all 0.3s;
+    width: 100vw;
+    min-height: 200vh;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .modal__inner {
@@ -190,8 +184,7 @@ input[type='submit'] {
     overflow: hidden;
     animation: showModal linear 0.2s;
     position: relative;
-    margin: 200px auto;
-    z-index: 5;
+    margin: 450px auto;
 }
 
 @keyframes showModal {
