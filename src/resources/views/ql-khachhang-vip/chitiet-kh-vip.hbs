@@ -2,6 +2,16 @@
 <link rel="stylesheet" href="/css/csvc.css">
 
 {{>header}}
+    <div class="row">
+        <div class="col-8">
+        
+        </div>
+        <div class="col-4">
+            <a href="/admin/vip/{{khvip._id}}/history" style="text-decoration: none;">
+                <div class="container-fluid btn-option" style="width: 60%">Lịch sử cập nhật</div>
+            </a>
+        </div>
+    </div>
     <div class="container">
         <form method="post" action="/admin/vip/{{khvip._id}}/update">
             <div class="container-fluid my-4" style="width: 70%">
@@ -132,101 +142,5 @@
             }
         })
     </script>
-<!--
-    <div style="display:block;" class="column content">
-        <ul class="list-unstyled">
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-            <li>
-                <input type="text">
-            </li>
-        </ul>
-    </div>
-</div>
--->
-<!--
-<div style="margin-top: 30px;" class="container">
-    <a href="#" class="setcolor">
-        <button style="float: right; margin-right: 350px;" id="myBtn" 
-        class="button_luu_kh_vip button">Xóa khách hàng</button>
-    </a>
-    <a href="http://127.0.0.1:5500/Sua_KH_Vip.html" class="setcolor">
-        <button style="float: right;" class="button_luu_kh_vip button">Sửa thông tin KH</button>
-    </a>
-    <a href="http://127.0.0.1:5500/QuanLy_KH_Vip.html" class="setcolor">
-        <button class="button_them_kh_vip button">Quay lại</button>
-    </a>
-</div>
-<script>
-    function delete_info() {
-        alert("Đã xóa thông tin khách hàng!");  
-    }
-</script>
--->
 
-    <!-- modal_xac nhan -->
-    <div id="myModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div style="margin: 50px 0px 50px;">
-                    <h5 style="text-align: center;" class="modal-title">Bạn có chắc chắn muốn xóa khách hàng này?</h5>
-                </div>                
-                <div  class="modal-footer">
-                    <a href="http://127.0.0.1:5500/QuanLy_KH_Vip.html">
-                        <button type="button" class="btn btn-primary" onclick="delete_info()">Lưu thay đổi</button>
-                    </a>  
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">  
-        function delete_info(){  
-            alert("Đã xóa thông tin khách hàng!");  
-        }  
-    </script>
-    <script>
-            // lấy phần Modal
-        var modal = document.getElementById('myModal');
-          
-            // Lấy phần button mở Modal
-        var btn = document.getElementById("myBtn");
-          
-            // Lấy phần span đóng Modal
-        var span = document.getElementsByClassName("btn-secondary")[0];
-          
-            // Khi button được click thi mở Modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-            }
-          
-            // Khi span được click thì đóng Modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-          
-            // Khi click ngoài Modal thì đóng Modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
--->
 {{> footer}}

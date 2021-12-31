@@ -14,8 +14,18 @@ class vipController {
             .catch(next);
     }
 
-    showHistory(req, res, next){
+    showAllHistories(req, res, next){
         lichSu.find({}).populate('khachhang')
+            .then(histories => {
+                res.render('ql-khachhang-vip/lichsu-kh-vip', { 
+                    histories: transform.mutipleMongooseToObject(histories),
+                });
+            })
+            .catch(next);
+    }
+
+    showHistory(req, res, next){
+        lichSu.find({khachhang: req.params.id}).populate('khachhang')
             .then(histories => {
                 res.render('ql-khachhang-vip/lichsu-kh-vip', { 
                     histories: transform.mutipleMongooseToObject(histories),

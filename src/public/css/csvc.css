@@ -108,7 +108,7 @@ input[type='submit'] {
 
 .btn-option:hover,
 [type='submit']:hover {
-    background-color: #c90b0b;
+    opacity: 0.6;
 }
 
 .img-upload {
@@ -173,12 +173,14 @@ input[type='submit'] {
 */
 
 .my-modal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    min-height: 150vh;
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.6);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    transition: all 0.3s;
 }
 
 .modal__inner {
