@@ -12,5 +12,7 @@ router.post('/quanlymathang/:id/xoa', banhangController.postDeleteProduct)
 router.get('/themmathang', banhangController.getAddProductForm)
 router.post('/themmathang', banhangController.postAddProduct)
 router.post('/giohang', banhangController.getCart)
+router.post('/kiemtravip', banhangController.postCheckVip)
+router.post('/taodonhang', banhangController.postCreateOrder)
 
 module.exports = router

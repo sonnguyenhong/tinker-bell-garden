@@ -53,31 +53,57 @@
         <div style="text-align: center;">
             <h4 id="totalPrice">Tổng số tiền: 0</h4>
             <div class="row justify-content-center">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Số điện thoại</label>
+                <label for="inputPassword" class="col-form-label">Số điện thoại</label>
                 <div class="col-sm-3">
-                    <form style="position: relative;" id="orderForm" method="POST" action="/admin/banhang/kiemtravip">
-                        <input style="width: 150px;" type="text" class="form-control" id="phoneNumInput" name="phoneNumber">
-                        <button style="position: absolute; top: 0; right: -120px;" type="submit" class="btn btn-info" id="makePaymentButton" form="orderForm">Kiểm tra SĐT</button>
+                    <form style="position: relative;" id="checkVipForm" method="POST" action="/admin/banhang/kiemtravip">
+                        <input style="width: 150px;" type="text" class="form-control" id="phoneNumInput">
                     </form>
+
+                    <form id="orderForm" action="/admin/banhang/taodonhang" method="POST" hidden>
+                    </form>
+                    <button style="position: absolute; top: 0; right: -120px;" class="btn btn-info" id="checkPhoneNumButton">Kiểm tra SĐT</button>
                 </div>
             </div>
         </div>
+        {{#if error}}
+            <p style="text-align: center; color: red; margin-top: 10px;">{{{message}}}</p>
+        {{/if}}
+
+        {{#if isVip}}
+            <div style="margin-top: 15px; margin-left: 275px" id="vipInformation">
+                
+                <h5>Thông tin khách hàng VIP</h5>
+                <p>Họ và tên: {{vipInfo.name}}</p>
+                <p>Số điện thoại: {{vipInfo.phoneNumber}}</p>
+                <p>Điểm tích lũy: {{vipInfo.points}}</p>
+                <label for="usePoints">Số điểm sử dụng: </label>
+                <input id="usePointsInput" type="text" name="usePoints" id="usePoints">
+
+            </div>
+
+        {{/if}}
     
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy hóa đơn</button>
         <button type="submit" class="btn btn-success" id="makePaymentButton" form="orderForm">Thanh toán</button>
     </div>
     </div>
 </div>
 
 <script>
+
+    console.log(`{{message}}`)
     
     let totalPrice = 0;
     const sumPriceList = document.getElementsByClassName("sumPrice")
     const totalPriceH4 = document.getElementById("totalPrice")
     const makePaymentBtn = document.getElementById("makePaymentButton")
+    const checkPhoneNumBtn = document.getElementById("checkPhoneNumButton")
     const orderFormData = document.getElementById("orderForm")
+    const usePointsInput = document.getElementById("usePointsInput")
+    const checkVipForm = document.getElementById("checkVipForm")
+    const phoneNumberInput = document.getElementById("phoneNumInput")
     
     for(let i = 0 ; i < sumPriceList.length ; i++) {
         totalPrice += parseInt(sumPriceList[i].textContent)
@@ -85,12 +111,25 @@
     
     totalPriceH4.innerHTML = `Tổng số tiền: ${totalPrice}`
 
+    checkPhoneNumBtn.addEventListener("click", function() {
+        checkVipForm.innerHTML += `<input type="hidden" name="phoneNumber" value="${phoneNumberInput.value}">`
+        for(let i = 0 ; i < productList.length ; i++) {
+            const input = `<input type="hidden" name="${productList[i].id}" value="${productList[i].quantity}">`
+            checkVipForm.innerHTML += input
+        }
+        console.log(phoneNumberInput.value)
+        checkVipForm.submit()
+    })
+
     makePaymentBtn.addEventListener("click", function() {
+        orderFormData.innerHTML += `<input type="hidden" name="vipId" value="{{vipInfo._id}}">`
+        orderFormData.innerHTML += `<input type="hidden" name="usePoints" value="${usePointsInput.value}">`
         for(let i = 0 ; i < productList.length ; i++) {
             const input = `<input type="hidden" name="${productList[i].id}" value="${productList[i].quantity}">`
             orderFormData.innerHTML += input
         }
 
+        console.log(orderFormData)
         orderFormData.submit()
     })
 
