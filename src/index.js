@@ -44,7 +44,11 @@ app.use(morgan('combined'))
 
 // Template Engine
 app.engine('hbs', engine({
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: {
+        _toInt: (str) => parseInt(str, 10),
+        _mul: (a, b) => a * b
+    }
 }))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resources', 'views'))
