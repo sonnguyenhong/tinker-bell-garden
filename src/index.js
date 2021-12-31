@@ -51,6 +51,8 @@ app.use(morgan('combined'))
 app.engine('hbs', engine({
     extname: '.hbs',
     helpers: {
+        _toInt: (str) => parseInt(str, 10),
+        _mul: (a, b) => a * b,
         sum: (a, b) => a + b,
         toDateString: (a) => Date(a),
         toString: (a) => {

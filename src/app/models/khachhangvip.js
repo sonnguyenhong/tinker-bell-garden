@@ -4,7 +4,7 @@ const { Schema } = mongoose
 const khachhangvipSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     phoneNumber: {
         type: String,
@@ -27,7 +27,7 @@ const khachhangvipSchema = new Schema({
     expiryDate: {
         type: Date,
         required: true,
-    },
+    }
 }, {
     timestamps: true
 })

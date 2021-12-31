@@ -1,31 +1,13 @@
 <link rel="stylesheet" href="/css/shop.css">
 <link rel="stylesheet" href="/css/app.css">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
 {{>header}}
 
 <div class="container">
 
-    <button id="cartBtn" class="btn btn-primary col-3" data-toggle="modal" data-target="#exampleModal">Xem giỏ hàng</button>
-    <button onclick="location.href='/admin/banhang/quanlymathang'" class="btn btn-primary col-3">Quản lý mặt hàng</button>
-    <div class="listing-section">
-        {{#each products}}
-            <div class="product">
-                <div class="image-box">
-                    <img class="product-img" src="/{{this.imageUrl}}" alt="">
-                </div>
-                <div class="text-box">
-                    <h2 class="item">{{this.name}}</h2>
-                    <h3 class="price">{{this.price}}</h3>
-                    {{!-- <p class="description">A bag of delicious oranges!</p>
-                    <label for="item-1-quantity">Quantity:</label>
-                    <input type="number" name="item-1-quantity" id="item-1-quantity" value="1"> --}}
-                    <button type="button" name="item-1-button" id="item-1-button" >Add to Cart</button>
-                </div>
-            </div>
-        {{/each}}
-    </div>
-    <div style="clear: both;"></div>
-
-   
     {{!-- Modal --}}
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -37,8 +19,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                
-                <table class="table">
+                <table id="table" class="table">
                     <thead class="thead-dark">
                         <tr>
                         <th scope="col">#</th>
@@ -48,33 +29,152 @@
                         <th scope="col">Thành tiền</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        </tr>
+                    <tbody id="myTable">
+                        
                     </tbody>
                 </table>
                 
                 <div style="text-align: center;">
-                    <h4>Tổng số tiền: 300000</h4>
+                    <h4 id="totalPrice">Tổng số tiền: 0</h4>
                     <div class="row justify-content-center">
-                        <label for="inputPassword" class="col-sm-2 col-form-label">Số điện thoại</label>
+                        {{!-- <label for="inputPassword" class="col-sm-2 col-form-label">Số điện thoại</label> --}}
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="phoneNumInput">
+                            <form id="orderForm" method="POST" action="/admin/banhang/giohang">
+                                {{!-- <input type="text" class="form-control" id="phoneNumInput" name="phoneNumber"> --}}
+                            </form>
                         </div>
                     </div>
                 </div>
+            
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Thanh toán</button>
+                <button type="submit" class="btn btn-success" id="makePaymentButton" form="orderForm">Thanh toán</button>
             </div>
             </div>
         </div>
     </div>
+
+    <button id="cartBtn" class="btn btn-primary col-3" data-toggle="modal" data-target="#exampleModal">Xem giỏ hàng</button>
+    <button onclick="location.href='/admin/banhang/quanlymathang'" class="btn btn-primary col-3">Quản lý mặt hàng</button>
+    <div class="listing-section">
+        <script>
+            productList = []
+            table = document.getElementsByClassName("table")
+            tableData = document.getElementById("myTable")
+        </script>    
+        {{#each products}}
+
+            <div class="product">
+                <div class="image-box">
+                    <img class="product-img" src="/{{this.imageUrl}}" alt="">
+                </div>
+                <div class="text-box">
+                    <h2 class="item">{{this.name}}</h2>
+                    <h3 class="price">{{this.price}}</h3>
+                    {{!-- <p class="description">A bag of delicious oranges!</p>
+                    <label for="item-1-quantity">Quantity:</label>
+                    <input type="number" name="item-1-quantity" id="item-1-quantity" value="1"> --}}
+                    <button type="button" name="item-1-button" id="item-1-button" class="addToCartButton">Add to Cart</button>
+                </div>
+            </div>
+
+            <script>
+                
+                productList.push({
+                    id: '{{this._id}}',
+                    name: '{{this.name}}',
+                    price: '{{this.price}}',
+                    quantity: 0,
+                })
+
+            </script>
+
+        {{/each}}
+    </div>
+    
+    <script>
+        productOrderList = []
+
+
+        // Cai dat su kien khi them hang vao gio hang
+        {{!-- console.log(productList) --}}
+        const makePaymentBtn = document.getElementById("makePaymentButton")
+        const orderFormData = document.getElementById("orderForm")
+        {{!-- console.log(orderFormData) --}}
+        const productOrderButtons = document.getElementsByClassName("addToCartButton")
+        console.log(productOrderButtons)
+        for(let i = 0 ; i < productOrderButtons.length ; i++) {
+            let cnt = 0
+            productOrderButtons[i].addEventListener("click", function() {
+                for(let j = 0 ; j < productOrderList.length ; j++) {
+                    if(JSON.stringify(productOrderList[j]) === JSON.stringify(productList[i])) {
+                        cnt = cnt + 1
+                        productOrderList[j].quantity = productOrderList[j].quantity + 1        
+                        break; 
+                    }
+                }
+                if(cnt === 0) {
+                    productOrderList.push(productList[i])
+                    productOrderList[productOrderList.length - 1].quantity = 1;
+                }
+
+                $("#table").find("tr:not(:first)").remove();
+            
+                let totalPrice = 0
+
+                for(let k = 0 ; k < productOrderList.length ; k++) {
+                    totalPrice += productOrderList[k].price * productOrderList[k].quantity
+                    var row = `<tr>
+                        <td>${k+1}</td>
+                        <td>${productOrderList[k].name}</td>
+                        <td class="orderQuantityInputRow"><input class="orderQuantityInput" style="width: 50px" min="1" name="quantity" value="${productOrderList[k].quantity}" type="number"></td>
+                        <td>${productOrderList[k].price}</td>
+                        <td class="sumPriceRow">${productOrderList[k].price * productOrderList[k].quantity}</td>
+                    </tr>`
+                    tableData.innerHTML += row
+                }    
+
+                let orderQuantityInput = document.getElementsByClassName('orderQuantityInput')
+
+                for(let k = 0 ; k < orderQuantityInput.length ; k++) {
+                    orderQuantityInput[k].addEventListener("change", function() {
+                        let oldQuantity = productOrderList[k].quantity
+                        productOrderList[k].quantity = orderQuantityInput[k].value
+
+                        totalPrice = totalPrice + (productOrderList[k].quantity - oldQuantity) * productOrderList[k].price
+                        tableData.rows[k].cells[2].getElementsByClassName("orderQuantityInput")[0].value = productOrderList[k].quantity
+
+                        tableData.rows[k].cells[4].innerHTML = productOrderList[k].price * productOrderList[k].quantity
+                        console.log(tableData)
+                        var totalPriceText = document.getElementById("totalPrice")
+                        console.log(totalPriceText)
+                        totalPriceText.innerHTML = `Tổng số tiền: ${totalPrice}`
+                    })
+                }
+                
+                console.log(totalPrice)
+                var totalPriceText = document.getElementById("totalPrice")
+                console.log(totalPriceText)
+                totalPriceText.innerHTML = `Tổng số tiền: ${totalPrice}`
+            })
+
+        }
+
+        makePaymentBtn.addEventListener("click", function() {
+            for(let i = 0 ; i < productOrderList.length ; i++) {
+                const input = `<input type="hidden" name="${productOrderList[i].id}" value="${productOrderList[i].quantity}">`
+                orderFormData.innerHTML += input
+            }
+
+            orderFormData.submit()
+        })
+        
+    </script>
+    
+    <div style="clear: both;"></div>
+   
+    
 
 </div>
 
