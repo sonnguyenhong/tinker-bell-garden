@@ -32,7 +32,6 @@ const lichsucapnhatSchema = new Schema({
     },
     newExpiryDate: {
         type: Date,
-        required: true
     },
     describe: {
         type: String,
