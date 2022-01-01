@@ -3,7 +3,9 @@ const { route } = require('express/lib/application');
 const eventController=require('../controllers/eventController')
 const router=express.Router();
 
+router.get('/find',eventController.findEvent)
 router.get('/',eventController.showListEvent)
+
 router.get('/addEvent',eventController.showAddEvent)
 router.post('/addEvent',eventController.store)
 router.get('/:id/delete',eventController.deleteEvent)

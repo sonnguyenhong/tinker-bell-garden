@@ -15,6 +15,23 @@ class eventController{
         .catch(next);
     }
 
+    findEvent(req,res,next){
+        Event.find({})
+        .then(events=>{
+    
+            var str2=(req.query.find).toLowerCase()
+            
+            var E=events.filter(function(e){
+                var str1=e.name.toLowerCase()
+                return str1.includes(str2)
+            })
+            res.render('sukien/manageEvent',{
+                events:mutipleMongooseToObject(E)
+            })
+        })
+        .catch(next);
+    }
+
     showAddEvent(req,res,next){
         res.render('sukien/addEvent')
     }
