@@ -1,5 +1,7 @@
 const Product = require('../models/mathang')
 const VipCustomer = require('../models/khachhangvip')
+const Order = require('../models/donhang')
+const VipHistory = require('../models/lichsucapnhat')
 
 const mongoose = require('mongoose')
 const fileHelper = require('../../util/file')
@@ -21,7 +23,6 @@ class BanhangController {
     }
 
     // [GET] /admin/banhang/quanlymathang
-
     getProductList(req, res, next) {
         Product.find({}).lean()
             .then(products => {
@@ -167,11 +168,11 @@ class BanhangController {
 
     // [POST] /admin/banhang/kiemtravip
     postCheckVip(req, res, next) {
-        const orderInfo = req.body
+        const orderInfo = req.body // Bao gom phoneNumber, danh sach product va quantity
             // console.log(orderInfo)
             // console.log(orderInfo)
             // check vip customer
-
+        console.log(orderInfo)
         const phoneNumber = req.body.phoneNumber
         console.log(phoneNumber)
         const productIds = []
@@ -224,6 +225,143 @@ class BanhangController {
     // [POST] /admin/banhang/taodonhang
     postCreateOrder(req, res, next) {
         console.log(req.body)
+
+        const productOrderList = []
+        const productOrderQuantity = []
+        for (var key in req.body) {
+            if (key !== 'vipId' && key !== 'usePoints') {
+                productOrderList.push(mongoose.Types.ObjectId(key))
+                productOrderQuantity.push(req.body[key])
+            }
+        }
+        // console.log(productOrderList)
+        // console.log(productOrderQuantity)
+
+        const products = []
+        for (let i = 0; i < productOrderList.length; i++) {
+            products.push({
+                productId: productOrderList[i],
+                quantity: parseInt(productOrderQuantity[i])
+            })
+        }
+
+        // console.log(products)
+        // console.log(products.productId)
+
+        // for (let i = 0; i < productOrderList.length; i++) {
+        //     // console.log(productOrderList[i])
+        //         // let prodId = productOrderList[i].toString()
+        //     // console.log(req.body[productOrderList[i].toString()])
+        // }
+
+        let hasDiscount = true
+        if (req.body.vipId === undefined) {
+            hasDiscount = false
+        }
+        console.log(req.body.vipId)
+        console.log("hasDiscount: " + hasDiscount)
+        let totalPrice = 0
+
+        Product.find({ "_id": { "$in": productOrderList } }).lean()
+            .then(prods => {
+                // console.log(prods)
+                for (let i = 0; i < prods.length; i++) {
+                    totalPrice += prods[i].price * req.body[prods[i]._id.toString()]
+                }
+                console.log(totalPrice)
+
+                if (hasDiscount) {
+                    VipCustomer.findById(mongoose.Types.ObjectId(req.body.vipId)).lean()
+                        .then(vipCustomer => {
+                            const phoneNumber = vipCustomer.phoneNumber
+                            let orderInfo = {
+                                phoneNumber: phoneNumber
+                            }
+                            for (let i = 0; i < productOrderList.length; i++) {
+                                orderInfo[productOrderList[i]] = productOrderQuantity[i]
+                            }
+
+                            console.log(orderInfo)
+
+                            console.log(vipCustomer.name)
+                            if (vipCustomer.points < req.body.usePoints) {
+                                res.render('banhang/giohang', {
+                                    products: prods,
+                                    orderInfo: orderInfo,
+                                    isVip: true,
+                                    isVipError: true,
+                                    vipInfo: vipCustomer,
+                                    vipErrorMessage: 'Bạn không đủ điểm.'
+                                })
+                            } else {
+                                totalPrice = totalPrice - parseInt(req.body.usePoints) * 1000
+                                const order = new Order({
+                                    products: products,
+                                    price: totalPrice,
+                                    hasDiscount: hasDiscount
+                                })
+
+                                order.save()
+                                    .then(result => {
+                                        console.log(products)
+
+                                        var today = new Date();
+                                        var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+                                        const ls = new VipHistory({
+                                            updateAt: date,
+                                            oldName: vipCustomer.name,
+                                            newName: vipCustomer.name,
+                                            oldAddress: vipCustomer.address,
+                                            newAddress: vipCustomer.address,
+                                            oldPoints: vipCustomer.points,
+                                            newPoints: vipCustomer.points - parseInt(req.body.usePoints),
+                                            oldExpiryDate: vipCustomer.expiryDate,
+                                            newExpiryDate: vipCustomer.expiriDate,
+                                            describe: "Mua hàng sử dụng " + req.body.usePoints + " điểm.",
+                                            khachhang: vipCustomer._id
+                                        })
+
+                                        VipCustomer.findByIdAndUpdate(vipCustomer._id, { points: ls.newPoints })
+                                            .then(result => {
+                                                ls.save()
+                                                    .then(result => {
+                                                        res.render('banhang/thong-tin-don-hang', {
+                                                            products: prods,
+                                                            orderInfo: orderInfo,
+                                                            totalPrice: totalPrice,
+                                                            discount: parseInt(req.body.usePoints) * 1000
+                                                        })
+                                                    })
+                                            })
+
+                                    })
+                            }
+                        })
+                } else {
+                    const order = new Order({
+                        products: products,
+                        price: totalPrice,
+                        hasDiscount: hasDiscount
+                    })
+
+                    order.save()
+                        .then(result => {
+                            let orderInfo = {}
+                            for (let i = 0; i < productOrderList.length; i++) {
+                                orderInfo[productOrderList[i]] = productOrderQuantity[i]
+                            }
+
+                            res.render('banhang/thong-tin-don-hang', {
+                                products: prods,
+                                orderInfo: orderInfo,
+                                totalPrice: totalPrice,
+                                discount: 0
+                            })
+                        })
+                }
+            })
+            .catch(err => next(err))
+
     }
 }
 

@@ -1,0 +1,40 @@
+{{> header}}
+
+<div class="container">
+
+    <h1>THÔNG TIN HÓA ĐƠN</h1>
+    <table id="table" class="table">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tên mặt hàng</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Đơn giá</th>
+            <th scope="col">Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            
+
+            {{#each products}}
+                
+                <tr>
+                <th scope="row">1</th>
+                <td>{{this.name}}</td>
+                <td>{{lookup ../orderInfo this._id }}</td>
+                <td>{{this.price}}</td>
+                <td class="sumPrice">{{_mul (lookup ../orderInfo this._id) this.price}}</td>
+                </tr>
+
+            {{/each}}
+        </tbody>
+    </table>
+
+    <h5>Số tiền được giảm: {{discount}}</h5>
+    <h5>Tổng đơn hàng: {{totalPrice}}</h5>
+
+    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="location.href='/admin/banhang'">Quay lại cửa hàng</button>
+</div>
+
+
+{{> footer}}

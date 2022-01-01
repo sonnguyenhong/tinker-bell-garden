@@ -71,16 +71,18 @@
 
         {{#if isVip}}
             <div style="margin-top: 15px; margin-left: 275px" id="vipInformation">
-                
                 <h5>Thông tin khách hàng VIP</h5>
                 <p>Họ và tên: {{vipInfo.name}}</p>
                 <p>Số điện thoại: {{vipInfo.phoneNumber}}</p>
                 <p>Điểm tích lũy: {{vipInfo.points}}</p>
                 <label for="usePoints">Số điểm sử dụng: </label>
                 <input id="usePointsInput" type="text" name="usePoints" id="usePoints">
-
             </div>
 
+        {{/if}}
+
+        {{#if isVipError}}
+            <p style="text-align: center; color: red; margin-top: 10px;">{{{vipErrorMessage}}}</p>
         {{/if}}
     
     </div>
@@ -122,8 +124,12 @@
     })
 
     makePaymentBtn.addEventListener("click", function() {
-        orderFormData.innerHTML += `<input type="hidden" name="vipId" value="{{vipInfo._id}}">`
-        orderFormData.innerHTML += `<input type="hidden" name="usePoints" value="${usePointsInput.value}">`
+        var vip = JSON.stringify({{isVip}})
+        console.log(vip)
+        if(vip) {
+            orderFormData.innerHTML += `<input type="hidden" name="vipId" value="{{vipInfo._id}}">`
+            orderFormData.innerHTML += `<input type="hidden" name="usePoints" value="${usePointsInput.value}">`
+        }
         for(let i = 0 ; i < productList.length ; i++) {
             const input = `<input type="hidden" name="${productList[i].id}" value="${productList[i].quantity}">`
             orderFormData.innerHTML += input
