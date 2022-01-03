@@ -1,0 +1,106 @@
+.transition  {
+    -webkit-transition: #59BAC0;
+    -moz-transition: #59BAC0;
+    -o-transition: #59BAC0;
+    transition: #59BAC0 
+  }
+  
+.clearfix,
+.clearfix:before,
+.clearfix:after {
+    display: block;
+    content: " ";   
+    clear: both;
+    zoom: 1;
+}
+
+* {
+-webkit-box-sizing: border-box; 
+-moz-box-sizing: border-box;
+box-sizing: border-box;  
+}
+
+body {
+background: #EDF2F6;
+font-family: Arial;
+color: #444;
+}
+
+.wrap {
+margin: 0 auto;
+padding: 50px;
+max-width: 1200px;
+}
+
+.barGraph {
+position: relative;
+width: 100%;
+height: auto;
+margin-bottom: 50px;
+}
+
+.graph {
+position: relative;
+list-style-type: none;
+padding: 0;
+margin: 0;
+width: calc(100% - 4%);
+left: 4%;
+}  
+.graph-barBack {
+    border-radius: 2px;
+    background: #DAE4EB;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.graph-bar {
+    background-color: red;    
+    transition: all 1s ease-out;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 9999;
+    display: block;
+    height: 20px;  
+    width: 0%;
+}    
+.graph-bar:hover {
+    transition: all 0.5s ease;
+    background: #428D92;
+}
+
+.graph-bar:last-child {
+    margin-bottom: 0;
+}
+
+.graph-bar:after {
+    position: absolute;
+    content: attr(data-value);
+    display: none;
+    
+    font-size: 12px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    
+    line-height: 20px;
+    height: 20px; 
+    padding: 0 10px;
+    
+    margin-left: 5px;
+    left: 100%;
+    top: 0;
+}
+
+.graph-bar:hover:after {
+    display: block;
+}
+
+.graph-legend {
+    position: absolute;
+    margin-right: 10px;
+    left: -90px ;
+    z-index: 9999;
+}
