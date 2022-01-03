@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/banve.css">
+{{>header}}
+    <!-- BANVE-BODY -->
+        <div class="banve-body">
+            <u class="banve-list text-size text-align">
+                <li><button class="js-truc-tiep">MUA VÉ VÀO KHU VUI CHƠI</button></li>
+                <li><button class="js-dat-truoc">BÁN VÉ ĐẶT TRƯỚC</button></li>
+                <li><button class="js-thanhtoan">KẾT THÚC CHƠI</button></li>
+            </u>
+        </div>
+
+        <!-- MODALS -->
+        <!-- MUA VE MODAL -->
+        <div class="modal js-modal-truc-tiep">
+            <div class="trucTiep-form">
+                <div class="trucTiep-close js-modal-close-truc-tiep">
+                    <i class="ti-close"></i>
+                </div>
+
+                <header class="trucTiep-header">
+                    <i style="margin: 16px" class="ti-money"></i>
+                    Đặt trước vé
+                </header>
+
+                <div class="trucTiep-body">
+                    <!-- Nhập Mã vé -->
+                    <label for="maVe" class="modal-label">
+                        <i class="ti-ticket"></i>
+                        Nhập mã vé
+                    </label>
+                    <input id="maVe" type="text" class="modal-input" placeholder="Mã vé vào cửa">
+
+                    <!-- Nhập SDT -->
+                    <label for="sdt" class="modal-label">
+                        <i class="ti-mobile"></i>
+                        Nhập số điện thoại
+                    </label>
+                    <input id="sdt" type="text" class="modal-input" placeholder="Số điện thoại">
+
+                    <!-- Nhập mã giảm giá -->
+                    <label for="coupon" class="modal-label">
+                        <i class="ti-star"></i>
+                        Nhập mã giảm giá
+                    </label>
+                    <input id="coupon" type="text" class="modal-input" placeholder="Mã giảm giá">
+
+                    <!-- Nút thanh toán -->
+                    <button id="confirm">
+                        Xác nhận thanh toán <i class="ti-check"></i>
+                    </button> 
+                </div>
+            </div>
+        </div>
+        <!-- KETHUC CHOI  MODAL -->
+        <div class="modal js-modal">
+            <div class="ketThuc-form">
+                <div class="ketThuc-close js-modal-close">
+                    <i class="ti-close"></i>
+                </div>
+
+                <header class="ketThuc-header">
+                    <i style="margin: 16px" class="ti-money"></i>
+                    Thanh toán kết thúc chơi
+                </header>
+
+                <div class="ketThuc-body">
+                    <!-- Nhập Mã vé -->
+                    <label for="maVe" class="modal-label">
+                        <i class="ti-ticket"></i>
+                        Nhập mã vé
+                    </label>
+                    <input id="maVe" type="text" class="modal-input" placeholder="Mã vé vào cửa">
+
+                    <!-- Nhập SDT -->
+                    <label for="sdt" class="modal-label">
+                        <i class="ti-mobile"></i>
+                        Nhập số điện thoại
+                    </label>
+                    <input id="sdt" type="text" class="modal-input" placeholder="Số điện thoại">
+
+                    <!-- Nhập mã giảm giá -->
+                    <label for="coupon" class="modal-label">
+                        <i class="ti-star"></i>
+                        Nhập mã giảm giá
+                    </label>
+                    <input id="coupon" type="text" class="modal-input" placeholder="Mã giảm giá">
+
+                    <!-- Nút thanh toán -->
+                    <button id="confirm">
+                        Xác nhận thanh toán <i class="ti-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- SCRIPTS -->
+        <!-- KET THUC SCRIPT -->
+        <script>
+            const ketthucBtn = document.querySelector('.js-thanhtoan')
+            const modalkt = document.querySelector('.js-modal')
+            const modalClose2 = document.querySelector('.js-modal-close')
+
+            function showKethucForm() {
+                // alert("YES")
+                modalkt.classList.add('open')
+            }
+
+            function hideKethucForm() {
+                modalkt.classList.remove('open')
+            }
+
+            ketthucBtn.addEventListener('click', showKethucForm)
+            modalClose2.addEventListener('click', hideKethucForm)
+        </script>  
+
+{{>footer}}

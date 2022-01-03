@@ -1,0 +1,142 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+.text-align { 
+    text-align: center !important;
+}
+
+.text-size {
+    text-size-adjust: 18px;
+}
+
+.modal.open {
+    display: flex;
+}
+
+#banve {
+    position: relative;
+    overflow: hidden;
+}
+
+.banve-body {
+    width: 100%;
+    min-height: 800px;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: url(/assets/img/download.png) top center / cover no-repeat;  
+      
+}
+
+#banve .banve-list {
+    text-decoration: none;
+    list-style: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+
+}
+
+#banve .banve-list button {
+    color: #fff;
+    background-color: red;
+    padding: 40px 150px;
+    margin: 50px;
+    width: 100%;
+    max-width: calc(100% - 32px);
+    border: none;
+    display: block;
+    box-shadow: 3px 3px rgba(0,0,0,0.2);
+    border-radius: 70px;
+}
+
+#banve .banve-list button:hover {
+    color: #000;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.35);
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.ketThuc-form {
+    background: #fff;
+    min-height: 500px;
+    width: 900px;
+    position: relative;
+    max-width: calc(100% - 32px);
+    box-shadow: 12px 12px rgba(0,0,0,0.2);
+}
+
+.ketThuc-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 16px;
+    color: #fff;
+}
+
+.ketThuc-close:hover {
+    opacity: 0.6;
+}
+
+header.ketThuc-header {
+    background: red;
+    color: #fff;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+}
+
+.ketThuc-body {
+    padding: 30px;
+}
+
+.ketThuc-body label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 11px;
+    cursor: pointer;
+}
+
+.ketThuc-body input {
+    width: 100%;
+    padding: 8px;
+    border: solid #ccc;
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+
+button#confirm {
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    margin-top: 12px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    box-shadow: 3px 3px rgba(0,0,0,0.2);
+}
+
+button#confirm:hover {
+    cursor: pointer;
+    color: #000;
+    background-color: #ccc;
+}
