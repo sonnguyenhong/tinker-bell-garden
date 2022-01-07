@@ -1,0 +1,237 @@
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/thongkethang.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+{{>header}}
+<div class="container-fluid" style="width: 80%">
+    <h2 class="my-4" style="color: red;">THỐNG KÊ THEO NGÀY</h2>
+    
+    <input class="form-control my-4" id="myInput" type="Month">
+    
+    <div style="padding-bottom: 20px">Tổng doanh thu:</div>
+    <div>
+
+        <main style="float : left;">
+            <h5>Tỷ lệ vé VIP</h5>
+            <div id="pie-chart-ve1"></div>
+        </main>
+    </div>
+    <div style="margin-left: 600px">
+        <main>
+            <h5>Tỷ lệ doanh thu vé</h5>
+            <div id="pie-chart-ve2"></div>
+        </main>
+    </div>
+
+    <div>
+        <main style="width : 100%">
+            <h5>Doanh Thu Trong Tháng</h5>
+            <div id="bar-chart"></div>
+        </main>
+    </div>
+
+
+    <div>
+         <div style="padding-bottom: 20px;">Thống kê bán hàng:</div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 15%">Tên mặt hàng</th>
+                    <th style="width: 13%">Số lượng</th>
+                    <th style="width: 13%">Thành tiền</th>
+                </tr>
+            </thead>
+            {{!-- <tbody id="myTableProduct">
+                {{#each vips}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.phoneNumber}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.points}}</td>
+                    <td>{{this.expiryDate}}</td>
+                    <td>
+                        <a href="/admin/vip/{{this._id}}">
+                            <span class="badge badge-success" style="width: 80%; height: 80%;">
+                                <i class="ti-more" style="font-size: 16px;"></i>
+                            </span>
+                        </a>
+                    </td>
+                
+                </tr>
+                {{/each}} --}}
+        </table>
+    </div>
+
+    <div style="padding-bottom: 20px; "></div>
+    <div style=" visibility: hidden;">
+        <table class="table table-hover">
+            
+        </table>
+    </div>
+
+    
+</div>
+
+<script>
+    $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    });
+</script>
+    <script>
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawCharts);
+        function drawCharts() {
+            // BEGIN PIE CHART
+            // pie chart data
+            var pieData = google.visualization.arrayToDataTable([
+                ['Loại vé', 'Số vé'],
+                ['Vé vip',      32],
+                ['Vé thường',      56],
+            ]);
+            // pie chart options
+            var pieOptions = {
+                backgroundColor: 'transparent',
+                pieHole: 0,
+                colors: [
+                        "orange", 
+                        "green", 
+                        ],
+                pieSliceText: 'value',
+                tooltip: {
+                text: 'percentage'
+                },
+                fontName: 'Open Sans',
+                chartArea: {
+                width: '100%',
+                height: '94%'
+                },
+                legend: {
+                textStyle: {
+                    fontSize: 13
+                }
+                }
+            };
+            // draw pie chart
+            var pieChart = new google.visualization.PieChart(document.getElementById('pie-chart-ve1'));
+            pieChart.draw(pieData, pieOptions);
+        }
+    </script>
+        <script>
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawCharts);
+        function drawCharts() {
+            // BEGIN PIE CHART
+            // pie chart data
+            var pieData = google.visualization.arrayToDataTable([
+                ['Loại vé', 'Số vé'],
+                ['Vé ngày',      32],
+                ['Vé giờ',      56],
+            ]);
+            // pie chart options
+            var pieOptions = {
+                backgroundColor: 'transparent',
+                pieHole: 0,
+                colors: [
+                        "orange", 
+                        "green", 
+                        ],
+                pieSliceText: 'value',
+                tooltip: {
+                text: 'percentage'
+                },
+                fontName: 'Open Sans',
+                chartArea: {
+                width: '100%',
+                height: '94%'
+                },
+                legend: {
+                textStyle: {
+                    fontSize: 13
+                }
+                }
+            };
+            // draw pie chart
+            var pieChart = new google.visualization.PieChart(document.getElementById('pie-chart-ve2'));
+            pieChart.draw(pieData, pieOptions);
+        }
+    </script>
+
+    <script>
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawCharts);
+        function drawCharts() {
+        var barData = google.visualization.arrayToDataTable([
+            ['Day', 'Page Views'],
+            ['Sun',  1050],
+            ['Mon',  1370],
+            ['Tue',  660],
+            ['Wed',  1030],
+            ['Thu',  1000],
+            ['Fri',  1170],
+            ['Sat',  660]
+        ]);
+        // set bar chart options
+        var barOptions = {
+            focusTarget: 'category',
+            backgroundColor: 'transparent',
+            colors: ['cornflowerblue', 'tomato'],
+            fontName: 'Open Sans',
+            chartArea: {
+            left: 50,
+            top: 10,
+            width: '100%',
+            height: '70%'
+            },
+            bar: {
+            groupWidth: '80%'
+            },
+            hAxis: {
+            textStyle: {
+                fontSize: 11
+            }
+            },
+            vAxis: {
+            minValue: 0,
+            maxValue: 1500,
+            baselineColor: '#DDD',
+            gridlines: {
+                color: '#DDD',
+                count: 4
+            },
+            textStyle: {
+                fontSize: 11
+            }
+            },
+            legend: {
+            position: 'bottom',
+            textStyle: {
+                fontSize: 12
+            }
+            },
+            animation: {
+            duration: 1200,
+            easing: 'out',
+            startup: true
+            }
+        };
+        // draw bar chart twice so it animates
+        var barChart = new google.visualization.ColumnChart(document.getElementById('bar-chart'));
+        //barChart.draw(barZeroData, barOptions);
+        barChart.draw(barData, barOptions);
+
+    }
+    </script>
+{{>footer}}
+
