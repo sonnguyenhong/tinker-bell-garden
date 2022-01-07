@@ -3,6 +3,6 @@ const thongkengayController = require('../app/controllers/thongkengayController'
 const router = express.Router();
 
 router.get('/', thongkengayController.showTicketStats)
-//router.post('/', thongkengayController.getTicketStats)
+router.post('/getInfo', thongkengayController.getTicketStats)
 
 module.exports = router

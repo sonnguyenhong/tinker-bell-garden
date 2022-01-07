@@ -14,10 +14,10 @@ async function connect() {
 
     // var db = mongoose.connection;
     // const user = {
-    //     phoneNum: '0328020155',
+    //     phoneNum: '0967874928',
     //     discountCode: '',
-    //     price: 200000,
-    //     typeTicket: 'day' 
+    //     price: 100000,
+    //     typeTicket: 'hour' 
     // }
     // const donhangve = new Donhangve(user);
     // donhangve.save();

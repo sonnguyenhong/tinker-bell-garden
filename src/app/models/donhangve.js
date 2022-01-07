@@ -1,6 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const khachhangvip = require('../models/khachhangvip');
 const { Schema } = mongoose
-
+const Khachhangvip = require('../models/khachhangvip')
 const donhangveSchema = new Schema({
     phoneNum: {
         type: String
@@ -13,7 +14,7 @@ const donhangveSchema = new Schema({
         type: Number,
         required : true,
     },
-    type: {
+    typeTicket: {
         type: String,
     },
 }, {

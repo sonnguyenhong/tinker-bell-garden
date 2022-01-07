@@ -9,55 +9,45 @@
 <div class="container-fluid" style="width: 80%">
     <h2 class="my-4" style="color: red;">THỐNG KÊ THEO NGÀY</h2>
     
-    <form action="admin/thongkengay" method="POST">
+    <form action="/admin/thongkengay/getInfo" method="POST">
         <div>
             <input class="form-control" id="myInput" type="date" name="selectedDay" style="float: left" >
             <input type="submit"  value="Thống kê" style="margin-bottom: 30px">
         </div>
     </form>
 
-    <div style="padding-bottom: 20px">Tổng doanh thu:</div>
+    <div style="padding-bottom: 20px">Tổng doanh thu: {{totalProfit}}  VND</div>
     <div>
-        <div style="padding-bottom: 20px">Doanh thu bán hàng: </div>
-        <div style="padding-bottom: 20px;float:left">Doanh thu bán vé: </div>
+        <div style="padding-bottom: 20px;float:left">Doanh thu bán hàng: {{totalProductProfit}} VND  </div>
+        <div style="padding-bottom: 20px;">Doanh thu bán vé: {{totalTicketProfit}} VND    </div>
     </div>
     
     <div>
         <div style="padding-bottom: 20px;">Thống kê bán vé</div>
-        <div style="padding-bottom: 20px">Số vé vip:</div>
-        <div style="padding-bottom: 20px">Số vé thường:</div>
+        <div style="padding-bottom: 20px">Số vé vip: {{numberOfVipTicket}}</div>
+        <div style="padding-bottom: 20px">Số vé thường: {{numberOfNormalTicket}}</div>
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th style="width: 5%">#</th>
-                    <th style="width: 10%">Mã vé</th>
                     <th style="width: 10%">Loại vé</th>
-                    <th style="width: 15%">Số điện thoại</th>
-                    <th style="width: 13%">Thời gian vào</th>
-                    <th style="width: 13%">Thời gian ra</th>
-                    <th style="width: 10%">Mã giảm giá</th>
-                
+                    <th style="width: 10%">Số điện thoại</th>
+                    <th style="width: 15%">Mã giảm giá</th>
+                    <th style="width: 10%">Thành tiền</th>
+
                 </tr>
             </thead>
-            {{!-- <tbody id="myTableTicket">
-                {{#each vips}}
+            <tbody id="myTableTicket">
+                {{#each ticket}}
                 <tr>
                     <th scope="row">{{@index}}</th>
-                    <td>{{this.name}}</td>
-                    <td>{{this.phoneNumber}}</td>
-                    <td>{{this.email}}</td>
-                    <td>{{this.points}}</td>
-                    <td>{{this.expiryDate}}</td>
-                    <td>
-                        <a href="/admin/vip/{{this._id}}">
-                            <span class="badge badge-success" style="width: 80%; height: 80%;">
-                                <i class="ti-more" style="font-size: 16px;"></i>
-                            </span>
-                        </a>
-                    </td>
+                    <td>{{this.typeTicket}}</td>
+                    <td>{{this.phoneNum}}</td>
+                    <td>{{this.discountCode}}</td>
+                    <td>{{this.price}}</td>
                 
                 </tr>
-                {{/each}} --}}
+                {{/each}}
         </table>
     </div>
 
@@ -72,25 +62,16 @@
                     <th style="width: 13%">Thành tiền</th>
                 </tr>
             </thead>
-            {{!-- <tbody id="myTableProduct">
-                {{#each vips}}
+            <tbody id="myTableProduct">
+                {{#each product}}
                 <tr>
                     <th scope="row">{{@index}}</th>
                     <td>{{this.name}}</td>
-                    <td>{{this.phoneNumber}}</td>
-                    <td>{{this.email}}</td>
-                    <td>{{this.points}}</td>
-                    <td>{{this.expiryDate}}</td>
-                    <td>
-                        <a href="/admin/vip/{{this._id}}">
-                            <span class="badge badge-success" style="width: 80%; height: 80%;">
-                                <i class="ti-more" style="font-size: 16px;"></i>
-                            </span>
-                        </a>
-                    </td>
+                    <td>{{this.number}}</td>
+                    <td>{{this.profit}}</td>
                 
                 </tr>
-                {{/each}} --}}
+                {{/each}}
         </table>
     </div>
 
