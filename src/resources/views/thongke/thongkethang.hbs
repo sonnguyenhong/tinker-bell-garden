@@ -11,9 +11,19 @@
 <div class="container-fluid" style="width: 80%">
     <h2 class="my-4" style="color: red;">THỐNG KÊ THEO NGÀY</h2>
     
-    <input class="form-control my-4" id="myInput" type="Month">
+     <form action="/admin/thongke/thongkethang/getInfo" method="POST">
+        <div>
+            <input class="form-control" id="myInput" type="Month" name="selectedMonth" style="float: left" >
+            <input type="submit"  value="Thống kê" style="margin-bottom: 30px">
+        </div>
+    </form>
+    <div style="padding-bottom: 20px">Tổng doanh thu: {{totalProfit}} VND.</div>
     
-    <div style="padding-bottom: 20px">Tổng doanh thu:</div>
+    <div>
+        <h5 style="padding-bottom: 20px;">Thống kê bán vé</h5>
+        <div style="padding-bottom: 20px">Doanh thu bán vé: {{totalTicketProfit}} VND.</div>
+    </div>
+    
     <div>
 
         <main style="float : left;">
@@ -37,7 +47,8 @@
 
 
     <div>
-         <div style="padding-bottom: 20px;">Thống kê bán hàng:</div>
+         <h5 style="padding-bottom: 20px;">Thống kê bán hàng</h5>
+         <div style="padding-bottom: 20px">Doanh thu bán hàng: {{totalProductProfit}} VND   </div>
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -47,25 +58,37 @@
                     <th style="width: 13%">Thành tiền</th>
                 </tr>
             </thead>
-            {{!-- <tbody id="myTableProduct">
-                {{#each vips}}
+            <tbody id="myTableProduct">
+                {{#each products}}
                 <tr>
                     <th scope="row">{{@index}}</th>
                     <td>{{this.name}}</td>
-                    <td>{{this.phoneNumber}}</td>
-                    <td>{{this.email}}</td>
-                    <td>{{this.points}}</td>
-                    <td>{{this.expiryDate}}</td>
-                    <td>
-                        <a href="/admin/vip/{{this._id}}">
-                            <span class="badge badge-success" style="width: 80%; height: 80%;">
-                                <i class="ti-more" style="font-size: 16px;"></i>
-                            </span>
-                        </a>
-                    </td>
+                    <td>{{this.number}}</td>
+                    <td>{{this.profit}} VND</td>
                 
                 </tr>
-                {{/each}} --}}
+                {{/each}}
+        </table>
+    </div>
+
+    <div>
+         <h5 style="padding-bottom: 20px;">Khách hàng ưu tiên</h5>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 15%">Số điện thoại khách</th>
+                    <th style="width: 13%">Số tiền khách đã tiêu</th>
+                </tr>
+            </thead>
+            <tbody id="myTableProduct">
+                {{#each regularCustomer}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.phone}}</td>
+                    <td>{{this.money}} VND</td>
+                </tr>
+                {{/each}}
         </table>
     </div>
 
@@ -97,9 +120,11 @@
             // pie chart data
             var pieData = google.visualization.arrayToDataTable([
                 ['Loại vé', 'Số vé'],
-                ['Vé vip',      32],
-                ['Vé thường',      56],
-            ]);
+                ['Vé vip',      {{vip}}],
+                ['Vé thường',      {{novip}}],
+                
+           ]);
+           //var pieData = google.visualization.arrayToDataTable({{vipChart}});
             // pie chart options
             var pieOptions = {
                 backgroundColor: 'transparent',
@@ -136,8 +161,8 @@
             // pie chart data
             var pieData = google.visualization.arrayToDataTable([
                 ['Loại vé', 'Số vé'],
-                ['Vé ngày',      32],
-                ['Vé giờ',      56],
+                ['Vé ngày',      {{dayTicketProfit}}],
+                ['Vé giờ',      {{hourTicketProfit}}],
             ]);
             // pie chart options
             var pieOptions = {
@@ -173,15 +198,39 @@
         google.setOnLoadCallback(drawCharts);
         function drawCharts() {
         var barData = google.visualization.arrayToDataTable([
-            ['Day', 'Page Views'],
-            ['Sun',  1050],
-            ['Mon',  1370],
-            ['Tue',  660],
-            ['Wed',  1030],
-            ['Thu',  1000],
-            ['Fri',  1170],
-            ['Sat',  660]
-        ]);
+                                    ['0', 'Doanh Thu Bán Vé'],
+                                    ['1', {{one}}],
+                                    ['2',  {{two}}],
+                                    ['3',  {{three}}],
+                                    ['4',  {{four}}],
+                                    ['5',  {{five}}],
+                                    ['6',  {{six}}],
+                                    ['7',  {{seven}}],
+                                    ['8',  {{eight}}],
+                                    ['9',   {{nine}}],
+                                    ['10',  {{ten}}],
+                                    ['11', {{one1}}],
+                                    ['12',  {{two1}}],
+                                    ['13',  {{three1}}],
+                                    ['14',  {{four1}}],
+                                    ['15',  {{five1}}],
+                                    ['16',  {{six1}}],
+                                    ['17',  {{seven1}}],
+                                    ['18',  {{eight1}}],
+                                    ['19',   {{nine1}}],
+                                    ['20',  {{ten1}}],
+                                    ['21', {{one2}}],
+                                    ['22',  {{two2}}],
+                                    ['23',  {{three2}}],
+                                    ['24',  {{four2}}],
+                                    ['25',  {{five2}}],
+                                    ['26',  {{six2}}],
+                                    ['27',  {{seven2}}],
+                                    ['28',  {{eight2}}],
+                                    ['29',   {{nine2}}],
+                                    ['30',  {{ten2}}],
+                                    ['31',  {{one3}}],
+                                ]);
         // set bar chart options
         var barOptions = {
             focusTarget: 'category',
