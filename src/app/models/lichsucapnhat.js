@@ -2,26 +2,45 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const lichsucapnhatSchema = new Schema({
-    updatedDate: {
+    updateAt: {
+        type: String,
+        required: true
+    },
+    oldName: {
+        type: String,
+    },
+    newName: {
+        type: String,
+        required: true
+    },
+    oldAddress: {
+        type: String,
+    },
+    newAddress: {
+        type: String,
+        required: true
+    },
+    oldPoints: {
+        type: Number,
+    },
+    newPoints: {
+        type: Number,
+        required: true
+    },
+    oldExpiryDate: {
         type: Date,
-        required
     },
-    information: {
-        type: String,
-        required
+    newExpiryDate: {
+        type: Date,
     },
-    oldInfor: {
+    describe: {
         type: String,
-        required
-    },
-    updatedInfo: {
-        type: String,
-        required
+        required: true
     },
     khachhang: {
         type: Schema.Types.ObjectId,
         ref: 'Khachhangvip',
-        required
+        required: true
     }
 }, {
     timestamps: true

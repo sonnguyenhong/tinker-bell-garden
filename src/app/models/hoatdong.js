@@ -4,28 +4,32 @@ const { Schema } = mongoose
 const hoatdongSchema = new Schema({
     name: {
         type: String,
-        required
+        required:true
     },
     startDate: {
         type: Date,
-        required
+        required:true
     },
     endDate: {
         type: Date,
-        required
+        required:true
     },
     eventInfo: {
         type: String,
-        required
+        required:true
     },
     numberOfDiscountCode: {
         type: Number,
-        required
+        required:true
+    },
+    imageUrl: {
+        type: String,
+        required:true
     },
     discountCode: [{
         type: Schema.Types.ObjectId,
         ref: 'Makhuyenmai',
-        required
+        // required:true
     }]
 }, {
     timestamps: true

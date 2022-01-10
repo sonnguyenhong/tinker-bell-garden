@@ -1,0 +1,30 @@
+{{> header}}
+
+<div class="container">
+    <h4 class="my-4" style="color: red;">THÊM MẶT HÀNG MỚI</h4>
+    <form method="POST" action="/admin/banhang/themmathang" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Tên mặt hàng</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Tên mặt hàng">
+        </div>
+        
+        <div class="mb-3">
+            <label for="price" class="form-label">Đơn giá</label>
+            <input type="text" class="form-control" id="price" name="price" placeholder="Đơn giá">
+        </div>
+
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Số lượng còn lại</label>
+            <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Số lượng còn lại">
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Ảnh</label>
+            <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh">
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-5">Submit</button>
+    </form>
+</div>
+
+{{> footer}}

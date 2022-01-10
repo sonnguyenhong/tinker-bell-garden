@@ -1,8 +1,8 @@
-<div class="header">
+<div class="header sticky-top" style="background-color: white;">
     <nav class="navbar navbar-light navbar-expand-lg">
         <div class="container">
             <a href="#">
-                <img src="/img/logo.png" alt="logo" class="logo">
+                <img src="/img/logo.png" alt="logo" class="logo" onclick="location.href='/admin'">
             </a>
 
             <div class="collapse navbar-collapse">
@@ -12,11 +12,11 @@
                         <hr class="item-hover hide">
                     </li>
                     <li class="nav-item px-2">
-                        <a class="nav-link mt-3 mb-3" href="#">Cơ sở vật chất</a>
+                        <a class="nav-link mt-3 mb-3" href="#">Khu vui chơi</a>
                         <hr class="item-hover hide">
                     </li>
                     <li class="nav-item px-2">
-                        <a class="nav-link mt-3 mb-3" href="#">Khách hàng VIP</a>
+                        <a class="nav-link mt-3 mb-3" href="/admin/vip">Khách hàng VIP</a>
                         <hr class="item-hover hide">
                     </li>
                     <li class="nav-item px-2">
@@ -24,7 +24,15 @@
                         <hr class="item-hover hide">
                     </li>
                     <li class="nav-item px-2">
-                        <a class="nav-link mt-3 mb-3" href="#">Hoạt động</a>
+                        <a class="nav-link mt-3 mb-3" href="/admin/event">Hoạt động</a>
+                        <hr class="item-hover hide">
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link mt-3 mb-3" href="/admin/banhang">Bán hàng</a>
+                        <hr class="item-hover hide">
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link mt-3 mb-3" href="#">Đăng xuất</a>
                         <hr class="item-hover hide">
                     </li>
                 </ul>
@@ -71,5 +79,17 @@
     });
     navItem[4].addEventListener("mouseout", function() {
         itemHover[4].classList.add("hide");
+    });
+    navItem[5].addEventListener("mouseout", function() {
+        itemHover[5].classList.add("hide");
+    });
+    navItem[5].addEventListener("mouseover", function() {
+        itemHover[5].classList.remove("hide");
+    });
+    navItem[6].addEventListener("mouseout", function() {
+        itemHover[6].classList.add("hide");
+    });
+    navItem[6].addEventListener("mouseover", function() {
+        itemHover[6].classList.remove("hide");
     });
 </script>

@@ -1,7 +1,148 @@
 <link rel="stylesheet" href="/css/app.css">
 <link rel="stylesheet" href="/css/cart.css">
 {{>header}}
-<div class="container-fluid my-4" style="width: 80%">
+
+<script>
+    productList = []
+</script>
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
+    </div>
+    <div class="modal-body">
+        <table id="table" class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên mặt hàng</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                
+
+                {{#each products}}
+                    
+                    <tr>
+                    <th scope="row">1</th>
+                    <td>{{this.name}}</td>
+                    <td>{{lookup ../orderInfo this._id }}</td>
+                    <td>{{this.price}}</td>
+                    <td class="sumPrice">{{_mul (lookup ../orderInfo this._id) this.price}}</td>
+                    </tr>
+
+                    <script>
+                
+                        productList.push({
+                            id: '{{this._id}}',
+                            quantity: '{{lookup ../orderInfo this._id }}',
+                        })
+
+                        console.log(productList)
+
+                    </script>
+
+                {{/each}}
+            </tbody>
+        </table>
+
+        <div style="text-align: center;">
+            <h4 id="totalPrice">Tổng số tiền: 0</h4>
+            <div class="row justify-content-center">
+                <label for="inputPassword" class="col-form-label">Số điện thoại</label>
+                <div class="col-sm-3">
+                    <form style="position: relative;" id="checkVipForm" method="POST" action="/admin/banhang/kiemtravip">
+                        <input style="width: 150px;" type="text" class="form-control" id="phoneNumInput">
+                    </form>
+
+                    <form id="orderForm" action="/admin/banhang/taodonhang" method="POST" hidden>
+                    </form>
+                    <button style="position: absolute; top: 0; right: -120px;" class="btn btn-info" id="checkPhoneNumButton">Kiểm tra SĐT</button>
+                </div>
+            </div>
+        </div>
+        {{#if error}}
+            <p style="text-align: center; color: red; margin-top: 10px;">{{{message}}}</p>
+        {{/if}}
+
+        {{#if isVip}}
+            <div style="margin-top: 15px; margin-left: 275px" id="vipInformation">
+                <h5>Thông tin khách hàng VIP</h5>
+                <p>Họ và tên: {{vipInfo.name}}</p>
+                <p>Số điện thoại: {{vipInfo.phoneNumber}}</p>
+                <p>Điểm tích lũy: {{vipInfo.points}}</p>
+                <label for="usePoints">Số điểm sử dụng: </label>
+                <input id="usePointsInput" type="text" name="usePoints" id="usePoints">
+            </div>
+
+        {{/if}}
+
+        {{#if isVipError}}
+            <p style="text-align: center; color: red; margin-top: 10px;">{{{vipErrorMessage}}}</p>
+        {{/if}}
+    
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy hóa đơn</button>
+        <button type="submit" class="btn btn-success" id="makePaymentButton" form="orderForm">Thanh toán</button>
+    </div>
+    </div>
+</div>
+
+<script>
+
+    console.log(`{{message}}`)
+    
+    let totalPrice = 0;
+    const sumPriceList = document.getElementsByClassName("sumPrice")
+    const totalPriceH4 = document.getElementById("totalPrice")
+    const makePaymentBtn = document.getElementById("makePaymentButton")
+    const checkPhoneNumBtn = document.getElementById("checkPhoneNumButton")
+    const orderFormData = document.getElementById("orderForm")
+    const usePointsInput = document.getElementById("usePointsInput")
+    const checkVipForm = document.getElementById("checkVipForm")
+    const phoneNumberInput = document.getElementById("phoneNumInput")
+    
+    for(let i = 0 ; i < sumPriceList.length ; i++) {
+        totalPrice += parseInt(sumPriceList[i].textContent)
+    }
+    
+    totalPriceH4.innerHTML = `Tổng số tiền: ${totalPrice}`
+
+    checkPhoneNumBtn.addEventListener("click", function() {
+        checkVipForm.innerHTML += `<input type="hidden" name="phoneNumber" value="${phoneNumberInput.value}">`
+        for(let i = 0 ; i < productList.length ; i++) {
+            const input = `<input type="hidden" name="${productList[i].id}" value="${productList[i].quantity}">`
+            checkVipForm.innerHTML += input
+        }
+        console.log(phoneNumberInput.value)
+        checkVipForm.submit()
+    })
+
+    makePaymentBtn.addEventListener("click", function() {
+        var vip = JSON.stringify({{isVip}})
+        console.log(vip)
+        if(vip) {
+            orderFormData.innerHTML += `<input type="hidden" name="vipId" value="{{vipInfo._id}}">`
+            orderFormData.innerHTML += `<input type="hidden" name="usePoints" value="${usePointsInput.value}">`
+        }
+        for(let i = 0 ; i < productList.length ; i++) {
+            const input = `<input type="hidden" name="${productList[i].id}" value="${productList[i].quantity}">`
+            orderFormData.innerHTML += input
+        }
+
+        console.log(orderFormData)
+        orderFormData.submit()
+    })
+
+</script>
+
+
+{{!-- <div class="container-fluid my-4" style="width: 80%">
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -39,48 +180,7 @@
                     </a>
                 </td>
             </tr>
-            <tr>
-                <th scope="row">
-                    <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 80%"> </a>
-                </th>
-                <td>Jacob</td>
-                <td style="text-align: center;">
-                    <div class="number-input" style="width: 80%;">
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
-                        <input class="quantity" min="1" name="quantity" value="1" type="number" disabled>
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-                    </div></td>
-                <td style="text-align: center;">@fat</td>
-                <td style="text-align: center;">@mdo</td>
-                <td>
-                    <a href="">
-                        <span class="badge badge-danger">
-                            <i class="ti-trash" style="font-size: 20px;"></i>
-                        </span>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 80%"> </a>
-                </th>
-                <td>Larry</td>
-                <td style="text-align: center;">
-                    <div class="number-input" style="width: 80%;">
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
-                        <input class="quantity" min="1" name="quantity" value="1" type="number" disabled>
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-                    </div></td>
-                <td style="text-align: center;">@twitter</td>
-                <td style="text-align: center;">@mdo</td>
-                <td>
-                    <a href="">
-                        <span class="badge badge-danger">
-                            <i class="ti-trash" style="font-size: 20px;"></i>
-                        </span>
-                    </a>
-                </td>
-            </tr>
+            
         <tr>
             <td>   </td>
             <td>   </td>
@@ -94,7 +194,7 @@
             <td>   </td>
             <td><h5>Số điện thoại</h5></td>
             <td class="text-right">
-              <input type="number">
+              <input type="text">
             </td>
         </tr>
         <tr>
@@ -115,41 +215,8 @@
 </div>
 
 <script>
-    $(document).ready(function(){
 
-    var quantitiy=0;
-    $('.quantity-right-plus').click(function(e){
-            
-            // Stop acting like a button
-            e.preventDefault();
-            // Get the field name
-            var quantity = parseInt($('#quantity').val());
-            
-            // If is not undefined
-                
-                $('#quantity').val(quantity + 1);
-
-            
-                // Increment
-            
-        });
-
-        $('.quantity-left-minus').click(function(e){
-            // Stop acting like a button
-            e.preventDefault();
-            // Get the field name
-            var quantity = parseInt($('#quantity').val());
-            
-            // If is not undefined
-        
-                // Increment
-                if(quantity>0){
-                $('#quantity').val(quantity - 1);
-                }
-        });
-        
-    });
-</script>
+</script> --}}
 <!--
 <div class="head">GIỎ HÀNG</div>
 <div class="container-fluid giohang">

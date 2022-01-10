@@ -3,23 +3,23 @@ const { Schema } = mongoose
 
 const donhangSchema = new Schema({
     products: [{
-        productData: {
+        productId: {
             type: Schema.Types.ObjectId,
             ref: 'Mathang',
-            required
+            required: true
         },
         quantity: {
             type: Number,
-            required
+            required: true
         }
     }],
     price: {
         type: Number,
-        required
+        required: true
     },
     hasDiscount: {
         type: Boolean,
-        required,
+        required: true,
         default: false
     }
 }, {

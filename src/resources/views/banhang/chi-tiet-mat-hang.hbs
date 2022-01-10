@@ -1,0 +1,69 @@
+{{> header}}
+
+<div class="container">
+    <h4 class="my-4" style="color: red;">CHI TIẾT MẶT HÀNG</h4>
+
+    <form method="POST" id="chi-tiet-mat-hang">
+        <div class="mb-3">
+            <label for="name" class="form-label">Tên mặt hàng</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" disabled>
+        </div>
+        
+        <div class="mb-3">
+            <label for="price" class="form-label">Đơn giá</label>
+            <input type="text" class="form-control" id="price" name="price" value="{{product.price}}" disabled>
+        </div>
+
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Số lượng còn lại</label>
+            <input type="text" class="form-control" id="quantity" name="quantity" value="{{product.quantity}}" disabled>
+        </div>
+
+        <div class="mb-3">
+            <label for="imageUrl" class="form-label">Ảnh</label>
+            <input type="file" class="form-control" id="imageUrl" name="imageUrl" value="{{product.imageUrl}}" disabled>
+        </div>        
+    </form>
+
+    <div style="text-align: center;">
+        <button id="updateBtn" class="btn btn-success mb-5 mr-5" onclick="location.href='/admin/banhang/quanlymathang/{{product._id}}/sua'">Sửa mặt hàng</button>
+        <button id="deleteBtn" class="btn btn-danger mb-5" data-toggle="modal" data-target="#exampleModal">Xóa mặt hàng</button>
+    </div>
+
+    <form id="deleteForm" method="POST" action="/admin/banhang/quanlymathang/{{product._id}}/xoa" type="hidden"></form>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa mặt hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Hành động này không thể khôi phục, bạn có thực sự muốn xóa mặt hàng này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger" form="deleteForm">Xóa vĩnh viễn</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+
+
+<script>
+
+    const updateBtn = document.querySelector('#updateBtn')
+    const deleteBtn = document.querySelector('deleteBtn')
+
+    // Neu chon sua mat hang --> bo class disabled
+
+</script>
+
+{{> footer}}

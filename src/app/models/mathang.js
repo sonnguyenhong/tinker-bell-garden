@@ -4,15 +4,19 @@ const { Schema } = mongoose
 const mathangSchema = new Schema({
     name: {
         type: String,
-        required
+        required: true
     },
     price: {
         type: Number,
-        required
+        required: true
     },
     quantity: {
         type: Number,
-        required
+        required: true
+    },
+    imageUrl: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

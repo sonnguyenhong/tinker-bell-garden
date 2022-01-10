@@ -4,32 +4,30 @@ const { Schema } = mongoose
 const khachhangvipSchema = new Schema({
     name: {
         type: String,
-        required
+        required: true,
     },
     phoneNumber: {
         type: String,
-        required
+        required: true,
+        unique: true
     },
     address: {
         type: String,
+        required: true,
     },
     email: {
         type: String,
-        required
+        required: true,
+        unique: true
     },
     points: {
         type: Number,
-        required
+        required: true,
     },
-    regisDate: {
+    expiryDate: {
         type: Date,
-        required
-    },
-    lichsu: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Lichsucapnhat',
-        required
-    }]
+        required: true,
+    }
 }, {
     timestamps: true
 })
