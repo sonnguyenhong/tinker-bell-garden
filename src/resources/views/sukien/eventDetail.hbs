@@ -1,6 +1,6 @@
 
 <link rel="stylesheet" href="/css/app.css">
-{{!-- <link rel="stylesheet" href="/css/csvc.css"> --}}
+<link rel="stylesheet" href="/css/csvc.css">
 <link rel="stylesheet" href="/css/event.css">
 <link
         rel="stylesheet"
@@ -87,16 +87,16 @@
     </div>
     <div class="row" id="page1">
         <div class="col">
-            <div class="container-fluid btn-option" id="update" style="width: 60%">Sửa thông tin</div>
-            <div class="container-fluid hide" id="save" style="width: 68%">
+            <div class="container-fluid btn-option" id="update" style="width: 50%">Sửa thông tin</div>
+            <div class="container-fluid hide" id="save" style="width: 56%">
                 <input type="submit" value="Lưu thông tin">
             </div>
         </div>
         <div class="col">
-            <div class="container-fluid btn-option" id="delete" style="width: 60%">
-                <a href="/admin/event/{{event._id}}/delete">Xóa sự kiện</a>
-            </div>
-            <div class="container-fluid btn-option hide" id="back" style="width: 60%">Quay lại</div>
+            <a href="/admin/event/{{event._id}}/delete" style="text-decoration: none;">
+                <div class="container-fluid btn-option" id="delete" style="width: 50%">Xóa sự kiện</div>
+            </a>
+            <div class="container-fluid btn-option hide" id="back" style="width: 50%">Quay lại</div>
         </div>
     </div>
     </form>
