@@ -1,0 +1,36 @@
+/* dropdown thong ke */
+.dropbtn {
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+/*     background-color: #ffffff; */
+/*     min-width: 150px; */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    /* text-align: center; */
+  }
+  
+  /* Css nội dung */
+/*   .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  } */
+
+  /* Làm mờ nền */
+/*   .dropdown-content a:hover {background-color: #f1f1f1} */
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
