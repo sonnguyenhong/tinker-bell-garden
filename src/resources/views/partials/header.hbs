@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/dropdown.css">
 <div class="header sticky-top" style="background-color: white;">
     <nav class="navbar navbar-light navbar-expand-lg">
         <div class="container">
@@ -7,9 +8,14 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item px-2">
+                    <li class="nav-item px-2 dropdown">
                         <a class="nav-link mt-3 mb-3" href="#">Bán vé</a>
                         <hr class="item-hover hide">
+                        <div style="min-width: 120px; left: -22px; text-align: center;" class="dropdown-content">
+                            <a class="nav-link mt-3" href="/admin/thongke/thongkengay">Bắt đầu chơi</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="nav-link mb-2" href="/admin/thongke/thongkethang">Kết thúc chơi</a>
+                        </div>
                     </li>
                     <li class="nav-item px-2">
                         <a class="nav-link mt-3 mb-3" href="#">Khu vui chơi</a>
@@ -19,9 +25,15 @@
                         <a class="nav-link mt-3 mb-3" href="/admin/vip">Khách hàng VIP</a>
                         <hr class="item-hover hide">
                     </li>
-                    <li class="nav-item px-2">
+                    <li class="nav-item px-2 dropdown">
                         <a class="nav-link mt-3 mb-3" href="#">Thống kê</a>
                         <hr class="item-hover hide">
+                        <div style="min-width: 150px; right: -35px;" class="dropdown-content">
+                            <a class="nav-link mt-3" href="/admin/thongke/thongkengay">Thống kê theo ngày</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="nav-link mb-2" href="/admin/thongke/thongkethang">Thống kê theo tháng</a>
+                        </div>
+                        <div style="border-top:50px;"></div>
                     </li>
                     <li class="nav-item px-2">
                         <a class="nav-link mt-3 mb-3" href="/admin/event">Hoạt động</a>
@@ -40,7 +52,7 @@
         </div>
     </nav>
 </div>
-<div class="dropdown-divider my-0"></div>
+<div class="dropdown-divider my-0 pb-5"></div>
 
 <script>
     const itemHover = document.querySelectorAll(".item-hover");

@@ -1,6 +1,6 @@
 
 <link rel="stylesheet" href="/css/app.css">
-{{!-- <link rel="stylesheet" href="/css/csvc.css"> --}}
+<link rel="stylesheet" href="/css/csvc.css">
 <link rel="stylesheet" href="/css/event.css">
 <link
         rel="stylesheet"
@@ -14,6 +14,11 @@
 
 <div class="container-fluid my-4" style="width: 80%">
     <h2 class="my-4" style="color: red;">Thông tin sự kiện</h2>
+    <div class="col-3 mb-1">
+        <a href="/admin/event" style="text-decoration: none;">
+            <div class="container-fluid btn-option" style="width: 55%">Quay lại</div>
+        </a>
+    </div>
     <form action="/admin/event/{{event._id}}/update" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-7">
@@ -87,16 +92,15 @@
     </div>
     <div class="row" id="page1">
         <div class="col">
-            <div class="container-fluid btn-option" id="update" style="width: 60%">Sửa thông tin</div>
-            <div class="container-fluid hide" id="save" style="width: 68%">
+            <div class="container-fluid btn-option" id="update" style="width: 50%">Sửa thông tin</div>
+            <div class="container-fluid hide" id="save" style="width: 56%">
                 <input type="submit" value="Lưu thông tin">
             </div>
         </div>
         <div class="col">
-            <div class="container-fluid btn-option" id="delete" style="width: 60%">
-                <a href="/admin/event/{{event._id}}/delete">Xóa sự kiện</a>
-            </div>
-            <div class="container-fluid btn-option hide" id="back" style="width: 60%">Quay lại</div>
+            <div class="container-fluid btn-option open-modal-btn" data-toggle="modal" 
+                data-target="#exampleModal" id="delete" style="width: 50%">Xóa sự kiện</div>
+            <div class="container-fluid btn-option hide" id="back" style="width: 50%">Quay lại</div>
         </div>
     </div>
     </form>
@@ -146,6 +150,29 @@
         }
     })
 </script>
+
+    {{!-- modal --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa sự kiện</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xoá sự kiện này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <a href="/admin/event/{{event._id}}/delete" style="text-decoration: none;">
+                    <button type="submit" class="btn btn-danger" >Xóa</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
