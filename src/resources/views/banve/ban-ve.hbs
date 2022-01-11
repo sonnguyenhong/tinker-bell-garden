@@ -86,7 +86,7 @@
                             <tbody>
                                 {{#each tickets}}
                                     <tr>
-                                        <td>1</td>
+                                        <td>{{sum @index 1}}</td>
                                         <td>{{this.code}}</td>
                                         <td>
                                             {{#if (checkTicketType this.type)}}

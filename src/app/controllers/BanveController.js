@@ -34,20 +34,28 @@ class BanveController {
                 if (!ticket) {
                     Ticket.find({}).lean()
                         .then(tickets => {
-                            res.render('banve/ban-ve', {
-                                tickets: tickets,
-                                error: true,
-                                errorMessage: 'Không tồn tại vé'
-                            })
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        error: true,
+                                        errorMessage: 'Không tồn tại vé',
+                                        quantity: numberOfTickets
+                                    })
+                                })
                         })
                 } else if (ticket.isPlaying === true) {
                     Ticket.find({}).lean()
                         .then(tickets => {
-                            res.render('banve/ban-ve', {
-                                tickets: tickets,
-                                error: true,
-                                errorMessage: 'Vé đã bắt đầu chơi'
-                            })
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        error: true,
+                                        errorMessage: 'Vé đã bắt đầu chơi',
+                                        quantity: numberOfTickets
+                                    })
+                                })
                         })
                 } else {
                     console.log(Date.now())
@@ -59,10 +67,14 @@ class BanveController {
                         .then(result => {
                             Ticket.find({}).lean()
                                 .then(tickets => {
-                                    res.render('banve/ban-ve', {
-                                        tickets: tickets,
-                                        message: 'Vào chơi thành công'
-                                    })
+                                    Ticket.countDocuments({ isPlaying: true }).lean()
+                                        .then(numberOfTickets => {
+                                            res.render('banve/ban-ve', {
+                                                tickets: tickets,
+                                                message: 'Vào chơi thành công',
+                                                quantity: numberOfTickets
+                                            })
+                                        })
                                 })
                         })
                         .catch(err => next(err))
@@ -78,20 +90,28 @@ class BanveController {
                 if (!ticket) {
                     Ticket.find({}).lean()
                         .then(tickets => {
-                            res.render('banve/ban-ve', {
-                                tickets: tickets,
-                                error: true,
-                                errorMessage: 'Không tồn tại vé'
-                            })
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        error: true,
+                                        errorMessage: 'Không tồn tại vé',
+                                        quantity: numberOfTickets
+                                    })
+                                })
                         })
                 } else if (ticket.isPlaying === false) {
                     Ticket.find({}).lean()
                         .then(tickets => {
-                            res.render('banve/ban-ve', {
-                                tickets: tickets,
-                                error: true,
-                                errorMessage: 'Vé chưa bắt đầu chơi'
-                            })
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        error: true,
+                                        errorMessage: 'Vé chưa bắt đầu chơi',
+                                        quantity: numberOfTickets
+                                    })
+                                })
                         })
                 } else {
                     res.render('banve/thanh-toan', {
