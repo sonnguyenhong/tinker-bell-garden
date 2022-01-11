@@ -1,0 +1,62 @@
+
+{{>header}}
+
+<div class="container">
+    <h2 class="text-danger mt-3">Thêm 1 khu vui chơi: </h2>
+    <div class="row">
+        <div class="col-6 offset-3 mt-3">
+            <form action="/admin/khuvuichoi" method="post" class="needs-validation" novalidate>
+                <div>
+                    <label for="name" class="form-label">Name: </label>
+                    <input type="text" name="name" id="name" class="form-control" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Cant leave blank!!
+                    </div>
+                </div>
+                <div>
+                    <label for="description" class="form-label">Description: </label>
+                    <textarea name="description" id="description" class="form-control" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Cant leave blank!!
+                    </div>
+                </div>
+                <div class="mt-3 row">
+                    <button class="btn btn-danger col-2" onclick="window.location.href = '/admin/khuvuichoi'">Leave</button>
+                    <span class="offset-8 col-2">
+                        <input type="submit" class="btn btn-success">
+                    </span>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{{>footer}}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.classList.add('was-validated');
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                }, false);
+            });
+        }, false);
+    })();
+</script>
