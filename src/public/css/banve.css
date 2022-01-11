@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+#bgImage .buyTicketButton {
+    position: absolute;
+    bottom: 350px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#bgImage {
+    padding-top: 50%;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("/css/img/banvebg.jpg");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.buyButton {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.customBtn {
+    width: 100%;
+    display: block;
+    background-color: rgb(168, 57, 57);
+    border-radius: 0.5;
+    font-size: larger;
+    font-weight: 500;
+}
+
+.overFlowY {
+    max-height: 70vh;
+    overflow-y: scroll;
+}

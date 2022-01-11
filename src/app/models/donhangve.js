@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const donhangveSchema = new Schema({
+    ticketType: {
+        type: Number,
+        required: true
+    },
     phoneNum: {
         type: String
     },
@@ -11,7 +15,7 @@ const donhangveSchema = new Schema({
     },
     price: {
         type: Number,
-        required
+        required: true
     }
 }, {
     timestamps: true

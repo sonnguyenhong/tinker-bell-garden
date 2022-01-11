@@ -1,0 +1,181 @@
+{{> header}}
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thanh toán</h5>
+    </div>
+    <div class="modal-body">
+        <div style="text-align: center;">
+            <h4>Mã vé: {{ticket.code}}</h4>
+            <h4 id="type">
+                {{#if (checkTicketType ticket.type)}}
+                    Loại vé: 2h/lượt
+                {{else}}
+                    Loại vé: Không giới hạn
+                {{/if}}
+            </h4>
+            <h4 id="time"></h4>
+            <h4 id="totalPrice"></h4>
+            <div style="margin-left: -350px" class="row justify-content-center">
+                
+                <div class="col-sm-3 form-inline form-group">
+                    <form class="form-inline form-group" style="position: relative;" id="checkDiscountAndVipForm" method="POST" action="/admin/banve/kiemtra">
+                        <label for="discountCodeInput" class="col-form-label mr-2">Mã giảm giá</label>
+                        <input style="width: 150px;" type="text" class="form-control mr-3" id="discountCodeInput">
+                        <label for="phoneNumInput" class="col-form-label mr-2">Số điện thoại</label>
+                        <input style="width: 150px;" type="text" class="form-control" id="phoneNumInput">
+                        <button style="position: absolute; top: 0px; right: -160px;" class="btn btn-info mb-5 mr-5" id="checkDiscountAndVipBtn" type="submit" form="checkDiscountAndVipForm">Kiểm tra</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{#if hasDiscount}}
+        <div style="margin-top: 15px; margin-left: 275px" id="discountInformation">
+            <h5>Thông tin mã giảm giá</h5>
+            <p>Giảm giá: {{discountInfo.discount}}%</p>
+        </div>
+    {{/if}}
+
+    {{#if isVip}}
+        <div style="margin-top: 15px; margin-left: 275px" id="vipInformation">
+            <h5>Thông tin khách hàng VIP</h5>
+            <p>Họ và tên: {{vipInfo.name}}</p>
+            <p>Số điện thoại: {{vipInfo.phoneNumber}}</p>
+            <p>Điểm tích lũy: {{vipInfo.points}}</p>
+            <label for="usePoints">Số điểm sử dụng: </label>
+            <input id="usePointsInput" type="text" name="usePoints" id="usePoints">
+        </div>
+
+    {{/if}}
+
+    {{#if isVipError}}
+        <p style="text-align: center; color: red; margin-top: 10px;">{{{vipErrorMessage}}}</p>
+    {{/if}}
+
+    {{#if error}}
+        <p style="text-align: center; color: red; margin-top: 10px;">{{{errorMessage}}}</p>
+    {{/if}}
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy hóa đơn</button>
+        <form id="orderForm" action="/admin/banve/taodonve" method="POST" hidden>
+        </form>
+        <button type="submit" class="btn btn-success" id="makePaymentButton" form="orderForm">Thanh toán</button>
+    </div>
+    </div>
+</div>
+
+<script>
+    function msToHMS(ms) {
+        let result = ''
+
+        let seconds = parseInt(ms/1000);
+        // 2- Extract hours:
+        let hours = parseInt(seconds / 3600); // 3,600 seconds in 1 hour
+        if(hours < 10) {
+            hours = '0' + hours.toString()
+        }
+        seconds = seconds % 3600; // seconds remaining after extracting hours
+        // 3- Extract minutes:
+        let minutes = parseInt(seconds / 60); // 60 seconds in 1 minute
+        if(minutes < 10) {
+            minutes = '0' + minutes.toString()
+        }
+        // 4- Keep only seconds not extracted to minutes:
+        seconds = seconds % 60;
+        if(seconds < 10) {
+            seconds = '0' + seconds.toString()
+        }
+
+        result = hours + ':' + minutes + ':' + seconds
+        return result
+    }
+
+    
+    const timeH4 = document.getElementById('time')
+    const totalPriceH4 = document.getElementById('totalPrice')
+    const phoneNumberInput = document.getElementById('phoneNumInput')
+    const discountCodeInput = document.getElementById('discountCodeInput')
+    const checkDiscountAndVipForm = document.getElementById('checkDiscountAndVipForm')
+    const checkDiscountAndVipBtn = document.getElementById('checkDiscountAndVipBtn')
+    const orderForm = document.getElementById('orderForm')
+
+    const usePointsInput = document.getElementById('usePointsInput')
+    const makePaymentButton = document.getElementById('makePaymentButton')
+
+    let startTime = `{{ticket.startTime}}`
+    let endTime = `{{endTime}}`
+    let discountCode = `{{discountInfo.discount}}`
+    let totalPrice = 0
+    const hasDiscount = `{{hasDiscount}}`
+    const isVip = `{{isVip}}`
+    
+
+    console.log(hasDiscount)
+    console.log(isVip)
+
+    let time = parseInt(endTime - Date.parse(startTime))
+    timeH4.innerHTML = `Tổng thời gian chơi: ${msToHMS(time)}`
+
+    const ticketType = `{{ticket.type}}`
+    if(ticketType === '0') {
+        if(time <= 7200000) {
+            totalPrice = 50000 * time / 3600000
+            totalPriceH4.innerHTML = `Tổng giá tiền: ${totalPrice.toFixed(0)}`
+        } else {
+            totalPrice = 50000 * 2 + 70000 * (time - 2*3600000)/3600000
+            totalPriceH4.innerHTML = `Tổng giá tiền: ${totalPrice.toFixed(0)}`
+        }
+    } else {
+        totalPrice = 200000
+        totalPrice.innerHTML = `Tổng giá tiền: ${totalPrice.toFixed(0)}`
+    }
+
+    checkDiscountAndVipBtn.addEventListener("click", function() {
+        const ticketId = `{{ticket._id}}`
+        const endTime = `{{endTime}}`
+        console.log(`${phoneNumberInput.value}`)
+        console.log(`${discountCodeInput.value}`)
+
+        checkDiscountAndVipForm.innerHTML += `<input type="hidden" name="phoneNumber" value="${phoneNumberInput.value}">`
+        checkDiscountAndVipForm.innerHTML += `<input type="hidden" name="discountCode" value="${discountCodeInput.value}">`
+        checkDiscountAndVipForm.innerHTML += `<input type="hidden" name="ticketId" value="${ticketId}">`
+        checkDiscountAndVipForm.innerHTML += `<input type="hidden" name="endTime" value="${endTime}">`
+        console.log(checkDiscountAndVipForm)
+        checkDiscountAndVipForm.submit()
+    })
+
+    makePaymentButton.addEventListener("click", function() { 
+        var isVip = JSON.stringify({{isVip}})
+        var hasDiscount = JSON.stringify({{hasDiscount}})
+        const ticketId = `{{ticket._id}}`
+        const vipId = `{{vipInfo._id}}`
+        console.log(hasDiscount)
+        //const ticketId = `{{ticket._id}}`
+        //const vipId = `{{vipInfo._id}}`
+        //const endTime = `{{endTime}}`
+        //console.log('ticket id ' + ticketId)
+        //console.log('Vip id ' + vipId)
+        //console.log('isVip ' + isVip)
+
+        if(hasDiscount) {
+            let discount = `{{discountInfo.discount}}`
+            let discountCode = `{{discountInfo.code}}`
+            orderForm.innerHTML += `<input type="hidden" name="discount" value="${discount}">`
+            orderForm.innerHTML += `<input type="hidden" name="discountCode" value="${discountCode}">`
+        } 
+        if(isVip) {
+            orderForm.innerHTML += `<input type="hidden" name="vipId" value="${vipId}">`
+            orderForm.innerHTML += `<input type="hidden" name="usePoints" value="${usePointsInput.value}">`
+        }
+        orderForm.innerHTML += `<input type="hidden" name="ticketId" value="${ticketId}">`
+        orderForm.innerHTML += `<input type="hidden" name="endTime" value="${endTime}">`
+        
+        orderForm.submit()
+    })
+
+</script>
+
+{{> footer}}

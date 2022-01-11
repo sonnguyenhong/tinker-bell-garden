@@ -4,19 +4,19 @@ const { Schema } = mongoose
 const makhuyenmaiSchema = new Schema({
     code: {
         type: String,
-        required
+        required: true
     },
     discount: {
         type: Number,
-        required
+        required: true
     },
     status: {
         type: Boolean,
-        required
+        required: true
     },
     quantity: {
         type: Number,
-        required
+        required: true
     }
 }, {
     timestamps: true
