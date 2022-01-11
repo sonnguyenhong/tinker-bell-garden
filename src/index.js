@@ -11,38 +11,47 @@ const db = require('./config/db/index')
 const app = express()
 const port = 3000
 
+// cookie bodyparser
+
+const bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
+
 // Connect to db
 db.connect()
 
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads')
-            // cb(null, path.join(__dirname, 'public', 'img'))
-    },
-    filename: (req, file, cb) => {
-        cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
-    }
-})
+// const fileStorage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads')
+//             // cb(null, path.join(__dirname, 'public', 'img'))
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
+//     }
+// })
 
-const fileFilter = (req, file, cb) => {
-    if (
-        file.mimetype === 'image/png' ||
-        file.mimetype === 'image/jpg' ||
-        file.mimetype === 'image/jpeg'
-    ) {
-        cb(null, true)
-    } else {
-        cb(null, false)
-    }
-}
+// const fileFilter = (req, file, cb) => {
+//     if (
+//         file.mimetype === 'image/png' ||
+//         file.mimetype === 'image/jpg' ||
+//         file.mimetype === 'image/jpeg'
+//     ) {
+//         cb(null, true)
+//     } else {
+//         cb(null, false)
+//     }
+// }
 
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(fileUpload())
 
 app.use(express.urlencoded())
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+    // app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
+    // app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 // HTTP Logger
 app.use(morgan('combined'))
@@ -54,9 +63,18 @@ app.engine('hbs', engine({
         _toInt: (str) => parseInt(str, 10),
         _mul: (a, b) => a * b,
         sum: (a, b) => a + b,
-        toDateString: (a) => Date(a),
+        toString2: (a) => {
+            return  String(a.getDate()).padStart(2, '0') + '-' + String((a.getMonth() + 1)).padStart(2, '0')+ '-' +a.getFullYear() 
+        },
         toString: (a) => {
-            return a.getFullYear() + '-' + (a.getMonth() + 1) + '-' + String(a.getDate()).padStart(2, '0')
+            return a.getFullYear() + '-' + String((a.getMonth() + 1)).padStart(2, '0')+ '-' + String(a.getDate()).padStart(2, '0')
+        },
+        checkTicketType: (type) => {
+            if (type === 0) return true
+            return false
+        },
+        helper: {
+            sum: (a,b) => a+b,
         }
     }
 }))

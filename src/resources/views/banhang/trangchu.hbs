@@ -55,8 +55,7 @@
         </div>
     </div>
 
-    <button id="cartBtn" class="btn btn-primary col-3" data-toggle="modal" data-target="#exampleModal">Xem giỏ hàng</button>
-    <button onclick="location.href='/admin/banhang/quanlymathang'" class="btn btn-primary col-3">Quản lý mặt hàng</button>
+    <button style="font-weight: 100; width: 150px; border-radius: 4px; margin-left: 20px" id="cartBtn" data-toggle="modal" data-target="#exampleModal"><i class="ti-shopping-cart"></i> Xem giỏ hàng</button>
     <div class="listing-section">
         <script>
             productList = []
@@ -67,7 +66,7 @@
 
             <div class="product">
                 <div class="image-box">
-                    <img class="product-img" src="/{{this.imageUrl}}" alt="">
+                    <img class="product-img" src="{{this.imageUrl}}" alt="">
                 </div>
                 <div class="text-box">
                     <h2 class="item">{{this.name}}</h2>

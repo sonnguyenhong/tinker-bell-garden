@@ -9,7 +9,7 @@
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
+        <h5 style="margin-left: 350px" class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
     </div>
     <div class="modal-body">
         <table id="table" class="table">
@@ -32,7 +32,7 @@
                     <td>{{this.name}}</td>
                     <td>{{lookup ../orderInfo this._id }}</td>
                     <td>{{this.price}}</td>
-                    <td class="sumPrice">{{_mul (lookup ../orderInfo this._id) this.price}}</td>
+                    <td class="sumPrice">{{_mul (lookup ../orderInfo this._id) this.price}} VNĐ</td>
                     </tr>
 
                     <script>
@@ -111,7 +111,7 @@
         totalPrice += parseInt(sumPriceList[i].textContent)
     }
     
-    totalPriceH4.innerHTML = `Tổng số tiền: ${totalPrice}`
+    totalPriceH4.innerHTML = `Tổng số tiền: ${totalPrice} VNĐ`
 
     checkPhoneNumBtn.addEventListener("click", function() {
         checkVipForm.innerHTML += `<input type="hidden" name="phoneNumber" value="${phoneNumberInput.value}">`
@@ -122,19 +122,20 @@
         console.log(phoneNumberInput.value)
         checkVipForm.submit()
     })
+    console.log('productList: ' + productList.length)
 
+    console.log(orderFormData)
     makePaymentBtn.addEventListener("click", function() {
         var vip = JSON.stringify({{isVip}})
         console.log(vip)
-        if(vip) {
-            orderFormData.innerHTML += `<input type="hidden" name="vipId" value="{{vipInfo._id}}">`
-            orderFormData.innerHTML += `<input type="hidden" name="usePoints" value="${usePointsInput.value}">`
-        }
         for(let i = 0 ; i < productList.length ; i++) {
             const input = `<input type="hidden" name="${productList[i].id}" value="${productList[i].quantity}">`
             orderFormData.innerHTML += input
         }
-
+        if(vip) {
+            orderFormData.innerHTML += `<input type="hidden" name="vipId" value="{{vipInfo._id}}">`
+            orderFormData.innerHTML += `<input type="hidden" name="usePoints" value="${usePointsInput.value}">`
+        }
         console.log(orderFormData)
         orderFormData.submit()
     })

@@ -5,6 +5,7 @@ const VipHistory = require('../models/lichsucapnhat')
 
 const mongoose = require('mongoose')
 const fileHelper = require('../../util/file')
+const path = require('path')
 const { response } = require('express')
 
 class BanhangController {
@@ -68,39 +69,42 @@ class BanhangController {
         const updatedName = req.body.name
         const updatedPrice = req.body.price
         const updatedQuantity = req.body.quantity
-        const image = req.file
+        let image = null
+        var url = path.resolve(__dirname)
+        url = url.replace('\\app\\controllers', '\\public\\img')
         console.log(image)
 
-        Product.findById(productId)
-            .then(product => {
-                product.name = updatedName
-                product.price = updatedPrice
-                product.quantity = updatedQuantity
-                if (image) {
-                    fileHelper.deleteFile(product.imageUrl)
-                    product.imageUrl = image.path
-                }
-
-                return product.save()
+        if (req.files != null) image = req.files.image
+        if (image) {
+            image.mv(path.resolve(url, image.name), (err) => {
+                Product.findByIdAndUpdate(req.params.id, {
+                        name: updatedName,
+                        price: updatedPrice,
+                        quantity: updatedQuantity,
+                        imageUrl: '/img/' + image.name
+                    })
                     .then(result => {
                         res.redirect('/admin/banhang/quanlymathang')
                     })
+                    .catch(err => next(err))
             })
-            .catch(err => next(err))
+        } else {
+            Product.findByIdAndUpdate(req.params.id, {
+                    name: updatedName,
+                    price: updatedPrice,
+                    quantity: updatedQuantity
+                })
+                .then(result => {
+                    res.redirect('/admin/banhang/quanlymathang')
+                })
+                .catch(err => next(err))
+        }
     }
 
     // [POST] /admin/banhang/quanlymathang/:id/xoa
     postDeleteProduct(req, res, next) {
         const productId = req.params.id
-        Product.findById(productId)
-            .then(product => {
-                if (!product) {
-                    console.log('KHONG TON TAI MAT HANG')
-                    return
-                }
-                fileHelper.deleteFile(product.imageUrl)
-                return Mathang.deleteOne({ _id: productId })
-            })
+        Product.findByIdAndDelete(productId)
             .then(result => {
                 res.redirect('/admin/banhang/quanlymathang')
             })
@@ -118,27 +122,27 @@ class BanhangController {
         const name = req.body.name
         const price = req.body.price
         const quantity = req.body.quantity
-        const image = req.file
+        let image = req.files.image
 
         if (!image) {
             console.log('Khong co anh')
             return
         }
 
-        const imageUrl = image.path
-
-        const product = new Product({
-            name: name,
-            price: price,
-            quantity: quantity,
-            imageUrl: imageUrl
+        var url = path.resolve(__dirname)
+        url = url.replace('\\app\\controllers', '\\public\\img')
+        image.mv(path.resolve(url, image.name), (err) => {
+            Product.create({
+                    name: name,
+                    price: price,
+                    quantity: quantity,
+                    imageUrl: '/img/' + image.name
+                })
+                .then(result => {
+                    res.redirect('/admin/banhang/quanlymathang')
+                })
+                .catch(err => next(err))
         })
-
-        product.save()
-            .then(result => {
-                res.redirect('/admin/banhang/quanlymathang')
-            })
-            .catch(err => next(err))
     }
 
     // [GET] /admin/banhang/giohang
@@ -172,7 +176,7 @@ class BanhangController {
             // console.log(orderInfo)
             // console.log(orderInfo)
             // check vip customer
-        console.log(orderInfo)
+        console.log('orderInfo: ' + orderInfo)
         const phoneNumber = req.body.phoneNumber
         console.log(phoneNumber)
         const productIds = []
@@ -224,18 +228,19 @@ class BanhangController {
 
     // [POST] /admin/banhang/taodonhang
     postCreateOrder(req, res, next) {
-        console.log(req.body)
+        console.log('req.body ' + req.body)
 
         const productOrderList = []
         const productOrderQuantity = []
         for (var key in req.body) {
+            console.log('key: ' + key)
             if (key !== 'vipId' && key !== 'usePoints') {
                 productOrderList.push(mongoose.Types.ObjectId(key))
                 productOrderQuantity.push(req.body[key])
             }
         }
-        // console.log(productOrderList)
-        // console.log(productOrderQuantity)
+        console.log(productOrderList)
+        console.log(productOrderQuantity)
 
         const products = []
         for (let i = 0; i < productOrderList.length; i++) {
@@ -255,7 +260,7 @@ class BanhangController {
         // }
 
         let hasDiscount = true
-        if (req.body.vipId === undefined) {
+        if (req.body.vipId === undefined || req.body.vipId === '') {
             hasDiscount = false
         }
         console.log(req.body.vipId)
@@ -264,7 +269,7 @@ class BanhangController {
 
         Product.find({ "_id": { "$in": productOrderList } }).lean()
             .then(prods => {
-                // console.log(prods)
+                console.log('prods ' + prods)
                 for (let i = 0; i < prods.length; i++) {
                     totalPrice += prods[i].price * req.body[prods[i]._id.toString()]
                 }
@@ -303,7 +308,7 @@ class BanhangController {
 
                                 order.save()
                                     .then(result => {
-                                        console.log(products)
+                                        console.log('prods 1: ' + prods)
 
                                         var today = new Date();
                                         var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();

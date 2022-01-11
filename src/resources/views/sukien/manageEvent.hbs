@@ -1,97 +1,23 @@
-<!--
-<style>
-    .button {
-        display: inline-block;
-        cursor: pointer;
-        text-align: center;
-    }
-    .button:hover {
-        opacity: 0.8;
-    }
-    .button:active {
-        background-color: #3e8e41;
-        border-radius: 30px;
-        transform: translateY(2px);
-        opacity: 1;   
-    }
-</style>
 
-
-
-
-
-<div class="container">
-    <h1 id="h1">QUẢN LÝ KHÁCH HÀNG VIP</h1> 
-    <a href="http://127.0.0.1:5500/History_Update_KH_Vip.html" class="setcolor">
-        <button style="float: right;" class="button_them_kh_vip button">Lịch sử cập nhật</button>
-    </a>
-    <a href="http://127.0.0.1:5500/Them_KH_Vip.html" class="setcolor">
-        <button style="float: right;" class="button_them_kh_vip button">Thêm khách hàng VIP</button>
-    </a>
-    <p id="p">Số lượng khách hàng VIP:</p>
-</div>
-
-<div class="container table-responsive">
-    <table border="1" width= "1100px" class="table settable table-striped table-hover table-sm align-middle">
-        <caption>Danh sách khách hàng VIP</caption>
-        <thead class="set_thead">
-            <th>STT</th>
-            <th>Tên</th>
-            <th>Số điện thoại</th>
-            <th>Địa chỉ</th>
-            <th>Email</th>
-            <th>Điểm tích lũy</th>
-            <th>Ngày gia hạn</th>
-            <th>Chức năng</th>
-        </thead>
-        <tbody class="set_tbody">
-            <tr>
-                <th scope="row">10</th>
-                <td>Name</td>
-                <td>012345</td>
-                <td>UK</td>
-                <td>one@yahoo.com</td>
-                <td>1 tỷ</td>
-                <td>Mai</td>
-                <td>
-                    <a href="http://127.0.0.1:5500/ChiTiet_KH_Vip.html" class="setcolor button">
-                        <button class="button_xem_chi_tiet">Xem chi tiết</button>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">12</th>
-                <td>Tên</td>
-                <td>98765</td>
-                <td>VN</td>
-                <td>123@gmail.com</td>
-                <td>2020</td>
-                <td>Kia</td>
-                <td> 
-                    <a href="http://127.0.0.1:5500/ChiTiet_KH_Vip.html" class="setcolor button">
-                        <button class="button_xem_chi_tiet">Xem chi tiết</button>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
--->
 <link rel="stylesheet" href="/css/app.css">
-{{!-- <link rel="stylesheet" href="/css/csvc.css"> --}}
+<link rel="stylesheet" href="/css/csvc.css">
 <link rel="stylesheet" href="/css/event.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 {{>header}}
 <div class="container-fluid" style="width: 80%">
-    <h2 class="my-4" style="color: red;">QUẢN LÝ SỰ KIỆN</h2>
+    <h2 class="my-4" style="color: red;">QUẢN LÝ HOẠT ĐỘNG</h2>
     <div class="row mb-2" id="page1">
-        <div class="col">
-            <div class="container-fluid btn-option" id="back" style="width: 30%">
-                <a href="/admin/event/addEvent">Thêm sự kiện</a>
-            </div>
+        <div class="col mb-4">
+            <a href="/admin/event/addEvent" style="text-decoration: none;">
+                <div class="container-fluid btn-option" id="back" style="width: 40%">Thêm sự kiện</div>
+            </a>
         </div>
         <div class="col">
         </div>
     </div>
+    <input class="form-control my-4" id="myInput" type="text" placeholder="Tìm kiếm">
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr>
@@ -103,13 +29,13 @@
                 <th style="width: 8%"></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             {{#each events}}
             <tr>
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
-                <td>{{toString this.startDate }}</td>
-                <td>{{toString this.endDate }}</td>
+                <td>{{toString2 this.startDate }}</td>
+                <td>{{toString2 this.endDate }}</td>
                 <td>{{this.numberOfDiscountCode}}</td>
                 <td>
                     <a href="/admin/event/{{this._id}}">
@@ -123,5 +49,15 @@
         </tbody>
     </table>
 </div>
+<script>
+    $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    });
+</script>
 {{>footer}}
 
