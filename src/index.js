@@ -11,6 +11,15 @@ const db = require('./config/db/index')
 const app = express()
 const port = 3000
 
+// cookie bodyparser
+
+const bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
+
 // Connect to db
 db.connect()
 

@@ -4,7 +4,7 @@ const jwtHelper = require('../helper/jwtHelper')
 const bcrypt = require('bcrypt');
 // username: tinkerbellgarden 
 // password: tinkerbellgarden
-class LoginController{
+class AuthController{
     //[POST] Login
     login(req, res){
         // var form = req.body
@@ -44,7 +44,7 @@ class LoginController{
                    data.changePasswordToken = token;
                    data.save();
                    res.cookie('token', token);
-                   return res.redirect('/');
+                   return res.redirect('/admin');
                 }else{
                     return res.redirect('/login')
                 }
@@ -63,7 +63,7 @@ class LoginController{
     //[GET] login
     showLogin(req,res, next){
     
-        res.render('login')
+        res.render('auth/login')
     
     }
 
@@ -77,7 +77,7 @@ class LoginController{
     //changepassword
     // [GET] /changepassword
     showChangePassword(req,res){
-        res.render('change-password')
+        res.render('auth/changePassword')
     }
     //[POST] /changepassword
     change(req,res){
@@ -92,12 +92,12 @@ class LoginController{
             if(isValidPassword){
                 data.password = req.body.nextPassword;
                 data.save();
-                return res.redirect('/');
+                return res.redirect('/admin');
             }
-            else return res.render('change-password', {success : "false"});
+            else return res.render('auth/changePassword', {success : "false"});
         })
         .catch(err=>{
-            return res.render('change-password', {success : "false"});
+            return res.render('auth/changePassword', {success : "false"});
         })
     }
 
@@ -106,4 +106,4 @@ class LoginController{
 
 
 
-module.exports = new AuthControlelr;
+module.exports = new AuthController;
