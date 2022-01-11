@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" href="/css/app.css">
 <link rel="stylesheet" href="/css/csvc.css">
-<link rel="stylesheet" href="/css/event.css">
+{{!-- <link rel="stylesheet" href="/css/event.css"> --}}
 <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
@@ -11,7 +11,24 @@
 >
 
 {{>header}}
-
+{{#if success}}
+        <div class="my-modal">
+            <div class="modal__inner sticky-top">
+                <div class="modal__header">
+                    <h5>Tinker Bell Garden</h5>
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="modal__body">
+                    <h4>{{success}}</h4>
+                </div>
+                <div class="modal__footer">
+                    <a href="/admin/event" style="text-decoration: none;">
+                        <button>Tiếp tục</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {{/if}}
 <div class="container-fluid my-4" style="width: 80%">
     <h2 class="my-4" style="color: red;">THÊM HOẠT ĐỘNG</h2>
     <form action="/admin/event/addEvent" method="Post" enctype="multipart/form-data">

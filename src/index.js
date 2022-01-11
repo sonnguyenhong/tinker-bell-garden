@@ -54,9 +54,11 @@ app.engine('hbs', engine({
         _toInt: (str) => parseInt(str, 10),
         _mul: (a, b) => a * b,
         sum: (a, b) => a + b,
-        toDateString: (a) => Date(a),
+        toString2: (a) => {
+            return  String(a.getDate()).padStart(2, '0') + '-' + String((a.getMonth() + 1)).padStart(2, '0')+ '-' +a.getFullYear() 
+        },
         toString: (a) => {
-            return a.getFullYear() + '-' + (a.getMonth() + 1) + '-' + String(a.getDate()).padStart(2, '0')
+            return a.getFullYear() + '-' + String((a.getMonth() + 1)).padStart(2, '0')+ '-' + String(a.getDate()).padStart(2, '0')
         },
         checkTicketType: (type) => {
             if (type === 0) return true
