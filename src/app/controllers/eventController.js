@@ -16,7 +16,9 @@
      }
 
      showAddEvent(req, res, next) {
-         res.render('sukien/addEvent')
+         res.render('sukien/addEvent',{
+            success: false
+         })
      }
 
      showEventDetail(req, res, next) {
@@ -32,14 +34,18 @@
      store(req, res, next) {
          let image = req.files.image;
          var url = path.resolve(__dirname)
-         url = url.replace('\controllers', 'public\\img')
+         url = url.replace('\\app\\controllers', '\\public\\img')
          image.mv(path.resolve(url, image.name), (err) => {
              Event.create({
                  ...req.body,
                  imageUrl: '/img/' + image.name
              }, (err) => {
-                 if (err) next();
-                 else res.redirect('/admin/event')
+                 if (err)  res.render('sukien/addEvent',{
+                    success: 'Thêm không thành công'
+                 })
+                 else  res.render('sukien/addEvent',{
+                    success: 'Đã thêm sự kiện thành công'
+                 })
              })
          })
      }
@@ -55,7 +61,7 @@
      updateEvent(req, res, next) {
          let image = null
          var url = path.resolve(__dirname)
-         url = url.replace('\controllers', 'public\\img')
+         url = url.replace('\\app\\controllers', '\\public\\img')
          if (req.files != null) image = req.files.image
          if (image) image.mv(path.resolve(url, image.name))
          let eve = req.body;
