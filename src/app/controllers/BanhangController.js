@@ -5,6 +5,7 @@ const VipHistory = require('../models/lichsucapnhat')
 
 const mongoose = require('mongoose')
 const fileHelper = require('../../util/file')
+const path = require('path')
 const { response } = require('express')
 
 class BanhangController {
@@ -68,39 +69,42 @@ class BanhangController {
         const updatedName = req.body.name
         const updatedPrice = req.body.price
         const updatedQuantity = req.body.quantity
-        const image = req.file
+        let image = null
+        var url = path.resolve(__dirname)
+        url = url.replace('\\app\\controllers', '\\public\\img')
         console.log(image)
 
-        Product.findById(productId)
-            .then(product => {
-                product.name = updatedName
-                product.price = updatedPrice
-                product.quantity = updatedQuantity
-                if (image) {
-                    fileHelper.deleteFile(product.imageUrl)
-                    product.imageUrl = image.path
-                }
-
-                return product.save()
+        if (req.files != null) image = req.files.image
+        if (image) {
+            image.mv(path.resolve(url, image.name), (err) => {
+                Product.findByIdAndUpdate(req.params.id, {
+                        name: updatedName,
+                        price: updatedPrice,
+                        quantity: updatedQuantity,
+                        imageUrl: '/img/' + image.name
+                    })
                     .then(result => {
                         res.redirect('/admin/banhang/quanlymathang')
                     })
+                    .catch(err => next(err))
             })
-            .catch(err => next(err))
+        } else {
+            Product.findByIdAndUpdate(req.params.id, {
+                    name: updatedName,
+                    price: updatedPrice,
+                    quantity: updatedQuantity
+                })
+                .then(result => {
+                    res.redirect('/admin/banhang/quanlymathang')
+                })
+                .catch(err => next(err))
+        }
     }
 
     // [POST] /admin/banhang/quanlymathang/:id/xoa
     postDeleteProduct(req, res, next) {
         const productId = req.params.id
-        Product.findById(productId)
-            .then(product => {
-                if (!product) {
-                    console.log('KHONG TON TAI MAT HANG')
-                    return
-                }
-                fileHelper.deleteFile(product.imageUrl)
-                return Mathang.deleteOne({ _id: productId })
-            })
+        Product.findByIdAndDelete(productId)
             .then(result => {
                 res.redirect('/admin/banhang/quanlymathang')
             })
@@ -118,27 +122,27 @@ class BanhangController {
         const name = req.body.name
         const price = req.body.price
         const quantity = req.body.quantity
-        const image = req.file
+        let image = req.files.image
 
         if (!image) {
             console.log('Khong co anh')
             return
         }
 
-        const imageUrl = image.path
-
-        const product = new Product({
-            name: name,
-            price: price,
-            quantity: quantity,
-            imageUrl: imageUrl
+        var url = path.resolve(__dirname)
+        url = url.replace('\\app\\controllers', '\\public\\img')
+        image.mv(path.resolve(url, image.name), (err) => {
+            Product.create({
+                    name: name,
+                    price: price,
+                    quantity: quantity,
+                    imageUrl: '/img/' + image.name
+                })
+                .then(result => {
+                    res.redirect('/admin/banhang/quanlymathang')
+                })
+                .catch(err => next(err))
         })
-
-        product.save()
-            .then(result => {
-                res.redirect('/admin/banhang/quanlymathang')
-            })
-            .catch(err => next(err))
     }
 
     // [GET] /admin/banhang/giohang
