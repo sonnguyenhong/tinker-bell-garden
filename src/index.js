@@ -61,6 +61,9 @@ app.engine('hbs', engine({
         checkTicketType: (type) => {
             if (type === 0) return true
             return false
+        },
+        helper: {
+            sum: (a,b) => a+b,
         }
     }
 }))
