@@ -4,19 +4,19 @@ const { Schema } = mongoose
 const cosovatchatSchema = new Schema({
     name: {
         type: String,
-        required
+        required: true
     },
     code: {
         type: Number,
-        required
+        required: true
     },
     status: {
         type: String,
-        required
+        required: true
     },
     imageUrl: {
         type: String,
-        required
+        required: true
     },
     khuvuichoi: {
         type: Schema.Types.ObjectId,

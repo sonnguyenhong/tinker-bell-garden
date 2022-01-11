@@ -1,0 +1,83 @@
+{{>header}}
+
+<div class="container">
+    <h2 class="text-danger">Sửa thông tin cơ sở vật chất: </h2>
+    <form action="/admin/khuvuichoi/{{id}}/{{csvc._id}}/edit" novalidate class="needs-validation" method="post">
+        <div>
+            <label for="name" class="form-label">Name: </label>
+            <input type="text" name="name" id="name" class="form-control" required value="{{csvc.name}}">
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Cant leave blank!!
+            </div>
+        </div>
+        <div>
+            <label for="code" class="form-label">Code: </label>
+            <input type="number" name="code" id="code" class="form-control" required value="{{csvc.code}}">
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Cant leave blank!!
+                Only number!!
+            </div>
+        </div>
+        <div>
+            <label for="status" class="form-label">Status: </label>
+            <input type="text" name="status" id="status" class="form-control" required value="{{csvc.status}}">
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Cant leave blank!!
+            </div>
+        </div>
+        <div>
+            <label for="img" class="form-label">Image: </label>
+            <input type="text" name="img" id="img" class="form-control" required value="{{csvc.imageUrl}}">
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Cant leave blank!!
+            </div>
+        </div>
+        <div class="col offset-1">
+            <button class="btn btn-danger col-1 mt-3 offset-9" id="backBtn2">Cancel</button>
+            <input type="submit" class="btn btn-success mt-3 col-1 ml-3">
+        </div>
+
+
+    </form>
+</div>
+
+{{>footer}}
+<script>
+    const backBtn2 = document.getElementById('backBtn2');
+    backBtn2.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = '/admin/khuvuichoi/{{id}}/{{csvc._id}}';
+    })
+</script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.classList.add('was-validated');
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                }, false);
+            });
+        }, false);
+    })();
+</script>
