@@ -57,6 +57,10 @@ app.engine('hbs', engine({
         toDateString: (a) => Date(a),
         toString: (a) => {
             return a.getFullYear() + '-' + (a.getMonth() + 1) + '-' + String(a.getDate()).padStart(2, '0')
+        },
+        checkTicketType: (type) => {
+            if (type === 0) return true
+            return false
         }
     }
 }))

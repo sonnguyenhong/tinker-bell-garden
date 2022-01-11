@@ -41,7 +41,13 @@
                 {{#each ticket}}
                 <tr>
                     <th scope="row">{{@index}}</th>
-                    <td>{{this.typeTicket}}</td>
+                    <td>
+                        {{#if (checkTicketType ticket.type)}}
+                            Không giới hạn
+                        {{else}}
+                            2h/lượt
+                        {{/if}}
+                    </td>
                     <td>{{this.phoneNum}}</td>
                     <td>{{this.discountCode}}</td>
                     <td>{{this.price}} VND</td>
