@@ -4,12 +4,18 @@ const { Schema } = mongoose
 const veSchema = new Schema({
     code: {
         type: String,
-        required
+        required: true,
     },
     type: {
-        type: String,
-        required
+        type: Number,
+        required: true,
     },
+    isPlaying: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
+
     startTime: {
         type: Date,
     },

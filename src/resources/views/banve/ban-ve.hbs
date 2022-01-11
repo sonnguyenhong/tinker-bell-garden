@@ -1,0 +1,186 @@
+    <link rel="stylesheet" href="/css/banve.css">
+
+{{> header}}
+
+    <div class="wrapper">
+        {{!-- <div id="bgImage">
+            
+            <div class="buyTicketButton">
+                <!-- Button trigger modal -->
+                <div class="buyButton">
+                    <button type="button" class="btn btn-primary customBtn" data-toggle="modal" data-target="#banvevaokhuvuichoi">
+                    Bán vé vào khu vui chơi
+                    </button>
+                </div>
+
+                <div class="buyButton">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary customBtn" data-toggle="modal" data-target="#banvedattruoc">
+                    Bán vé đặt trước
+                    </button>
+                </div>
+
+                <div class="buyButton">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary customBtn" data-toggle="modal" data-target="#ketthucchoi">
+                    Kết thúc chơi
+                    </button>
+                </div>
+            </div>
+            
+        </div> --}}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-">
+                <!-- Button trigger modal -->
+                    <div style="margin-top: 150px" class="buyButton">
+                        <button type="button" class="btn btn-primary customBtn" data-toggle="modal" data-target="#banvevaokhuvuichoi">
+                        Bán vé vào khu vui chơi
+                        </button>
+                    </div>
+
+                    <div class="buyButton">
+                    <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary customBtn" data-toggle="modal" data-target="#banvedattruoc">
+                        Bán vé đặt trước
+                        </button>
+                    </div>
+
+                    <div class="buyButton">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary customBtn" data-toggle="modal" data-target="#ketthucchoi">
+                        Kết thúc chơi
+                        </button>
+                    </div>
+
+                    <h5>Số vé đang chơi: {{quantity}} vé</h5>
+
+                    {{#if error}}
+                        <p style="text-align: center; color: red; margin-top: 10px;">{{{errorMessage}}}</p>
+                    {{else}}
+                        <p style="color: green;">{{message}}</p>
+                    {{/if}}
+
+                </div>
+
+                <div style="width: 100px" class="col-sm-">
+                    
+                </div>
+
+
+                <div style="margin-top: 50px;" class="col ">
+                    <h3 style="text-align: center;">DANH SÁCH VÉ</h3>
+
+                    <div class="ticketTable overFlowY">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Mã vé</th>
+                                <th scope="col">Loại vé</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Thời gian bắt đầu chơi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each tickets}}
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{this.code}}</td>
+                                        <td>
+                                            {{#if (checkTicketType this.type)}}
+                                                <p>2h/lượt</p>
+                                            {{else}}
+                                                <p>Không giới hạn</p>
+                                            {{/if}}
+                                        </td>
+                                        <td>
+                                            {{#if this.isPlaying}}
+                                                <p style="color: green">Đang chơi</p>
+                                            {{else}}
+                                                <p style="color: red;">Chưa chơi</p>
+                                            {{/if}}
+                                        </td>
+                                        <td>{{this.startTime}}</td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="banvevaokhuvuichoi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Bán vé vào khu vui chơi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="startForm" action="/admin/banve/batdauchoi" method="POST">
+                    <label for="beginTicketCode">Nhập mã vé</label>
+                    <input type="text" class="form-control" id="beginTicketCode" name="beginTicketCode" aria-describedby="emailHelp" placeholder="Nhập mã vé">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" form="startForm">Bắt đầu chơi</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="banvedattruoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Bán vé đặt trước</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="phoneNumber">Nhập số điện thoại</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" aria-describedby="emailHelp" placeholder="Nhập SĐT">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary">Kiểm tra đơn đặt vé</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ketthucchoi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Kết thúc chơi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="endForm" action="/admin/banve/ketthucchoi" method="POST">
+                    <label for="endTicketCode">Nhập mã vé</label>
+                    <input type="text" class="form-control" id="endTicketCode" name="endTicketCode" aria-describedby="emailHelp" placeholder="Nhập mã vé">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" form="endForm">Kết thúc chơi</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+{{> footer}}

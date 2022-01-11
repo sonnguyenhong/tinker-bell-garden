@@ -3,6 +3,10 @@ const khachhangvip = require('../models/khachhangvip');
 const { Schema } = mongoose
 const Khachhangvip = require('../models/khachhangvip')
 const donhangveSchema = new Schema({
+    ticketType: {
+        type: Number,
+        required: true
+    },
     phoneNum: {
         type: String
     },
@@ -12,11 +16,8 @@ const donhangveSchema = new Schema({
     },
     price: {
         type: Number,
-        required : true,
-    },
-    typeTicket: {
-        type: String,
-    },
+        required: true
+    }
 }, {
     timestamps: true
 })

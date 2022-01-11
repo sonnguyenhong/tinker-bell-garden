@@ -1,0 +1,32 @@
+{{> header}}
+
+<div class="container">
+
+    <h1>THÔNG TIN HÓA ĐƠN</h1>
+
+    <h5>Mã vé: {{ticket.code}}</h5>
+    <h5>
+        {{#if (checkTicketType ticket.type)}}
+            Loại vé: 2h/lượt
+        {{else}}
+            Loại vé: Không giới hạn
+        {{/if}}
+    </h5>
+
+    {{#if hasDiscount}}
+        <h5>Mã giảm giá: {{discountCode}}</h5>
+        <h5>Lượng giảm giá: {{discount}}%</h5>
+    {{/if}}
+
+    {{#if isVip}}
+        <h5>Tên khách hàng VIP: {{vipInfo.name}}</h5>
+        <h5>Số điểm sử dụng: {{usePoints}}</h5>
+    {{/if}}
+
+    <h5>Tổng số tiền: {{totalPrice}}</h5>
+
+    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="location.href='/admin/banve'">Quay lại</button>
+</div>
+
+
+{{> footer}}
