@@ -42,10 +42,10 @@
                 <tr>
                     <th scope="row">{{@index}}</th>
                     <td>
-                        {{#if (checkTicketType ticket.type)}}
-                            Không giới hạn
+                        {{#if (checkTicketType this.ticketType)}}
+                            <p>2h/lượt</p>
                         {{else}}
-                            2h/lượt
+                            <p>Không giới hạn</p>
                         {{/if}}
                     </td>
                     <td>{{this.phoneNum}}</td>
