@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+ const Donhangve = require('../../app/models/donhangve')
 async function connect() {
 
     try {
@@ -11,6 +11,16 @@ async function connect() {
     } catch (err) {
         console.log('Connected Failed')
     }
+
+    // var db = mongoose.connection;
+    // const user = {
+    //     phoneNum: '0967874928',
+    //     discountCode: '',
+    //     price: 100000,
+    //     typeTicket: 'hour' 
+    // }
+    // const donhangve = new Donhangve(user);
+    // donhangve.save();
 
 }
 

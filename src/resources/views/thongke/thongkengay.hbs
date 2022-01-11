@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/csvc.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+{{>header}}
+<div class="container-fluid" style="width: 80%">
+    <h2 class="my-4" style="color: red;">THỐNG KÊ THEO NGÀY</h2>
+    
+    <form action="/admin/thongke/thongkengay/getInfo" method="POST">
+        <div>
+            <input class="form-control" id="myInput" type="date" name="selectedDay" style="float: left" >
+            <input type="submit"  value="Thống kê" style="margin-bottom: 30px">
+        </div>
+    </form>
+
+    <div style="padding-bottom: 20px">Tổng doanh thu: {{totalProfit}}  VND</div>
+    <div>
+        <div style="padding-bottom: 20px;float:left">Doanh thu bán hàng: {{totalProductProfit}} VND  </div>
+        <div style="padding-bottom: 20px;">.     Doanh thu bán vé: {{totalTicketProfit}} VND    </div>
+    </div>
+    
+    <div>
+        <div style="padding-bottom: 20px;">Thống kê bán vé</div>
+        <div style="padding-bottom: 20px">Số vé vip: {{numberOfVipTicket}}</div>
+        <div style="padding-bottom: 20px">Số vé thường: {{numberOfNormalTicket}}</div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 10%">Loại vé</th>
+                    <th style="width: 10%">Số điện thoại</th>
+                    <th style="width: 15%">Mã giảm giá</th>
+                    <th style="width: 10%">Thành tiền</th>
+
+                </tr>
+            </thead>
+            <tbody id="myTableTicket">
+                {{#each ticket}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.typeTicket}}</td>
+                    <td>{{this.phoneNum}}</td>
+                    <td>{{this.discountCode}}</td>
+                    <td>{{this.price}} VND</td>
+                
+                </tr>
+                {{/each}}
+        </table>
+    </div>
+
+    <div>
+         <div style="padding-bottom: 20px;">Thống kê bán hàng:</div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 15%">Tên mặt hàng</th>
+                    <th style="width: 5%">Số Lượng</th>
+                    <th style="width: 13%">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody id="myTableProduct">
+                {{#each product}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.number}}</td>
+                    <td>{{this.profit}} VND</td>
+                
+                </tr>
+                {{/each}}
+        </table>
+    </div>
+
+    
+</div>
+
+<script>
+    $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    });
+</script>
+
+{{>footer}}
+
