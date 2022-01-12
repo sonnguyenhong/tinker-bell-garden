@@ -253,7 +253,7 @@ html{
 }
 
 .place-img2{
-    width: 377px;
+    width: 385px;
 }
 
 .place-img:hover{
@@ -472,71 +472,6 @@ html{
     margin-bottom: 20px;
 }
 
-.modaldb{
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0, 0.4);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.modaldb.open{
-    display: flex;
-}
-
-.modal-containerdb{
-    background: #fff;
-    width: 900px;
-    min-height: 200px;
-    position: relative;
-    max-width: calc(100% - 32px);
-}
-
-.modal-headerdb {
-    background: #ee183c;
-    height: 130px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    color: #fff;
-}
-
-.modal-heading-icondb{
-    margin-right: 16px;
-}
-
-.modal-closedb{
-    position: absolute;
-    right: 0;
-    color: #fff;
-    padding: 10px;
-    cursor: pointer;
-    opacity: 0.9;
-}
-
-.modal-bodydb{
-    padding: 16px;
-}
-
-.modal-labeldb{
-    display: block;
-    font-size: 15px;
-    margin-bottom: 12px;
-}
-
-.modal-inputdb{
-    border: 1px solid #ccc;
-    width: 100%;
-    padding: 10px;
-    font-size: 15px;
-    margin-bottom: 20px;
-}
-
 #buy-ticket{
     background: #ee183c;
     border: none;
@@ -595,6 +530,7 @@ html{
 
 .map-section img{
     width: 100%;
+    margin-bottom: 80px;
 }
 
 .footer{

@@ -4,5 +4,6 @@ const dangkyonlineController = require('../app/controllers/dangkyonlineControlle
 
 router.post('/dangkyonline', dangkyonlineController.store)
 router.get('/',dangkyonlineController.index)
+router.post('/dangkiskdb', dangkyonlineController.store2)
 
 module.exports = router
