@@ -12,9 +12,14 @@
     <h2 class="my-4" style="color: red;">THỐNG KÊ THEO THÁNG</h2>
     
      <form action="/admin/thongke/thongkethang/getInfo" method="POST">
-        <div>
-            <input class="form-control" id="myInput" type="Month" name="selectedMonth" style="float: left" >
-            <input type="submit"  value="Thống kê" style="margin-bottom: 30px">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <input class="form-control py-4" id="myInput" type="Month" name="selectedMonth" style="float: left" >
+            </div>
+            <div class="col-4" ">
+                <input  type="submit"  value="Thống kê" style="margin-bottom: 30px; width: 60%; ">
+            </div>
         </div>
     </form>
     <div style="padding-bottom: 20px">Tổng doanh thu: {{totalProfit}} VND.</div>

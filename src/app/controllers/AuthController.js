@@ -80,7 +80,7 @@ class AuthController{
         res.render('auth/changePassword')
     }
     //[POST] /changepassword
-    change(req,res){
+        change(req,res){
         //console.log(req.body)
         console.log(req.cookies.token)
         const token = req.cookies.token;
@@ -91,13 +91,17 @@ class AuthController{
             const isValidPassword = bcrypt.compareSync(req.body.currentPassword, data.password);
             if(isValidPassword){
                 data.password = req.body.nextPassword;
-                data.save();
-                return res.redirect('/admin');
+                data.save()
+                .then(()=>{
+                    return res.redirect('/admin')
+                    }
+                )
+                
             }
-            else return res.render('auth/changePassword', {success : "false"});
+            else return res.render('auth/changePassword', {success : true});
         })
         .catch(err=>{
-            return res.render('auth/changePassword', {success : "false"});
+            return res.render('auth/changePassword', {success : true});
         })
     }
 
