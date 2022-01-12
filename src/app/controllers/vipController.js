@@ -11,7 +11,7 @@ class vipController {
                     vips: transform.mutipleMongooseToObject(vips),
                 });
             })
-            .catch(next);
+            .catch(err => next(err));
     }
 
     showAllHistories(req, res, next) {
@@ -21,7 +21,7 @@ class vipController {
                     histories: transform.mutipleMongooseToObject(histories),
                 });
             })
-            .catch(next);
+            .catch(err => next(err));
     }
 
     showHistory(req, res, next) {
@@ -31,7 +31,7 @@ class vipController {
                     histories: transform.mutipleMongooseToObject(histories),
                 });
             })
-            .catch(next);
+            .catch(err => next(err));
     }
 
     create(req, res) {
@@ -98,6 +98,7 @@ class vipController {
                     remainTime: ((khvip.expiryDate.getTime() - Date.now()) / 86400000).toFixed()
                 })
             })
+            .catch(err => next(err))
     }
 
     update(req, res, next) {
@@ -135,13 +136,14 @@ class vipController {
                     .then(() => {
                         res.redirect('/admin/vip/' + khvip._id)
                     })
+                    .catch(err => next(err))
             })
     }
 
     terminate(req, res, next) {
         Khachhangvip.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('/admin/vip'))
-            .catch(next);
+            .catch(err => next(err));
     }
 }
 

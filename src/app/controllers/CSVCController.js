@@ -18,123 +18,127 @@ ________________________________________________________________________________
 class CSVCController {
     // Lay danh sach khu vui choi
     async getKhuVuiChoi(req, res, next) {
-        try {
-            const KhuVuiChoiList = await KhuVuiChoi.find({}).lean();
-            const CSVCList = await CSVC.find({}).populate('khuvuichoi').lean();
-            //console.log(KhuVuiChoiList, CSVCList)
-            res.render('khu-vui-choi/danh-sach-khu-vui-choi', {KhuVuiChoiList, CSVCList});
-        } catch (err) {
-            next(err);
+            try {
+                const KhuVuiChoiList = await KhuVuiChoi.find({}).lean();
+                const CSVCList = await CSVC.find({}).populate('khuvuichoi').lean();
+                //console.log(KhuVuiChoiList, CSVCList)
+                res.render('khu-vui-choi/danh-sach-khu-vui-choi', { KhuVuiChoiList, CSVCList });
+            } catch (err) {
+                next(err);
+            }
         }
-    }
-    // Hien thi form them khu vui choi
+        // Hien thi form them khu vui choi
     createKhuVuiChoiForm(req, res) {
-        res.render('khu-vui-choi/them-khu-vui-choi');
-    }
-    // Tao moi 1 khu vui choi
+            res.render('khu-vui-choi/them-khu-vui-choi');
+        }
+        // Tao moi 1 khu vui choi
     async createKhuVuiChoi(req, res, next) {
-        try {
-            const {id} = req.params;
-            const khuvuichoi = new KhuVuiChoi(req.body);
-            await khuvuichoi.save();
-            res.redirect('/admin/khuvuichoi');
-        } catch (err) {
-            next(err);
+            try {
+                const { id } = req.params;
+                const khuvuichoi = new KhuVuiChoi(req.body);
+                await khuvuichoi.save();
+                res.redirect('/admin/khuvuichoi');
+            } catch (err) {
+                next(err);
+            }
         }
-    }
-    // Xem chi tiet 1 khu vui choi
+        // Xem chi tiet 1 khu vui choi
     async getKhuVuiChoiDetail(req, res, next) {
-        try {
-            const {id} = req.params;
-            const khuvuichoi = await KhuVuiChoi.findById(id).populate('CSVC').lean();
-            res.render('khu-vui-choi/chi-tiet-khu-vui-choi', {khuvuichoi});
-        } catch (err) {
-            next(err);
+            try {
+                const { id } = req.params;
+                const khuvuichoi = await KhuVuiChoi.findById(id).populate('CSVC').lean();
+                res.render('khu-vui-choi/chi-tiet-khu-vui-choi', { khuvuichoi });
+            } catch (err) {
+                next(err);
+            }
         }
-    }
-    // Sua chi tiet 1 khu vui choi
+        // Sua chi tiet 1 khu vui choi
     async updateKhuVuiChoiForm(req, res, next) {
         try {
-            const {id} = req.params;
+            const { id } = req.params;
             const khuvuichoi = await KhuVuiChoi.findById(id).lean();
-            res.render('khu-vui-choi/sua-khu-vui-choi', {khuvuichoi})
+            res.render('khu-vui-choi/sua-khu-vui-choi', { khuvuichoi })
         } catch (err) {
             next(err);
         }
     }
     async updateKhuVuiChoi(req, res, next) {
-        try {
-            const {id} = req.params;
-            await KhuVuiChoi.findByIdAndUpdate(id, req.body);
-            res.redirect(`/admin/khuvuichoi/${id}`);
-        } catch (err) {
-            next(err);
+            try {
+                const { id } = req.params;
+                await KhuVuiChoi.findByIdAndUpdate(id, req.body);
+                res.redirect(`/admin/khuvuichoi/${id}`);
+            } catch (err) {
+                next(err);
+            }
         }
-    }
-    // Xoa 1 khu vui choi
+        // Xoa 1 khu vui choi
     async deleteKhuVuiChoi(req, res, next) {
-        try {
-            const {id} = req.params;
-            await KhuVuiChoi.findByIdAndDelete(id, req.body);
-            res.redirect('/admin/khuvuichoi');
-        } catch (err) {
-            next(err);
+            try {
+                const { id } = req.params;
+                await KhuVuiChoi.findByIdAndDelete(id, req.body);
+                res.redirect('/admin/khuvuichoi');
+            } catch (err) {
+                next(err);
+            }
         }
-    }
-    // Xem chi tiet CSVC
-    async CSVCDetail (req, res, next) {
-        try {
-            const {id, idCsvc} = req.params; // id cua KhuVuiChoi
-            const csvc = await CSVC.findById(idCsvc).lean();
-            res.render('csvc/chi-tiet-csvc', {csvc, id});
-        } catch (err) {
-            next(err);
+        // Xem chi tiet CSVC
+    async CSVCDetail(req, res, next) {
+            try {
+                const { id, idCsvc } = req.params; // id cua KhuVuiChoi
+                const csvc = await CSVC.findById(idCsvc).lean();
+                res.render('csvc/chi-tiet-csvc', { csvc, id });
+            } catch (err) {
+                next(err);
+            }
         }
-    }
-    // Tao moi CSVC
+        // Tao moi CSVC
     createCSVCform(req, res) {
-        const {id} = req.params;
-        res.render('csvc/them-csvc', {id});
+        const { id } = req.params;
+        res.render('csvc/them-csvc', { id });
     }
     async createCSVC(req, res, next) {
-        try {
-            const {id} = req.params; // id cua KhuVuiChoi
-            const khuvuichoi = await KhuVuiChoi.findById(id);
-            const {name, code, status, img} = req.body;
-            const csvc = new CSVC({
-                name: name,
-                code: code,
-                status: status,
-                imageUrl: img
-            });
-            csvc.khuvuichoi = khuvuichoi;
-            khuvuichoi.CSVC.push(csvc); // them CSVC vao danh sach CSVC cua khu vui choi
-            await csvc.save();
-            await khuvuichoi.save();
-            res.redirect(`/admin/khuvuichoi/${id}`);
-        } catch (err) {
-            next(err);
+            try {
+                const { id } = req.params; // id cua KhuVuiChoi
+                const khuvuichoi = await KhuVuiChoi.findById(id);
+                const { name, code, status, img } = req.body;
+                const csvc = new CSVC({
+                    name: name,
+                    code: code,
+                    status: status,
+                    imageUrl: img
+                });
+                csvc.khuvuichoi = khuvuichoi;
+                khuvuichoi.CSVC.push(csvc); // them CSVC vao danh sach CSVC cua khu vui choi
+                await csvc.save();
+                await khuvuichoi.save();
+                res.redirect(`/admin/khuvuichoi/${id}`);
+            } catch (err) {
+                next(err);
+            }
         }
-    }
-    // Sua 1 CSVC
-    async updateCSVCform(req, res) {
-        const {id, idCsvc} = req.params;
-        const csvc = await CSVC.findById(idCsvc).lean();
-        res.render('csvc/sua-csvc', {id, csvc});
+        // Sua 1 CSVC
+    async updateCSVCform(req, res, next) {
+        try {
+            const { id, idCsvc } = req.params;
+            const csvc = await CSVC.findById(idCsvc).lean();
+            res.render('csvc/sua-csvc', { id, csvc });
+        } catch (err) {
+            next(err)
+        }
     }
     async updateCSVC(req, res, next) {
-        try {
-            const {id, idCsvc} = req.params; // id cua KhuVuiChoi
-            await CSVC.findByIdAndUpdate(idCsvc, req.body);
-            res.redirect(`/admin/khuvuichoi/${id}`);
-        } catch (err) {
-            next(err);
+            try {
+                const { id, idCsvc } = req.params; // id cua KhuVuiChoi
+                await CSVC.findByIdAndUpdate(idCsvc, req.body);
+                res.redirect(`/admin/khuvuichoi/${id}`);
+            } catch (err) {
+                next(err);
+            }
         }
-    }
-    // Xoa 1 CSVC
+        // Xoa 1 CSVC
     async deleteCSVC(req, res, next) {
         try {
-            const {id, idCsvc} = req.params; // id cua KhuVuiChoi
+            const { id, idCsvc } = req.params; // id cua KhuVuiChoi
             await CSVC.findByIdAndDelete(idCsvc, req.body);
             res.redirect(`/admin/khuvuichoi/${id}`);
         } catch (err) {

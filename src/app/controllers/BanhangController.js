@@ -176,7 +176,7 @@ class BanhangController {
             // console.log(orderInfo)
             // console.log(orderInfo)
             // check vip customer
-        console.log('orderInfo: ' + orderInfo)
+            // console.log('orderInfo: ' + orderInfo)
         const phoneNumber = req.body.phoneNumber
         console.log(phoneNumber)
         const productIds = []
@@ -228,7 +228,6 @@ class BanhangController {
 
     // [POST] /admin/banhang/taodonhang
     postCreateOrder(req, res, next) {
-        console.log('req.body ' + req.body)
 
         const productOrderList = []
         const productOrderQuantity = []

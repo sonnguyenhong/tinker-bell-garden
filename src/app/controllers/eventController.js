@@ -12,12 +12,12 @@
                      events: mutipleMongooseToObject(events)
                  })
              })
-             .catch(next);
+             .catch(err => next(err));
      }
 
      showAddEvent(req, res, next) {
-         res.render('sukien/addEvent',{
-            success: false
+         res.render('sukien/addEvent', {
+             success: false
          })
      }
 
@@ -28,7 +28,7 @@
                      event: mongooseToObject(event)
                  })
              })
-             .catch(next);
+             .catch(err => next(err));
      }
 
      store(req, res, next) {
@@ -40,11 +40,11 @@
                  ...req.body,
                  imageUrl: '/img/' + image.name
              }, (err) => {
-                 if (err)  res.render('sukien/addEvent',{
-                    success: 'Thêm không thành công'
+                 if (err) res.render('sukien/addEvent', {
+                     success: 'Thêm không thành công'
                  })
-                 else  res.render('sukien/addEvent',{
-                    success: 'Đã thêm sự kiện thành công'
+                 else res.render('sukien/addEvent', {
+                     success: 'Đã thêm sự kiện thành công'
                  })
              })
          })
@@ -55,7 +55,7 @@
              .then(event => {
                  res.redirect('/admin/event')
              })
-             .catch(next)
+             .catch(err => next(err))
      }
 
      updateEvent(req, res, next) {
@@ -67,7 +67,7 @@
          let eve = req.body;
          if (image) eve.imageUrl = '/img/' + image.name;
          Event.findByIdAndUpdate(req.params.id, eve, (err, event) => {
-             if (err) console.log(err)
+             if (err) next(err)
              res.redirect('/admin/event/' + req.params.id)
          })
      }
