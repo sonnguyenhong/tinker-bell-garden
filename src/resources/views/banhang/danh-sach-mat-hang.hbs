@@ -1,8 +1,8 @@
 {{> header}}
 
 <div class="container">
-    <h4 class="my-4" style="color: red;">QUẢN LÝ MẶT HÀNG</h4>
-    <button onclick="location.href='/admin/banhang/themmathang'" class="btn btn-primary col-3 mb-5">THÊM MẶT HÀNG</button>
+    <h4  style="text-align: center;" class="">DANH SÁCH MẶT HÀNG</h4>
+    <button onclick="location.href='/admin/banhang/themmathang'" style="background-color: #C43030; color: white; margin-top: -15px; margin-left: -15px" class="btn mb-3">THÊM MẶT HÀNG</button>
     <div class="row">
         <table class="table">
             <thead>
@@ -17,7 +17,7 @@
             <tbody>
                 {{#each products}}
                     <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{sum @index 1}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.price}}</td>
                     <td>{{this.quantity}}</td>

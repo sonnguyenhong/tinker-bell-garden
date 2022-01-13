@@ -130,7 +130,6 @@ class thongkeController {
 
 
 
-
         totalProfit = totalTicketProfit + totalProductProfit;
         //console.log(arr);
         //return res.send('ok');
@@ -269,6 +268,7 @@ class thongkeController {
             }
             thongKeBanHang.push(temp);
         }
+
 
         totalProfit = totalProductProfit + totalTicketProfit;
 

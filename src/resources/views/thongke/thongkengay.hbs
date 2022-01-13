@@ -40,7 +40,7 @@
             <tbody id="myTableTicket">
                 {{#each ticket}}
                 <tr>
-                    <th scope="row">{{@index}}</th>
+                    <th scope="row">{{sum @index 1}}</th>
                     <td>
                         {{#if (checkTicketType this.ticketType)}}
                             <p>2h/lượt</p>
@@ -71,7 +71,7 @@
             <tbody id="myTableProduct">
                 {{#each product}}
                 <tr>
-                    <th scope="row">{{@index}}</th>
+                    <th scope="row">{{sum @index 1}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.number}}</td>
                     <td>{{this.profit}} VND</td>

@@ -61,7 +61,7 @@
             <tbody id="myTableProduct">
                 {{#each products}}
                 <tr>
-                    <th scope="row">{{@index}}</th>
+                    <th scope="row">{{sum @index 1}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.number}}</td>
                     <td>{{this.profit}} VND</td>
