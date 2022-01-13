@@ -8,7 +8,7 @@ const authMiddleware = require('../app/middleware/auth')
 const CSVCRoutes = require('./CSVCRoutes')
 
 function route(app) {
-    app.use('/', authMiddleware.requireAuth)
+   // app.use('/', authMiddleware.requireAuth)
     app.use('/admin/banhang', banhangRoutes)
     app.use('/admin/event', adminEventRouter)
     app.use('/admin/vip', vipRouter)
