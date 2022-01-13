@@ -1,4 +1,5 @@
     <link rel="stylesheet" href="/css/banve.css">
+    <link rel="stylesheet" href="/css/csvc.css">
 
 {{> header}}
 
@@ -56,12 +57,12 @@
 
                     <h5>Số vé đang chơi: {{quantity}} vé</h5>
 
-                    {{#if error}}
-                        <p style="text-align: center; color: red; margin-top: 10px;">{{{errorMessage}}}</p>
-                    {{else}}
-                        <p style="color: green;">{{message}}</p>
+                    {{#if isOrder}}
+                        <p>Họ và tên: {{orderInfo.name}}</p>
+                        <p>Số điện thoại: {{orderInfo.phoneNum}}</p>
+                        <p>Số lượng vé 2h/lượt: {{orderInfo.numberOfTwoHoursTicket}}</p>
+                        <p>Số lượng vé không giới hạn: {{orderInfo.numberOfUnlimitedTicket}}</p>
                     {{/if}}
-
                 </div>
 
                 <div style="width: 100px" class="col-sm-">
@@ -71,9 +72,10 @@
 
                 <div style="margin-top: 50px;" class="col ">
                     <h3 style="text-align: center;">DANH SÁCH VÉ</h3>
-
+                    <label for="myInput">Tìm trạng thái vé</label>
+                    <input type="text" class='form-control' id="myInput" onkeyup="myFunction()" placeholder="Tìm trạng thái vé ...">
                     <div class="ticketTable overFlowY">
-                        <table class="table">
+                        <table id="ticketTable" class="table">
                             <thead>
                                 <tr>
                                 <th scope="col">#</th>
@@ -113,6 +115,8 @@
         </div>
     </div>
 
+    
+
     <!-- Modal -->
     <div class="modal fade" id="banvevaokhuvuichoi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -148,12 +152,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <label for="phoneNumber">Nhập số điện thoại</label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" aria-describedby="emailHelp" placeholder="Nhập SĐT">
+                <form id="ticketOrderForm" method="POST" action="/admin/banve/banvedattruoc">
+                    <label for="phoneNumber">Nhập số điện thoại</label>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" aria-describedby="emailHelp" placeholder="Nhập SĐT">
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary">Kiểm tra đơn đặt vé</button>
+                <button type="submit" class="btn btn-primary" form="ticketOrderForm">Kiểm tra đơn đặt vé</button>
             </div>
             </div>
         </div>
@@ -184,3 +190,52 @@
     </div>
 
 {{> footer}}
+
+                    {{!-- {{#if error}}
+                        <p style="text-align: center; color: red; margin-top: 10px;">{{{errorMessage}}}</p>
+                    {{else}}
+                        <p style="color: green;">{{message}}</p>
+                    {{/if}} --}}
+
+{{#if error}}
+    <div class="my-modal">
+        <div class="modal__inner sticky-top">
+            <div class="modal__header">
+                <h5>Tinker Bell Garden</h5>
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal__body">
+                <p style="text-align: center; color: red;">{{{errorMessage}}}</p>
+            </div>
+            <div class="modal__footer">
+                <a href="/admin/banve" style="text-decoration: none;">
+                    <button>Trở lại</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{{/if}}
+
+<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("ticketTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[3];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

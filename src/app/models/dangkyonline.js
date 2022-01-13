@@ -19,6 +19,10 @@ const dangkyonlineSchema = new Schema({
     },
     numberOfUnlimitedTicket: {
         type: Number
+    },
+    status: {
+        type: Boolean,
+        required: true
     }
 }, {
     timestamps: true
