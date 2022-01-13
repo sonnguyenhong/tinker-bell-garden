@@ -4,15 +4,15 @@ const { Schema } = mongoose
 const dangkyonlineSchema = new Schema({
     name: {
         type: String,
-        required
+        required: true
     },
     email: {
         type: String,
-        required
+        required: true
     },
     phoneNum: {
         type: String,
-        required
+        required: true
     },
     numberOfTwoHoursTicket: {
         type: Number
