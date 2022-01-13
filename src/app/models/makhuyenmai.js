@@ -17,7 +17,11 @@ const makhuyenmaiSchema = new Schema({
     quantity: {
         type: Number,
         required: true
-    }
+    },
+    enddate: {
+        type: Date,
+        required:true
+    },
 }, {
     timestamps: true
 })

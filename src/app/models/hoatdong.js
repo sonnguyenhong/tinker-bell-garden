@@ -22,6 +22,10 @@ const hoatdongSchema = new Schema({
         type: Number,
         required:true
     },
+    discount: {
+        type: Number,
+        required:true
+    },
     imageUrl: {
         type: String,
         required:true
@@ -33,6 +37,10 @@ const hoatdongSchema = new Schema({
     }]
 }, {
     timestamps: true
+})
+
+hoatdongSchema.post('save', function(hoatdong){
+    hoatdong.currentNumofDiscountCode = hoatdong.numberOfDiscountCode
 })
 
 module.exports = mongoose.model('Hoatdong', hoatdongSchema)

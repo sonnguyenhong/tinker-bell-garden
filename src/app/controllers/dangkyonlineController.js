@@ -1,6 +1,8 @@
 const dangkyon = require('../models/dangkyonline')
 const dkonskdb = require('../models/makhuyenmai')
+const sukien = require('../models/hoatdong')
 const { mutipleMongooseToObject } = require('../../util/mongoose')
+const { events } = require('../models/dangkyonline')
 
 class DangkyonlineController{
     store(req, res, next){
@@ -29,21 +31,45 @@ class DangkyonlineController{
         const magiamgia = new dkonskdb(
             {
             code: req.body.phoneNum,
-            discount: 20,
+            discount: red.body.discount,
             quantity: c,
-            status: true
+            status: true,
+            enddate: req.body.endDate
         })
         
-        magiamgia.save()
-        dkonline.save().then(() => {
-            res.redirect("/")
+        sukien.find().lean()
+        .then(events => {
+            events = events.filter(e => {
+                return (e.endDate > Date.now() && Date.now() > e.startDate)
+            })
+            var a = events[0].currentNumofDiscountCode
+            sukien.findByIdAndUpdate(events[0]._id, {currentNumofDiscountCode: a + 1},(err,e)=>
+            {magiamgia.save()
+                dkonline.save().then(() => {
+                    res.redirect("/")
+                })})
         })
-    }
 
+    }
 
     index(req, res){
-        res.render('home')
+        sukien.find().lean()
+        .then(events => {
+            events = events.filter(e => {
+                return (e.endDate > Date.now() && Date.now() > e.startDate)
+            })
+
+            var ticNum = []
+            ticNum[0] = 0
+            for(var i = 0; i < events.length; i++){
+                ticNum[i] = Number(events[i].numberOfDiscountCode) - Number(events[i].currentNumofDiscountCode)
+
+            }
+            res.render('home', {ticNum})
+        })
+        
     }
+
 }
 
 module.exports = new DangkyonlineController
