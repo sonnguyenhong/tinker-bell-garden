@@ -4,6 +4,7 @@ const VipCustomer = require('../models/khachhangvip')
 const DiscountCode = require('../models/makhuyenmai')
 const TicketOrder = require('../models/donhangve')
 const VipHistory = require('../models/lichsucapnhat')
+const OnlineOrder = require('../models/dangkyonline')
 
 class BanveController {
 
@@ -80,6 +81,48 @@ class BanveController {
                         .catch(err => next(err))
                 }
             })
+    }
+
+    // [POST] /admin/banve/banvedattruoc
+    postCheckOrderTicket(req, res, next) {
+        const phoneNumber = req.body.phoneNumber
+        OnlineOrder.findOne({ phoneNum: phoneNumber, status: true }).lean()
+            .then(order => {
+                console.log(order)
+                if (!order) {
+                    console.log('ok')
+                    Ticket.find({}).lean()
+                        .then(tickets => {
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        quantity: numberOfTickets,
+                                        error: true,
+                                        errorMessage: 'Số điện thoại không đúng hoặc bạn chưa đặt vé thành công'
+                                    })
+                                })
+                        })
+                } else {
+                    Ticket.find({}).lean()
+                        .then(tickets => {
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    OnlineOrder.findOneAndUpdate({ phoneNum: phoneNumber, status: true }, { status: false })
+                                        .then(result => {
+                                            res.render('banve/ban-ve', {
+                                                tickets: tickets,
+                                                quantity: numberOfTickets,
+                                                isOrder: true,
+                                                message: 'Bạn đã đặt vé. Thông tin chi tiết: ',
+                                                orderInfo: order
+                                            })
+                                        })
+                                })
+                        })
+                }
+            })
+            .catch(err => next(err))
     }
 
     // [POST] /admin/banve/ketthucchoi

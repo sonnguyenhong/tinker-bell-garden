@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 // password: tinkerbellgarden
 class AuthController {
     //[POST] Login
-    login(req, res) {
+    login(req, res, next) {
         // var form = req.body
         //console.log(req.body)
         // form.name = 'admin1'
