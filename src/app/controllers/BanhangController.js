@@ -313,6 +313,8 @@ class BanhangController {
                                         var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                                         const ls = new VipHistory({
                                             updateAt: date,
+                                            phoneNumber: vipCustomer.phoneNumber,
+                                            email: vipCustomer.email,
                                             oldName: vipCustomer.name,
                                             newName: vipCustomer.name,
                                             oldAddress: vipCustomer.address,
@@ -320,7 +322,7 @@ class BanhangController {
                                             oldPoints: vipCustomer.points,
                                             newPoints: vipCustomer.points - parseInt(req.body.usePoints),
                                             oldExpiryDate: vipCustomer.expiryDate,
-                                            newExpiryDate: vipCustomer.expiriDate,
+                                            newExpiryDate: vipCustomer.expiryDate,
                                             describe: "Mua hàng sử dụng " + req.body.usePoints + " điểm.",
                                             khachhang: vipCustomer._id
                                         })
