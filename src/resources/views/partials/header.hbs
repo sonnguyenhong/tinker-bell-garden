@@ -11,6 +11,7 @@
                     <li class="nav-item px-2">
                         <a class="nav-link mt-3 mb-3" href="/admin/banve">Bán vé</a>
                         <hr class="item-hover hide">
+                        <hr class="item-hover-white">
                         <div style="min-width: 120px; left: -22px; text-align: center;" class="dropdown-content">
                             <a class="nav-link mt-3" href="/admin/thongke/thongkengay">Bắt đầu chơi</a>
                             <div class="dropdown-divider"></div>
@@ -62,13 +63,16 @@
 
 <script>
     const itemHover = document.querySelectorAll(".item-hover");
+    const itemHoverWhite = document.querySelectorAll(".item-hover-white");
     const navItem = document.querySelectorAll(".nav-item");
 
     navItem[0].addEventListener("mouseover", function() {
         itemHover[0].classList.remove("hide");
+        itemHoverWhite[0].classList.add("hide");
     });
     navItem[0].addEventListener("mouseout", function() {
         itemHover[0].classList.add("hide");
+        itemHoverWhite[0].classList.remove("hide");
     });
 
     navItem[1].addEventListener("mouseover", function() {
