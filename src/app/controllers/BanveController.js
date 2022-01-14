@@ -454,7 +454,7 @@ class BanveController {
                                                 oldPoints: vipCustomer.points,
                                                 newPoints: vipCustomer.points - parseInt(req.body.usePoints),
                                                 oldExpiryDate: vipCustomer.expiryDate,
-                                                newExpiryDate: vipCustomer.expiriDate,
+                                                newExpiryDate: vipCustomer.expiryDate,
                                                 describe: "Mua vé sử dụng " + req.body.usePoints + " điểm.",
                                                 khachhang: vipCustomer._id
                                             })
@@ -506,7 +506,7 @@ class BanveController {
                                                 oldPoints: vipCustomer.points,
                                                 newPoints: vipCustomer.points - parseInt(req.body.usePoints),
                                                 oldExpiryDate: vipCustomer.expiryDate,
-                                                newExpiryDate: vipCustomer.expiriDate,
+                                                newExpiryDate: vipCustomer.expiryDate,
                                                 describe: "Mua vé sử dụng " + req.body.usePoints + " điểm.",
                                                 khachhang: vipCustomer._id
                                             })
