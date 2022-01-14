@@ -8,9 +8,11 @@ const authRouter = require('./authRoute')
 const authMiddleware = require('../app/middleware/auth')
 const CSVCRoutes = require('./CSVCRoutes')
 const errorController = require('../app/controllers/ErrorController')
+const homeRoutes = require('./homeRoutes')
 
 function route(app) {
     app.use('/', authMiddleware.requireAuth)
+    app.use('/admin', homeRoutes)
     app.use('/admin/banhang', banhangRoutes)
     app.use('/admin/event', adminEventRouter)
     app.use('/admin/vip', vipRouter)
