@@ -1,20 +1,34 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
+const CSVC = require('./cosovatchat');
 
 const khuvuichoiSchema = new Schema({
     name: {
         type: String,
-        required
+        required: true
     },
-    activity: {
-        type: String
+    description: {
+        type: String,
+        required: true
     },
-    cosovatchat: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Cosovatchat'
-    }]
+    CSVC: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Cosovatchat'
+        }
+    ]
 }, {
     timestamps: true
 })
+
+khuvuichoiSchema.post('findOneAndDelete', async(khuvuichoi) => {
+    // console.log('ayy');
+    await CSVC.deleteMany({
+        _id: {
+            $in: khuvuichoi.CSVC
+        }
+    })
+})
+
 
 module.exports = mongoose.model('Khuvuichoi', khuvuichoiSchema)

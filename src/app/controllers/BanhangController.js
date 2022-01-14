@@ -176,7 +176,7 @@ class BanhangController {
             // console.log(orderInfo)
             // console.log(orderInfo)
             // check vip customer
-        console.log(orderInfo)
+            // console.log('orderInfo: ' + orderInfo)
         const phoneNumber = req.body.phoneNumber
         console.log(phoneNumber)
         const productIds = []
@@ -228,18 +228,18 @@ class BanhangController {
 
     // [POST] /admin/banhang/taodonhang
     postCreateOrder(req, res, next) {
-        console.log(req.body)
 
         const productOrderList = []
         const productOrderQuantity = []
         for (var key in req.body) {
+            console.log('key: ' + key)
             if (key !== 'vipId' && key !== 'usePoints') {
                 productOrderList.push(mongoose.Types.ObjectId(key))
                 productOrderQuantity.push(req.body[key])
             }
         }
-        // console.log(productOrderList)
-        // console.log(productOrderQuantity)
+        console.log(productOrderList)
+        console.log(productOrderQuantity)
 
         const products = []
         for (let i = 0; i < productOrderList.length; i++) {
@@ -259,7 +259,7 @@ class BanhangController {
         // }
 
         let hasDiscount = true
-        if (req.body.vipId === undefined) {
+        if (req.body.vipId === undefined || req.body.vipId === '') {
             hasDiscount = false
         }
         console.log(req.body.vipId)
@@ -268,7 +268,7 @@ class BanhangController {
 
         Product.find({ "_id": { "$in": productOrderList } }).lean()
             .then(prods => {
-                // console.log(prods)
+                console.log('prods ' + prods)
                 for (let i = 0; i < prods.length; i++) {
                     totalPrice += prods[i].price * req.body[prods[i]._id.toString()]
                 }
@@ -307,7 +307,7 @@ class BanhangController {
 
                                 order.save()
                                     .then(result => {
-                                        console.log(products)
+                                        console.log('prods 1: ' + prods)
 
                                         var today = new Date();
                                         var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();

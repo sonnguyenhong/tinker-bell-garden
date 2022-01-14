@@ -4,6 +4,7 @@ const VipCustomer = require('../models/khachhangvip')
 const DiscountCode = require('../models/makhuyenmai')
 const TicketOrder = require('../models/donhangve')
 const VipHistory = require('../models/lichsucapnhat')
+const OnlineOrder = require('../models/dangkyonline')
 
 class BanveController {
 
@@ -34,20 +35,28 @@ class BanveController {
                 if (!ticket) {
                     Ticket.find({}).lean()
                         .then(tickets => {
-                            res.render('banve/ban-ve', {
-                                tickets: tickets,
-                                error: true,
-                                errorMessage: 'Không tồn tại vé'
-                            })
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        error: true,
+                                        errorMessage: 'Không tồn tại vé',
+                                        quantity: numberOfTickets
+                                    })
+                                })
                         })
                 } else if (ticket.isPlaying === true) {
                     Ticket.find({}).lean()
                         .then(tickets => {
-                            res.render('banve/ban-ve', {
-                                tickets: tickets,
-                                error: true,
-                                errorMessage: 'Vé đã bắt đầu chơi'
-                            })
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        error: true,
+                                        errorMessage: 'Vé đã bắt đầu chơi',
+                                        quantity: numberOfTickets
+                                    })
+                                })
                         })
                 } else {
                     console.log(Date.now())
@@ -59,15 +68,61 @@ class BanveController {
                         .then(result => {
                             Ticket.find({}).lean()
                                 .then(tickets => {
-                                    res.render('banve/ban-ve', {
-                                        tickets: tickets,
-                                        message: 'Vào chơi thành công'
-                                    })
+                                    Ticket.countDocuments({ isPlaying: true }).lean()
+                                        .then(numberOfTickets => {
+                                            res.render('banve/ban-ve', {
+                                                tickets: tickets,
+                                                message: 'Vào chơi thành công',
+                                                quantity: numberOfTickets
+                                            })
+                                        })
                                 })
                         })
                         .catch(err => next(err))
                 }
             })
+    }
+
+    // [POST] /admin/banve/banvedattruoc
+    postCheckOrderTicket(req, res, next) {
+        const phoneNumber = req.body.phoneNumber
+        OnlineOrder.findOne({ phoneNum: phoneNumber, status: true }).lean()
+            .then(order => {
+                console.log(order)
+                if (!order) {
+                    console.log('ok')
+                    Ticket.find({}).lean()
+                        .then(tickets => {
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        quantity: numberOfTickets,
+                                        error: true,
+                                        errorMessage: 'Số điện thoại không đúng hoặc bạn chưa đặt vé thành công'
+                                    })
+                                })
+                        })
+                } else {
+                    Ticket.find({}).lean()
+                        .then(tickets => {
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    OnlineOrder.findOneAndUpdate({ phoneNum: phoneNumber, status: true }, { status: false })
+                                        .then(result => {
+                                            res.render('banve/ban-ve', {
+                                                tickets: tickets,
+                                                quantity: numberOfTickets,
+                                                isOrder: true,
+                                                message: 'Bạn đã đặt vé. Thông tin chi tiết: ',
+                                                orderInfo: order
+                                            })
+                                        })
+                                })
+                        })
+                }
+            })
+            .catch(err => next(err))
     }
 
     // [POST] /admin/banve/ketthucchoi
@@ -78,20 +133,28 @@ class BanveController {
                 if (!ticket) {
                     Ticket.find({}).lean()
                         .then(tickets => {
-                            res.render('banve/ban-ve', {
-                                tickets: tickets,
-                                error: true,
-                                errorMessage: 'Không tồn tại vé'
-                            })
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        error: true,
+                                        errorMessage: 'Không tồn tại vé',
+                                        quantity: numberOfTickets
+                                    })
+                                })
                         })
                 } else if (ticket.isPlaying === false) {
                     Ticket.find({}).lean()
                         .then(tickets => {
-                            res.render('banve/ban-ve', {
-                                tickets: tickets,
-                                error: true,
-                                errorMessage: 'Vé chưa bắt đầu chơi'
-                            })
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        error: true,
+                                        errorMessage: 'Vé chưa bắt đầu chơi',
+                                        quantity: numberOfTickets
+                                    })
+                                })
                         })
                 } else {
                     res.render('banve/thanh-toan', {

@@ -1,10 +1,14 @@
 {{> header}}
 
 <div class="container">
-    <h4 class="my-4" style="color: red;">QUẢN LÝ MẶT HÀNG</h4>
-    <button onclick="location.href='/admin/banhang/themmathang'" class="btn btn-primary col-3 mb-5">THÊM MẶT HÀNG</button>
+    <h4  style="text-align: center;" class="">DANH SÁCH MẶT HÀNG</h4>
+    <button onclick="location.href='/admin/banhang/themmathang'" style="background-color: #C43030; color: white; margin-top: -15px; margin-left: -15px" class="btn mb-3">THÊM MẶT HÀNG</button>
+    <div>
+        <label for="myInput">Tìm mặt hàng</label>
+        <input type="text" class='form-control mb-5' id="myInput" onkeyup="myFunction()" placeholder="Tên mặt hàng ...">
+    </div>
     <div class="row">
-        <table class="table">
+        <table id="productTable" class="table">
             <thead>
                 <tr>
                 <th scope="col">#</th>
@@ -17,7 +21,7 @@
             <tbody>
                 {{#each products}}
                     <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{sum @index 1}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.price}}</td>
                     <td>{{this.quantity}}</td>
@@ -35,3 +39,27 @@
     </div>
 </div>
 {{> footer}}
+
+<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("productTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

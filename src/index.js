@@ -11,6 +11,15 @@ const db = require('./config/db/index')
 const app = express()
 const port = 3000
 
+// cookie bodyparser
+
+const bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
+
 // Connect to db
 db.connect()
 
@@ -55,14 +64,17 @@ app.engine('hbs', engine({
         _mul: (a, b) => a * b,
         sum: (a, b) => a + b,
         toString2: (a) => {
-            return  String(a.getDate()).padStart(2, '0') + '-' + String((a.getMonth() + 1)).padStart(2, '0')+ '-' +a.getFullYear() 
+            return String(a.getDate()).padStart(2, '0') + '-' + String((a.getMonth() + 1)).padStart(2, '0') + '-' + a.getFullYear()
         },
         toString: (a) => {
-            return a.getFullYear() + '-' + String((a.getMonth() + 1)).padStart(2, '0')+ '-' + String(a.getDate()).padStart(2, '0')
+            return a.getFullYear() + '-' + String((a.getMonth() + 1)).padStart(2, '0') + '-' + String(a.getDate()).padStart(2, '0')
         },
         checkTicketType: (type) => {
             if (type === 0) return true
             return false
+        },
+        helper: {
+            sum: (a, b) => a + b,
         }
     }
 }))
@@ -72,6 +84,10 @@ app.set('views', path.join(__dirname, 'resources', 'views'))
 // console.log(path.join(__dirname, 'resources', 'views'))
 
 route(app)
+
+app.use((error, req, res, next) => {
+    res.render('error/500')
+})
 
 app.listen(port, () => {
     console.log(`TinkerBellGarden is listening at http://localhost:${port}`)
