@@ -1,6 +1,37 @@
 <link rel="stylesheet" href="/css/csvc.css">
 
-{{>header}}
+<link rel="stylesheet" href="/css/dropdown.css">
+<div class="header sticky-top" style="background-color: white;">
+    <nav class="navbar navbar-light navbar-expand-lg">
+        <div class="container">
+            <a href="#">
+                <img src="/img/logo.png" alt="logo" class="logo" onclick="location.href='/admin'">
+            </a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item px-2">
+                        <a class="nav-link mt-3 mb-3" href="#carouselExampleSlidesOnly">Khu vui chơi</a>
+                        <hr class="item-hover hide">
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link mt-3 mb-3" href="#info">Thông tin</a>
+                        <hr class="item-hover hide">
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link mt-3 mb-3" href="#order">Đặt vé online</a>
+                        <hr class="item-hover hide">
+                    </li>
+                    <li class="nav-item px-2 dropdown">
+                        <a class="nav-link mt-3 mb-3" href="#map">Bản đồ</a>
+                        <hr class="item-hover hide">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
 <link rel="stylesheet" href="/css/home.css">
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -16,7 +47,7 @@
             </div>
           </div>
         <div id="content">
-            <div class="content-sections">
+            <div id="info" class="content-sections">
                 <h2 class="section-heading">TINKERBELLGARDEN</h2>
                 <h3 class="section-head">Thông tin và giới thiệu</h3>
                 
@@ -40,7 +71,7 @@
                 </div>
             </div>
 
-            <div class="tour-section">
+            <div id="order" class="tour-section">
                 <div class="content-section">
                     <h2 class="section-heading text-white">ĐẶT VÉ ONLINE</h2>
                     <p class="section-motaheading text-white">Remember to book your tickets!</p>
@@ -91,8 +122,9 @@
                 
             </div>
 
-            <div class="content-section">
+            <div id="map" class="content-section">
                 <h2 class="section-heading">Bản đồ</h2>
+            </div>
         </div>
 
         <div class="map-section">
