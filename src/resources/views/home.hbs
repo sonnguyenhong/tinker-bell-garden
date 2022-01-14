@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/css/csvc.css">
+
 {{>header}}
 <link rel="stylesheet" href="/css/home.css">
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
@@ -43,14 +45,12 @@
                     <h2 class="section-heading text-white">ĐẶT VÉ ONLINE</h2>
                     <p class="section-motaheading text-white">Remember to book your tickets!</p>
 
-                    {{#each ticNum}}
+                    {{#if hasEvent}}
+                        <ul class="ticket-list">
+                            <li>Số vé giảm giá sự kiện đặc biệt còn lại : {{sub event.numberOfDiscountCode event.currentNumofDiscountCode}} </li>
+                        </ul>
+                    {{/if}}   
 
-                    <ul class="ticket-list">
-                        <li>Số vé giảm giá sự kiện đặc biệt còn lại : {{this}} </li>
-                    </ul>   
-
-
-                    {{/each}}
 
                 <div class="row place-list">
                     <div class="col-6">
@@ -61,14 +61,18 @@
                                 <button class="buybutton js-buy-ticket" >Buy Tickets</button>
                             </div>
                     </div>
+
+                    {{#if hasEvent}}
                         <div class="col-6">
-                            <img src="./img/chup-anh-khu-vui-choi-tre-em-516family-3-1536x1020.jpg" alt="New York" class="place-img">
+                            <img src="{{event.imageUrl}}" alt="New York" class="place-img">
                             <div class="place-body">
-                                <h3 class="place-heading">Sự kiện đặc biệt</h3>
-                                <p class="place-time">Đăng kí đặt vé sự kiện đặc biệt ngay</p>
-                                <button class="buybutton js-buy-ticket-db" >Buy Tickets</button>
+                                <h3 class="place-heading">{{event.name}}</h3>
+                                <p class="place-time">{{event.eventInfo}}</p>
+                                <button id="buyBtn" class="buybutton js-buy-ticket-db" >Buy Tickets</button>
+                                <p id="soldOutText" style="color: red; float: right; margin-right: 150px; margin-top: 25px"></p>
                             </div>
                         </div>
+                    {{/if}}
 
                         {{!-- <div class="col-6 ">
                             <img src="./img/chup-anh-khu-vui-choi-tre-em-516family-3-1536x1020.jpg" alt="New York" class="place-img">
@@ -240,8 +244,16 @@
         </div>
 
         <script>
-            {{#each ticNum}}
-            if ({{this}} > 0){
+            let buyBtn = document.getElementById('buyBtn')
+            let soldOutText = document.getElementById('soldOutText')
+
+            if({{sub event.numberOfDiscountCode event.currentNumofDiscountCode}} <= 0) {
+                buyBtn.disabled = true
+                soldOutText.innerHTML = 'Hết vé'
+            } 
+
+
+            if ({{sub event.numberOfDiscountCode event.currentNumofDiscountCode}} > 0){
                 const buyBtndb = document.querySelector('.js-buy-ticket-db')
                 const modaldb = document.querySelector('.js-model-db')
                 const modalcontainerdb = document.querySelector('.js-modal-container-db')
@@ -277,7 +289,7 @@
                     event.stopPropagation()
                 })
             }  
-            {{/each}}
+            
             const buyBtns = document.querySelectorAll('.js-buy-ticket')
             const modal = document.querySelector('.js-model')
             const modalcontainer = document.querySelector('.js-modal-container')
@@ -366,3 +378,22 @@
         </script>
 
 {{> footer}}
+
+{{#if error}}
+    <div class="my-modal">
+        <div class="modal__inner sticky-top">
+            <div class="modal__header">
+                <h5>Tinker Bell Garden</h5>
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal__body">
+                <p style="text-align: center; color: red;">{{{errorMessage}}}</p>
+            </div>
+            <div class="modal__footer">
+                <a href="/" style="text-decoration: none;">
+                    <button>Trở lại</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{{/if}}

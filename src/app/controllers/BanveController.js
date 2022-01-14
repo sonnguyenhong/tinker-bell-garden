@@ -208,7 +208,7 @@ class BanveController {
         console.log(ticketInfor)
         console.log(req.body.discountCode)
 
-        DiscountCode.findOne({ code: req.body.discountCode }).lean()
+        DiscountCode.findOne({ code: req.body.discountCode, status: true }).lean()
             .then(discountCode => {
                 console.log(discountCode)
                 if (!discountCode) {
@@ -299,50 +299,66 @@ class BanveController {
                         })
                 } else {
                     console.log('Đã tìm thấy mã rồi nhé :3')
-                    VipCustomer.findOne({ phoneNumber: req.body.phoneNumber }).lean()
-                        .then(vipCustomer => {
-                            if (!vipCustomer) {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            hasDiscount: true,
-                                            discountInfo: discountCode,
-                                            isVipError: true,
-                                            vipErrorMessage: 'Không tồn tại khách hàng VIP'
-                                        })
-                                    })
-                            } else if (vipCustomer.expiryDate < Date.now()) {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            hasDiscount: true,
-                                            discountInfo: discountCode,
-                                            isVip: true,
-                                            isVipError: true,
-                                            vipErrorMessage: 'Khách hàng VIP đã hết hạn'
-                                        })
-                                    })
-                            } else {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            hasDiscount: true,
-                                            discountInfo: discountCode,
-                                            isVip: true,
-                                            vipInfo: vipCustomer
-                                        })
-                                    })
-                            }
+                    if (discountCode.quantity > 0) {
+                        discountCode.quantity = discountCode.quantity - 1
+                        if (discountCode.quantity === 0) {
+                            discountCode.status = false
+                        }
+                    }
+
+                    DiscountCode.findByIdAndUpdate(discountCode._id, { discountCode })
+                        .then(result => {
+                            console.log('Saving')
+                            VipCustomer.findOne({ phoneNumber: req.body.phoneNumber }).lean()
+                                .then(vipCustomer => {
+                                    if (!vipCustomer) {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    hasDiscount: true,
+                                                    discountInfo: discountCode,
+                                                    isVipError: true,
+                                                    vipErrorMessage: 'Không tồn tại khách hàng VIP'
+                                                })
+                                            })
+                                    } else if (vipCustomer.expiryDate < Date.now()) {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    hasDiscount: true,
+                                                    discountInfo: discountCode,
+                                                    isVip: true,
+                                                    isVipError: true,
+                                                    vipErrorMessage: 'Khách hàng VIP đã hết hạn'
+                                                })
+                                            })
+                                    } else {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    hasDiscount: true,
+                                                    discountInfo: discountCode,
+                                                    isVip: true,
+                                                    vipInfo: vipCustomer
+                                                })
+                                            })
+                                    }
+                                })
                         })
+
+
                 }
             })
-            .catch(err => next(err))
+            .catch(err => {
+                console.log(err)
+                next(err)
+            })
     }
 
     postMakePayment(req, res, next) {
