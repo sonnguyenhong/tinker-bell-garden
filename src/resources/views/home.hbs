@@ -42,28 +42,45 @@
                 <div class="content-section">
                     <h2 class="section-heading text-white">ĐẶT VÉ ONLINE</h2>
                     <p class="section-motaheading text-white">Remember to book your tickets!</p>
-                    <ul class="ticket-list">
-                        <li>Sự kiện <span class="quantity">0</span></li>
-                    </ul>
 
-                    <!-- chỗ mua vé -->
+                    {{#each ticNum}}
+
+                    <ul class="ticket-list">
+                        <li>Số vé giảm giá sự kiện đặc biệt còn lại : {{this}} </li>
+                    </ul>   
+
+
+                    {{/each}}
+
                 <div class="row place-list">
-                    <div class="col col-half">
+                    <div class="col-6">
                         <img src="./img/khu-vui-choi-ha-noi-nemtv-12.jpg" alt="New York" class="place-img">
                             <div class="place-body">
                                 <h3 class="place-heading">Đặt vé online</h3>
                                 <p class="place-time">Đăng kí đặt vé online ngay</p>
                                 <button class="buybutton js-buy-ticket" >Buy Tickets</button>
                             </div>
-                        </div>
-                        <div class="col col-half">
-                            <img src="./img/chup-anh-khu-vui-choi-tre-em-516family-3-1536x1020.jpg" alt="New York" class="place-img2">
+                    </div>
+                        <div class="col-6">
+                            <img src="./img/chup-anh-khu-vui-choi-tre-em-516family-3-1536x1020.jpg" alt="New York" class="place-img">
                             <div class="place-body">
                                 <h3 class="place-heading">Sự kiện đặc biệt</h3>
                                 <p class="place-time">Đăng kí đặt vé sự kiện đặc biệt ngay</p>
                                 <button class="buybutton js-buy-ticket-db" >Buy Tickets</button>
                             </div>
                         </div>
+
+                        {{!-- <div class="col-6 ">
+                            <img src="./img/chup-anh-khu-vui-choi-tre-em-516family-3-1536x1020.jpg" alt="New York" class="place-img">
+                            <div class="place-body">
+                                <h3 class="place-heading">Sự kiện đặc biệt</h3>
+                                <p class="place-time">Đăng kí đặt vé sự kiện đặc biệt ngay</p>
+                                <button class="buybutton js-buy-ticket-db" >Buy Tickets</button>
+                            </div>
+                        </div> --}}
+
+                        
+
                         <div class="clear"></div> 
                     </div>
                 </div>
@@ -72,39 +89,6 @@
 
             <div class="content-section">
                 <h2 class="section-heading">Bản đồ</h2>
-                {{!-- <p class="section-motaheading">Drop a note!c</p>
-
-                <div class="row contact-content">
-                    <div class="col col-half contact-info">
-                        <p><i class="ti-location-pin"></i>Hà Nội, VN</p>
-                        <p><i class="ti-mobile"></i>Phone: +00 151515</p>
-                        <p><i class="ti-email"></i>Email: mail@mail.com</p>
-                    </div>
-                    <div class="col col-half contact-form">
-                        <form action="">
-                            <div class="row">
-                                <div class="col col-half">
-                                    <input type="text" name="" placeholder="Name" required id="" class="form-control">                          
-                                </div>
-                                <div class="col col-half">
-                                    <input type="email" name="" placeholder="Email" required id="" class="form-control">                          
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <div class="row mt-8">
-                                <div class="col col-full">
-                                    <input type="text" name="" placeholder="Massage" required id="" class="form-control">                          
-                                </div>
-                            </div>
-                            <input class="form-submit-btn mt-16" type="submit" value="SEND"> 
-                        </form>
-                    </div>
-                </div>
-            </div> --}}
-            {{!-- <div class="map-section">
-                <img src="./img/Screenshot 2022-01-12 171138.png" alt="Map">
-            </div> --}}
-
         </div>
 
         <div class="map-section">
@@ -143,12 +127,12 @@
                         <label for="quantity" class="modal-label">
                             Số vé chơi theo giờ (100.000đ/vé) (2 giờ chơi)
                         </label>
-                        <input id="quantity" type="number" class="modal-input" name="numberOfTwoHoursTicket" placeholder="timeTicketNum" required>
+                        <input id="quantity" type="number" min="0" step="1" class="modal-input" name="numberOfTwoHoursTicket" placeholder="timeTicketNum" required>
     
                         <label for="quantity" class="modal-label">
                             Số vé Không giới hạn (200.000đ/vé)
                         </label>
-                        <input id="quantity" type="number" class="modal-input" name="numberOfUnlimitedTicket" placeholder="noLimitTicketNum" required>
+                        <input id="quantity" type="number" min="0" step="1" class="modal-input" name="numberOfUnlimitedTicket" placeholder="noLimitTicketNum" required>
 
                         <input type="submit" id="buy-ticket" value="Đặt vé" >
                     </form>
@@ -229,6 +213,22 @@
                 <div class="uudai">Hãy nhanh tay vì trong mỗi sự kiện, chỉ 50 khách hàng đăng kí sớm nhất có thể nhận được ưu đãi</div>
             </div>
         </div>
+
+        <div class="modal js-model-dbloi">
+
+            <div class="modal-container js-modal-container-dbloi">
+                <div class="modal-close js-modal-close-dbloi">
+                    <i class="ti-close"></i>
+                </div>
+
+                <header class="modal-heading2">
+                     THÔNG BÁO
+                </header>
+                <div class="modal-body2">
+                    Đã hết mã giảm giá hoặc không có sự kiện đang diễn ra
+                </div>
+            </div>
+        </div>
         
         <div class="ttkvc js-ttkvc">
             <div class="dkvip js-ttkvc-container">
@@ -240,47 +240,76 @@
         </div>
 
         <script>
+            {{#each ticNum}}
+            if ({{this}} > 0){
+                const buyBtndb = document.querySelector('.js-buy-ticket-db')
+                const modaldb = document.querySelector('.js-model-db')
+                const modalcontainerdb = document.querySelector('.js-modal-container-db')
+                const modalclosedb = document.querySelector('.js-modal-close-db')
+                function showbuyticketdb(){
+                    modaldb.classList.add('open')
+                }
+                function hidebuyticketdb(){
+                    modaldb.classList.remove('open')
+                } 
+                buyBtndb.addEventListener('click', showbuyticketdb)
+                modalclosedb.addEventListener('click', hidebuyticketdb)
+                modaldb.addEventListener('click', hidebuyticketdb)
+                modalcontainerdb.addEventListener('click', function(event){
+                    event.stopPropagation()
+                })
+            }
+            else {
+                const buyBtndb = document.querySelector('.js-buy-ticket-db')
+                const modaldbloi = document.querySelector('.js-model-dbloi')
+                const modalcontainerdbloi = document.querySelector('.js-modal-container-dbloi')
+                const modalclosedbloi = document.querySelector('.js-modal-close-dbloi')
+                function showbuyticketdbloi(){
+                    modaldbloi.classList.add('open')
+                }
+                function hidebuyticketdbloi(){
+                    modaldbloi.classList.remove('open')
+                } 
+                buyBtndb.addEventListener('click', showbuyticketdbloi)
+                modalclosedbloi.addEventListener('click', hidebuyticketdbloi)
+                modaldbloi.addEventListener('click', hidebuyticketdbloi)
+                modalcontainerdbloi.addEventListener('click', function(event){
+                    event.stopPropagation()
+                })
+            }  
+            {{/each}}
             const buyBtns = document.querySelectorAll('.js-buy-ticket')
             const modal = document.querySelector('.js-model')
             const modalcontainer = document.querySelector('.js-modal-container')
             const modalclose = document.querySelector('.js-modal-close')
-
-            const buyBtndb = document.querySelector('.js-buy-ticket-db')
+            {{!-- const buyBtndb = document.querySelector('.js-buy-ticket-db')
             const modaldb = document.querySelector('.js-model-db')
             const modalcontainerdb = document.querySelector('.js-modal-container-db')
-            const modalclosedb = document.querySelector('.js-modal-close-db')
-
+            const modalclosedb = document.querySelector('.js-modal-close-db') --}}
             const dkvip = document.querySelector('.js-dkvip')
             const thongtinkm = document.querySelector('.js-thongtinkm')
             const dkvipclose = document.querySelector('.js-dkvip-close')
             const dkvipcontainer = document.querySelector('.js-dkvip-container')
-
             const dipdacbietbtn = document.querySelector('.js-dipdacbiet')
             const dipdb = document.querySelector('.js-dipdb')
             const dipdbcontainer = document.querySelector('.js-dipdb-container')
             const dipdbclose = document.querySelector('.js-dipdb-close')
-
             const thongtinkvc = document.querySelector('.js-thongtinkvc')
             const ttkvc = document.querySelector('.js-ttkvc')
             const ttkvccontainer = document.querySelector('.js-ttkvc-container')
             const ttkvcclose = document.querySelector('.js-ttkvc-close')
-
-
             function showttkvc(){
                 ttkvc.classList.add('open')
             }
-
             function hidettkvc(){
                 ttkvc.classList.remove('open')
             }
-
             function showdkvip(){
                 thongtinkm.classList.add('open')
             }
             function hidedkvip(){
                 thongtinkm.classList.remove('open')
             }
-
             function showbuyticket(){
                 modal.classList.add('open')
             }
@@ -288,60 +317,48 @@
                 modal.classList.remove('open')
             }
             
-            function showbuyticketdb(){
+            {{!-- function showbuyticketdb(){
                 modaldb.classList.add('open')
             }
             function hidebuyticketdb(){
                 modaldb.classList.remove('open')
-            } 
-
+            }  --}}
             function showdipdb(){
                 dipdb.classList.add('open')
             }
-
             function hidedipdb(){
                 dipdb.classList.remove('open')
             }
-
             for(const buyBtn of buyBtns) {
                 buyBtn.addEventListener('click', showbuyticket)
             }
-
             dkvip.addEventListener('click',showdkvip)
             dkvipclose.addEventListener('click',hidedkvip)
             thongtinkm.addEventListener('click', hidedkvip)
-
             dipdacbietbtn.addEventListener('click',showdipdb)
             dipdbclose.addEventListener('click', hidedipdb)
             dipdb.addEventListener('click',hidedipdb)
-
             modalclose.addEventListener('click', hidebuyticket)
             modal.addEventListener('click', hidebuyticket)
-
-            buyBtndb.addEventListener('click', showbuyticketdb)
+            {{!-- buyBtndb.addEventListener('click', showbuyticketdb)
             modalclosedb.addEventListener('click', hidebuyticketdb)
-            modaldb.addEventListener('click', hidebuyticketdb)
-
+            modaldb.addEventListener('click', hidebuyticketdb) --}}
             thongtinkvc.addEventListener('click', showttkvc)
             ttkvcclose.addEventListener('click', hidettkvc)
             ttkvc.addEventListener('click', hidettkvc)
-
             modalcontainer.addEventListener('click', function(event){
                 event.stopPropagation()
             })
-
-            modalcontainerdb.addEventListener('click', function(event){
+            {{!-- modalcontainerdb.addEventListener('click', function(event){
                 event.stopPropagation()
-            })
+            }) --}}
             
             dipdbcontainer.addEventListener('click', function(event){
                 event.stopPropagation()
             })
-
             dkvipcontainer.addEventListener('click', function (event){
                 event.stopPropagation()
             })
-
             ttkvccontainer.addEventListener('click', function (event){
                 event.stopPropagation()
             })
@@ -349,4 +366,3 @@
         </script>
 
 {{> footer}}
-
