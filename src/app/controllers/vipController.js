@@ -49,7 +49,7 @@ class vipController {
             email: req.body.email,
             points: 0,
             expiryDate: d,
-            expiryDateString: dString
+            expiryDateString: dString,
         })
         khvip.save()
             .then(() => {
@@ -57,6 +57,8 @@ class vipController {
                 var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                 const ls = new lichSu({
                     updateAt: date,
+                    phoneNumber: req.body.phoneNumber,
+                    email: req.body.email,
                     newName: req.body.name,
                     newAddress: req.body.address,
                     newPoints: 0,
@@ -72,8 +74,10 @@ class vipController {
             .catch(next => {
                 res.render('ql-khachhang-vip/them-kh-vip', {
                     err: true,
+                    khvip: transform.mongooseToObject(khvip)
                 })
             })
+            
     }
 
     vipInfo(req, res) {
@@ -94,6 +98,8 @@ class vipController {
                 var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                 const ls = new lichSu({
                     updateAt: date,
+                    phoneNumber: khvip.phoneNumber,
+                    email: khvip.email,
                     oldName: khvip.name,
                     newName: req.body.name,
                     oldAddress: khvip.address,
@@ -109,8 +115,10 @@ class vipController {
                 if (ls.newName !== ls.oldName) ls.describe = ls.describe + " Tên mới: " + ls.newName + ". "
                 if (ls.newAddress !== ls.oldAddress) ls.describe = ls.describe + " Địa chỉ mới: " + ls.newAddress + ". "
                 if (ls.newPoints !== ls.oldPoints) ls.describe = ls.describe + " Số điểm mới: " + ls.newPoints + ". "
-                if (ls.oldExpiryDate !== ls.newExpiryDate){
-                    var newDate=ls.newExpiryDate.getDate() + '-' + (ls.newExpiryDate.getMonth() + 1) + '-' + ls.newExpiryDate.getFullYear();
+
+                var newDate=ls.newExpiryDate.getDate() + '-' + (ls.newExpiryDate.getMonth() + 1) + '-' + ls.newExpiryDate.getFullYear();
+                var oldDate=ls.oldExpiryDate.getDate() + '-' + (ls.oldExpiryDate.getMonth() + 1) + '-' + ls.oldExpiryDate.getFullYear();
+                if (newDate !== oldDate){
                     ls.describe = ls.describe + "Ngày hết hạn mới: " + newDate;
                 } 
 
