@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
  const Donhangve = require('../../app/models/donhangve')
+ const Donhang = require('../../app/models/donhang')
 async function connect() {
 
     try {
@@ -19,8 +20,7 @@ async function connect() {
     //     price: 100000,
     //     typeTicket: 'hour' 
     // }
-    // const donhangve = new Donhangve(user);
-    // donhangve.save();
+    //const donhangve = new Donhangve();
 
 }
 
