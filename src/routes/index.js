@@ -10,8 +10,8 @@ const CSVCRoutes = require('./CSVCRoutes')
 const errorController = require('../app/controllers/ErrorController')
 
 function route(app) {
-    app.use('/', dkonRouter)
     app.use('/', authMiddleware.requireAuth)
+    app.use('/', dkonRouter)
     app.use('/admin/banhang', banhangRoutes)
     app.use('/admin/event', adminEventRouter)
     app.use('/admin/vip', vipRouter)

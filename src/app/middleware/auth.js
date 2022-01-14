@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken')
 module.exports.requireAuth = function(req,res,next){
     try{
         //console.log(req.path)
-        if(req.path == '/' || req.path == '/login' || req.path == '/logout' || req.path == '/dangkiskdb') return next();
+        if(req.path == '/' || req.path == '/login' || req.path == '/logout' || req.path == '/dangkiskdb'
+        || req.path == '/dangkiskdb' || req.path == '/dangkyonline'
+        ) return next();
         const token = req.cookies.token;
         const isValid = jwt.verify(token, 'mk');
         if(isValid){
