@@ -7,7 +7,15 @@
 
 {{>header}}
 
-<div class="container-fluid my-4" style="width: 80%">
+<div class="container-fluid mb-4" style="width: 80%">
+    <div class="row">
+        <div class="col-8">
+        
+        </div>
+        <div class="col-4">
+            <div class="container-fluid btn-option" id="save" onclick="history.back()" style="width: 60%;">Quay lại</div>
+        </div>
+    </div>
     <h2 class="my-4" style="color: red;">LỊCH SỬ CẬP NHẬT KHÁCH HÀNG VIP</h2>
     <input class="form-control my-4" id="myInput" type="text" placeholder="Tìm kiếm">
     <table class="table table-hover">
@@ -24,8 +32,8 @@
             {{#each histories}}
             <tr>
             <th scope="row">{{@index}}</th>
-            <td>{{this.khachhang.email}}</td>
-            <td>{{this.khachhang.phoneNumber}}</td>
+            <td>{{this.khachhang.email}}{{this.email}}</td>
+            <td>{{this.khachhang.phoneNumber}}{{this.phoneNumber}}</td>
             <td>{{this.describe}}</td>
             <td>{{this.updateAt}}</td>
             </tr>
@@ -34,7 +42,6 @@
     </table>
 </div>
 
-<div class="container-fluid btn-option mb-2" id="save" style="width: 10%" onclick="history.back()">Quay lại</div>
 
 <script>
     $(document).ready(function(){
