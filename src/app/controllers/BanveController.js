@@ -445,6 +445,8 @@ class BanveController {
                                             var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                                             const ls = new VipHistory({
                                                 updateAt: date,
+                                                phoneNumber: vipCustomer.phoneNumber,
+                                                email: vipCustomer.email,
                                                 oldName: vipCustomer.name,
                                                 newName: vipCustomer.name,
                                                 oldAddress: vipCustomer.address,
@@ -495,6 +497,8 @@ class BanveController {
                                             var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                                             const ls = new VipHistory({
                                                 updateAt: date,
+                                                phoneNumber: vipCustomer.phoneNumber,
+                                                email: vipCustomer.email,
                                                 oldName: vipCustomer.name,
                                                 newName: vipCustomer.name,
                                                 oldAddress: vipCustomer.address,
