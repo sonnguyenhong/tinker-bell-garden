@@ -8,6 +8,7 @@
          // res.render('sukien/manageEvent')
          Event.find({})
              .then(events => {
+                
                  res.render('sukien/manageEvent', {
                      events: mutipleMongooseToObject(events)
                  })
@@ -16,8 +17,9 @@
      }
 
      showAddEvent(req, res, next) {
-         res.render('sukien/addEvent', {
-             success: false
+         res.render('sukien/addEvent',{
+            success: false,
+            check: false
          })
      }
 
@@ -35,19 +37,55 @@
          let image = req.files.image;
          var url = path.resolve(__dirname)
          url = url.replace('\\app\\controllers', '\\public\\img')
-         image.mv(path.resolve(url, image.name), (err) => {
-             Event.create({
-                 ...req.body,
-                 imageUrl: '/img/' + image.name
-             }, (err) => {
-                 if (err) res.render('sukien/addEvent', {
-                     success: 'Thêm không thành công'
-                 })
-                 else res.render('sukien/addEvent', {
-                     success: 'Đã thêm sự kiện thành công'
-                 })
+         Event.find({},(err,events)=>{
+             var check=true;
+             events= events.sort((e1,e2)=>{
+                if (e1.endDate < e2.endDate){
+                    return -1;
+                }
+                else {
+                    return 0;
+                }
              })
+             
+             for(var i=0;i<events.length;i++){
+                console.log('start')
+                 var d1=new Date(events[i].endDate)
+                 var d2=new Date(events[i].startDate)
+                 var d3=new  Date(req.body.startDate)
+                 var d4=new Date(req.body.endDate)
+                 
+                if(!(d1<d3||d2>d4))
+                {
+                    check=false;
+                    break
+                }
+             }
+             if(!check){
+                res.render('sukien/addEvent',{
+                    success: false,
+                    check:  "Thời gian sự kiện đã bị trùng"
+                 })
+             }
+             else{
+             image.mv(path.resolve(url, image.name), (err) => {
+                Event.create({
+                    ...req.body,
+                    imageUrl: '/img/' + image.name
+                }, (err) => {
+                    if (err)  res.render('sukien/addEvent',{
+                       success: false,
+                       check: "Thêm sự kiện không thành công"
+                    })
+                    else  res.render('sukien/addEvent',{
+                       success: "Đã thêm sự kiện thành công",
+                       check: false
+                    })
+                })
+            })
+        }
          })
+         
      }
 
      deleteEvent(req, res, next) {
