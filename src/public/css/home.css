@@ -578,3 +578,7 @@ html{
 .cangiua{
     text-align: center;
 }
+
+.d-block{
+    height: 800px;
+}
