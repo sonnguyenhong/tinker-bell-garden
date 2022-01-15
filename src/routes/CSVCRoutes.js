@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const CSVCController = require('../app/controllers/CSVCController');
-const {route} = require("express/lib/router");
 
 // /admin/khuvuichoi
 

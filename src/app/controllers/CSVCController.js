@@ -1,6 +1,7 @@
 const KhuVuiChoi = require('../models/khuvuichoi');
 const CSVC = require('../models/cosovatchat');
 const mongoose = require('mongoose');
+const path = require("path");
 
 /*  Method     |     Duong dan                                                   |          Mo ta
 __________________________________________________________________________________________________________________________-
@@ -119,22 +120,48 @@ class CSVCController {
         // Sua 1 CSVC
     async updateCSVCform(req, res, next) {
         try {
-            const { id, idCsvc } = req.params;
-            const csvc = await CSVC.findById(idCsvc).lean();
-            res.render('csvc/sua-csvc', { id, csvc });
+            const {id} = req.params; // id cua KhuVuiChoi
+            const khuvuichoi = await KhuVuiChoi.findById(id);
+            const {name, code, status, img} = req.body;
+            const image = req.files.image;
+            // return res.send(req.files.image)
+            //res.send(req.body);
+            let url = path.resolve(__dirname);
+            url = url.replace('\\app\\controllers', '\\public\\img');
+            image.mv(path.resolve(url, image.name),  async () => {
+                const csvc = new CSVC({
+                    name: name,
+                    code: code,
+                    status: status,
+                    imageUrl: '/img/' + image.name
+                });
+                csvc.khuvuichoi = khuvuichoi;
+                khuvuichoi.CSVC.push(csvc); // them CSVC vao danh sach CSVC cua khu vui choi
+                await csvc.save();
+                await khuvuichoi.save();
+                res.redirect(`/admin/khuvuichoi/${id}`);
+            });
         } catch (err) {
             next(err)
         }
     }
     async updateCSVC(req, res, next) {
-            try {
-                const { id, idCsvc } = req.params; // id cua KhuVuiChoi
-                await CSVC.findByIdAndUpdate(idCsvc, req.body);
-                res.redirect(`/admin/khuvuichoi/${id}`);
-            } catch (err) {
-                next(err);
+        try {
+            const {id, idCsvc} = req.params; // id cua KhuVuiChoi
+            await CSVC.findByIdAndUpdate(idCsvc, req.body);
+            if (req.files.image) {
+                const image = req.files.image;
+                let url = path.resolve(__dirname);
+                url = url.replace('\\app\\controllers', '\\public\\img');
+                image.mv(path.resolve(url, image.name),  async () => {
+                    await CSVC.findByIdAndUpdate(idCsvc, {imageUrl: '/img/' + image.name});
+                });
             }
+            res.redirect(`/admin/khuvuichoi/${id}`);
+        } catch (err) {
+            next(err);
         }
+    }
         // Xoa 1 CSVC
     async deleteCSVC(req, res, next) {
         try {

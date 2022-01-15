@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
+const fs = require('fs');
+const path = require("path");
 
 const cosovatchatSchema = new Schema({
     name: {
@@ -25,5 +27,6 @@ const cosovatchatSchema = new Schema({
 }, {
     timestamps: true
 })
+
 
 module.exports = mongoose.model('Cosovatchat', cosovatchatSchema)
