@@ -9,11 +9,19 @@
 <div class="container-fluid" style="width: 80%">
     <h2 class="my-4" style="color: red;">THỐNG KÊ THEO NGÀY</h2>
     
+    
     <form action="/admin/thongke/thongkengay/getInfo" method="POST">
-        <div>
-            <input class="form-control" id="myInput" type="date" name="selectedDay" style="float: left" >
-            <input type="submit"  value="Thống kê" style="margin-bottom: 30px">
+
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <input class="form-control py-4" id="myInput" type="Date" name="selectedDay" style="float: left" >
+            </div>
+            <div class="col-4" >
+                <input  type="submit"  value="Thống kê" style="margin-bottom: 30px; width: 60%;">
+            </div>
         </div>
+
     </form>
 
     <div style="padding-bottom: 20px">Tổng doanh thu: {{totalProfit}}  VND</div>
@@ -96,4 +104,3 @@
 </script>
 
 {{>footer}}
-
