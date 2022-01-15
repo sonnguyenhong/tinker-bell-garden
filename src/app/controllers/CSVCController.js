@@ -98,25 +98,32 @@ class CSVCController {
         res.render('csvc/them-csvc', { id });
     }
     async createCSVC(req, res, next) {
-            try {
-                const { id } = req.params; // id cua KhuVuiChoi
-                const khuvuichoi = await KhuVuiChoi.findById(id);
-                const { name, code, status, img } = req.body;
+        try {
+            const {id} = req.params; // id cua KhuVuiChoi
+            const khuvuichoi = await KhuVuiChoi.findById(id);
+            const {name, code, status, img} = req.body;
+            const image = req.files.image;
+            // return res.send(req.files.image)
+            //res.send(req.body);
+            let url = path.resolve(__dirname);
+            url = url.replace('\\app\\controllers', '\\public\\img');
+            image.mv(path.resolve(url, image.name), async () => {
                 const csvc = new CSVC({
                     name: name,
                     code: code,
                     status: status,
-                    imageUrl: img
+                    imageUrl: '/img/' + image.name
                 });
                 csvc.khuvuichoi = khuvuichoi;
                 khuvuichoi.CSVC.push(csvc); // them CSVC vao danh sach CSVC cua khu vui choi
                 await csvc.save();
                 await khuvuichoi.save();
                 res.redirect(`/admin/khuvuichoi/${id}`);
-            } catch (err) {
-                next(err);
-            }
+            });
+        } catch (err) {
+            next(err);
         }
+    }
         // Sua 1 CSVC
     async updateCSVCform(req, res, next) {
         try {
