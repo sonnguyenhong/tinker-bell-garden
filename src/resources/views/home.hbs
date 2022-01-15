@@ -80,6 +80,12 @@
                         <ul class="ticket-list">
                             <li>Số vé giảm giá sự kiện đặc biệt còn lại : {{sub event.numberOfDiscountCode event.currentNumofDiscountCode}} </li>
                         </ul>
+
+                    {{else}}
+                        <ul class="ticket-list">
+                            <li>Số vé giảm giá sự kiện đặc biệt còn lại : 0 </li>
+                        </ul>
+                    
                     {{/if}}   
 
 
@@ -94,6 +100,7 @@
                     </div>
 
                     {{#if hasEvent}}
+
                         <div class="col-6">
                             <img src="{{event.imageUrl}}" alt="New York" class="place-img">
                             <div class="place-body">
@@ -103,6 +110,19 @@
                                 <p id="soldOutText" style="color: red; float: right; margin-right: 150px; margin-top: 25px"></p>
                             </div>
                         </div>
+
+                    {{else}}
+
+                        <div class="col-6">
+                            <img src="{{event.imageUrl}}" alt="New York" class="place-img">
+                            <div class="place-body">
+                                <h3 class="place-heading">{{event.name}}</h3>
+                                <p class="place-time">{{event.eventInfo}}</p>
+                                <button id="buyBtn" class="buybutton js-buy-ticket-db" disabled>Buy Tickets</button>
+                                <p id="soldOutText" style="color: red; float: right; margin-right: 100px; margin-top: 25px">Chưa có sự kiện</p>
+                            </div>
+                        </div>
+                    
                     {{/if}}
 
                         {{!-- <div class="col-6 ">
@@ -278,8 +298,9 @@
         <script>
             let buyBtn = document.getElementById('buyBtn')
             let soldOutText = document.getElementById('soldOutText')
+            let hasEvent = `{{hasEvent}}`
 
-            if({{sub event.numberOfDiscountCode event.currentNumofDiscountCode}} <= 0) {
+            if({{sub event.numberOfDiscountCode event.currentNumofDiscountCode}} <= 0 && hasEvent === 'true') {
                 buyBtn.disabled = true
                 soldOutText.innerHTML = 'Hết vé'
             } 
