@@ -6,26 +6,29 @@ const lichsucapnhatSchema = new Schema({
         type: String,
         required: true
     },
+    phoneNumber: {
+        type: String,
+    },
+    email: {
+        type: String,
+    },
     oldName: {
         type: String,
     },
     newName: {
         type: String,
-        required: true
     },
     oldAddress: {
         type: String,
     },
     newAddress: {
         type: String,
-        required: true
     },
     oldPoints: {
         type: Number,
     },
     newPoints: {
         type: Number,
-        required: true
     },
     oldExpiryDate: {
         type: Date,

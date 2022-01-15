@@ -25,6 +25,26 @@
                     <a href="/admin/event" style="text-decoration: none;">
                         <button>Tiếp tục</button>
                     </a>
+                  
+                </div>
+            </div>
+        </div>
+    {{/if}}
+    {{#if check}}
+        <div class="my-modal">
+            <div class="modal__inner sticky-top">
+                <div class="modal__header">
+                    <h5>Tinker Bell Garden</h5>
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="modal__body">
+                    <h4>{{check}}</h4>
+                </div>
+                <div class="modal__footer">
+                    {{!-- <a href="/admin/event" style="text-decoration: none;">
+                        <button>Tiếp tục</button>
+                    </a> --}}
+                    <button onclick="history.back()">Tiếp tục</button>
                 </div>
             </div>
         </div>
@@ -57,6 +77,11 @@
                         <small></small>
                     </div>
                     <div class="label">
+                        Khuyến mãi (%)
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="label">
                         Thông tin chi tiết
                         <span></span>
                         <small></small>
@@ -80,6 +105,11 @@
                     </div>
                     <div class="form-control">
                         <input type="number" class="infor" name="numberOfDiscountCode" required>
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="form-control">
+                        <input type="number" min="1" max="100" class="infor" name="discount" required>
                         <span></span>
                         <small></small>
                     </div>

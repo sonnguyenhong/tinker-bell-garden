@@ -7,25 +7,33 @@
 
 {{>header}}
 
-<div class="container-fluid my-4" style="width: 80%">
+<div class="container-fluid mb-4" style="width: 80%">
+    <div class="row">
+        <div class="col-8">
+        
+        </div>
+        <div class="col-4">
+            <div class="container-fluid btn-option" id="save" onclick="history.back()" style="width: 60%;">Quay lại</div>
+        </div>
+    </div>
     <h2 class="my-4" style="color: red;">LỊCH SỬ CẬP NHẬT KHÁCH HÀNG VIP</h2>
     <input class="form-control my-4" id="myInput" type="text" placeholder="Tìm kiếm">
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr>
             <th style="width: 5%">#</th>
-            <th style="width: 25%">Email</th>
-            <th style="width: 20%">Số điện thoại</th>
+            <th style="width: 23%">Email</th>
+            <th style="width: 17%">Số điện thoại</th>
             <th style="width: 38%">Thông tin cập nhật</th>
-            <th style="width: 12%">Ngày cập nhật</th>
+            <th style="width: 17%">Ngày cập nhật</th>
             </tr>
         </thead>
         <tbody id="myTable">
             {{#each histories}}
             <tr>
-            <th scope="row">{{@index}}</th>
-            <td>{{this.khachhang.email}}</td>
-            <td>{{this.khachhang.phoneNumber}}</td>
+            <th scope="row">{{sum @index 1}}</th>
+            <td>{{this.email}}</td>
+            <td>{{this.phoneNumber}}</td>
             <td>{{this.describe}}</td>
             <td>{{this.updateAt}}</td>
             </tr>
@@ -34,7 +42,6 @@
     </table>
 </div>
 
-<div class="container-fluid btn-option mb-2" id="save" style="width: 10%" onclick="history.back()">Quay lại</div>
 
 <script>
     $(document).ready(function(){

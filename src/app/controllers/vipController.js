@@ -40,15 +40,16 @@ class vipController {
 
     store(req, res, next) {
         var d = new Date();
-
         d.setFullYear(d.getFullYear() + 1);
+        var dString = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
         const khvip = new Khachhangvip({
             name: req.body.name,
             phoneNumber: req.body.phoneNumber,
             address: req.body.address,
             email: req.body.email,
-            points: 0,
-            expiryDate: d
+            points: 100,
+            expiryDate: d,
+            expiryDateString: dString,
         })
         khvip.save()
             .then(() => {
@@ -56,9 +57,11 @@ class vipController {
                 var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                 const ls = new lichSu({
                     updateAt: date,
+                    phoneNumber: req.body.phoneNumber,
+                    email: req.body.email,
                     newName: req.body.name,
                     newAddress: req.body.address,
-                    newPoints: 0,
+                    newPoints: 100,
                     newExpiryDate: d,
                     describe: "Khách hàng VIP mới",
                     khachhang: khvip._id
@@ -71,23 +74,10 @@ class vipController {
             .catch(next => {
                 res.render('ql-khachhang-vip/them-kh-vip', {
                     err: true,
+                    khvip: transform.mongooseToObject(khvip)
                 })
             })
-            /*
-            var today = new Date();
-            var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-            const ls=new lichSu({
-                updateAt: date,
-                newName: req.body.name,
-                newAddress: req.body.address,
-                newPoints: 0,
-                newExpiryDate: d,
-                describe: "Khách hàng VIP mới",
-                khachhang: khvip._id
-            })
-            ls.save()
-                .then(()=> res.redirect('/admin/vip'))
-            */
+
     }
 
     vipInfo(req, res) {
@@ -108,6 +98,8 @@ class vipController {
                 var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                 const ls = new lichSu({
                     updateAt: date,
+                    phoneNumber: khvip.phoneNumber,
+                    email: khvip.email,
                     oldName: khvip.name,
                     newName: req.body.name,
                     oldAddress: khvip.address,
@@ -123,7 +115,12 @@ class vipController {
                 if (ls.newName !== ls.oldName) ls.describe = ls.describe + " Tên mới: " + ls.newName + ". "
                 if (ls.newAddress !== ls.oldAddress) ls.describe = ls.describe + " Địa chỉ mới: " + ls.newAddress + ". "
                 if (ls.newPoints !== ls.oldPoints) ls.describe = ls.describe + " Số điểm mới: " + ls.newPoints + ". "
-                if (ls.oldExpiryDate !== ls.newExpiryDate) ls.describe = ls.describe + "Gia hạn thêm thời gian. Ngày hết hạn: " + ls.newExpiryDate
+
+                var newDate = ls.newExpiryDate.getDate() + '-' + (ls.newExpiryDate.getMonth() + 1) + '-' + ls.newExpiryDate.getFullYear();
+                var oldDate = ls.oldExpiryDate.getDate() + '-' + (ls.oldExpiryDate.getMonth() + 1) + '-' + ls.oldExpiryDate.getFullYear();
+                if (newDate !== oldDate) {
+                    ls.describe = ls.describe + "Ngày hết hạn mới: " + newDate;
+                }
 
                 ls.save();
 
@@ -131,6 +128,7 @@ class vipController {
                 khvip.address = req.body.address;
                 khvip.points = req.body.points;
                 khvip.expiryDate = Date.now() + req.body.remainTime * 86400000;
+                khvip.expiryDateString = khvip.expiryDate.getDate() + '-' + (khvip.expiryDate.getMonth() + 1) + '-' + khvip.expiryDate.getFullYear();
 
                 khvip.save()
                     .then(() => {
@@ -141,6 +139,20 @@ class vipController {
     }
 
     terminate(req, res, next) {
+        Khachhangvip.findOne({ _id: req.params.id })
+            .then(khvip => {
+                var today = new Date();
+                var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+                const ls = new lichSu({
+                    updateAt: date,
+                    phoneNumber: khvip.phoneNumber,
+                    email: khvip.email,
+                    describe: "Xoá khách hàng VIP",
+                    khachhang: khvip._id
+                })
+
+                ls.save();
+            })
         Khachhangvip.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('/admin/vip'))
             .catch(err => next(err));

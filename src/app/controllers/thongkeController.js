@@ -120,12 +120,14 @@ class thongkeController {
 
         var thongKeBanHang = [];
         for (const id of productsIdList) {
-            var temp = {
-                name: productsName[id],
-                number: productsNumber[id],
-                profit: productsProfit[id],
+            if(productsProfit[id] > 0){
+                var temp = {
+                    name: productsName[id],
+                    number: productsNumber[id],
+                    profit: productsProfit[id].toFixed(0),
+                }
+                thongKeBanHang.push(temp);
             }
-            thongKeBanHang.push(temp);
         }
 
 
@@ -136,9 +138,9 @@ class thongkeController {
         ticket = mutipleMongooseToObject(ticket);
 
         return res.render('thongke/thongkengay', {
-            totalTicketProfit: totalTicketProfit,
-            totalProductProfit: totalProductProfit,
-            totalProfit: totalProfit,
+            totalTicketProfit: totalTicketProfit.toFixed(0),
+            totalProductProfit: totalProductProfit.toFixed(0),
+            totalProfit: totalProfit.toFixed(0),
             numberOfVipTicket: numberOfVipTicket,
             numberOfNormalTicket: numberOfNormalTicket,
             ticket: ticket,
@@ -258,15 +260,18 @@ class thongkeController {
                 totalProductProfit += productsProfit[id];
             }
         }
+        
 
         var thongKeBanHang = [];
         for (const id of productsIdList) {
-            var temp = {
-                name: productsName[id],
-                number: productsNumber[id],
-                profit: productsProfit[id],
+            if(productsProfit[id] > 0 ){
+                var temp = {
+                    name: productsName[id],
+                    number: productsNumber[id],
+                    profit: productsProfit[id].toFixed(0),
+                }
+                thongKeBanHang.push(temp);
             }
-            thongKeBanHang.push(temp);
         }
 
 
@@ -286,7 +291,7 @@ class thongkeController {
         }
         var sortable = [];
         for (var customer in phoneNumberList) {
-            sortable.push([customer, phoneNumberList[customer]]);
+            sortable.push([customer, phoneNumberList[customer].toFixed(0)]);
         }
         sortable.sort(function(a, b) {
             return b[1] - a[1];
@@ -299,47 +304,47 @@ class thongkeController {
                 money: sortable[i][1]
             })
         }
-        console.log(regularCustomer);
+        //console.log(regularCustomer);
         return res.render('thongke/thongkethang', {
             vip: numberOfVipTicket,
             novip: numberOfNormalTicket,
-            hourTicketProfit: hourTicketProfit,
-            dayTicketProfit: dayTicketProfit,
-            one: profitOfDayMap[1],
-            two: profitOfDayMap[2],
-            three: profitOfDayMap[3],
-            four: profitOfDayMap[4],
-            five: profitOfDayMap[5],
-            six: profitOfDayMap[6],
-            seven: profitOfDayMap[7],
-            eight: profitOfDayMap[8],
-            nine: profitOfDayMap[9],
-            ten: profitOfDayMap[10],
-            one1: profitOfDayMap[11],
-            two1: profitOfDayMap[12],
-            three1: profitOfDayMap[13],
-            four1: profitOfDayMap[14],
-            five1: profitOfDayMap[15],
-            six1: profitOfDayMap[16],
-            seven1: profitOfDayMap[17],
-            eight1: profitOfDayMap[18],
-            nine1: profitOfDayMap[19],
-            ten1: profitOfDayMap[20],
-            one2: profitOfDayMap[21],
-            two2: profitOfDayMap[22],
-            three2: profitOfDayMap[23],
-            four2: profitOfDayMap[24],
-            five2: profitOfDayMap[25],
-            six2: profitOfDayMap[26],
-            seven2: profitOfDayMap[27],
-            eight2: profitOfDayMap[28],
-            nine2: profitOfDayMap[29],
-            ten2: profitOfDayMap[30],
-            one3: profitOfDayMap[31],
-            totalProductProfit: totalProductProfit,
+            hourTicketProfit: hourTicketProfit.toFixed(0),
+            dayTicketProfit: dayTicketProfit.toFixed(0),
+            one: profitOfDayMap[1].toFixed(0),
+            two: profitOfDayMap[2].toFixed(0),
+            three: profitOfDayMap[3].toFixed(0),
+            four: profitOfDayMap[4].toFixed(0),
+            five: profitOfDayMap[5].toFixed(0),
+            six: profitOfDayMap[6].toFixed(0),
+            seven: profitOfDayMap[7].toFixed(0),
+            eight: profitOfDayMap[8].toFixed(0),
+            nine: profitOfDayMap[9].toFixed(0),
+            ten: profitOfDayMap[10].toFixed(0),
+            one1: profitOfDayMap[11].toFixed(0),
+            two1: profitOfDayMap[12].toFixed(0),
+            three1: profitOfDayMap[13].toFixed(0),
+            four1: profitOfDayMap[14].toFixed(0),
+            five1: profitOfDayMap[15].toFixed(0),
+            six1: profitOfDayMap[16].toFixed(0),
+            seven1: profitOfDayMap[17].toFixed(0),
+            eight1: profitOfDayMap[18].toFixed(0),
+            nine1: profitOfDayMap[19].toFixed(0),
+            ten1: profitOfDayMap[20].toFixed(0),
+            one2: profitOfDayMap[21].toFixed(0),
+            two2: profitOfDayMap[22].toFixed(0),
+            three2: profitOfDayMap[23].toFixed(0),
+            four2: profitOfDayMap[24].toFixed(0),
+            five2: profitOfDayMap[25].toFixed(0),
+            six2: profitOfDayMap[26].toFixed(0),
+            seven2: profitOfDayMap[27].toFixed(0),
+            eight2: profitOfDayMap[28].toFixed(0),
+            nine2: profitOfDayMap[29].toFixed(0),
+            ten2: profitOfDayMap[30].toFixed(0),
+            one3: profitOfDayMap[31].toFixed(0),
+            totalProductProfit: totalProductProfit.toFixed(0),
             products: thongKeBanHang,
-            totalTicketProfit: totalTicketProfit,
-            totalProfit: totalProfit,
+            totalTicketProfit: totalTicketProfit.toFixed(0),
+            totalProfit: totalProfit.toFixed(0),
             regularCustomer: regularCustomer,
         })
     }

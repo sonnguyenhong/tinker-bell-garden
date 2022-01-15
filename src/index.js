@@ -63,6 +63,7 @@ app.engine('hbs', engine({
         _toInt: (str) => parseInt(str, 10),
         _mul: (a, b) => a * b,
         sum: (a, b) => a + b,
+        sub: (a, b) => a - b,
         toString2: (a) => {
             return String(a.getDate()).padStart(2, '0') + '-' + String((a.getMonth() + 1)).padStart(2, '0') + '-' + a.getFullYear()
         },
@@ -76,8 +77,11 @@ app.engine('hbs', engine({
         helper: {
             sum: (a, b) => a + b,
         }
-    }
+    },
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true,
 }))
+
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resources', 'views'))
 

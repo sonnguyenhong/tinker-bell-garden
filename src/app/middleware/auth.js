@@ -1,20 +1,18 @@
 const account = require('../models/account');
 const jwtHelper = require('../helper/jwtHelper')
 const jwt = require('jsonwebtoken')
-module.exports.requireAuth = function(req,res,next){
-    try{
+module.exports.requireAuth = function(req, res, next) {
+    try {
         //console.log(req.path)
-        if(req.path == '/' || req.path == '/login' || req.path == '/logout') return next();
+        if (req.path == '/' || req.path == '/login' || req.path == '/logout' || req.path == '/dangkyonline' || req.path == '/dangkiskdb') return next();
         const token = req.cookies.token;
         const isValid = jwt.verify(token, 'mk');
-        if(isValid){
-          return next();
+        if (isValid) {
+            return next();
+        } else {
+            return res.redirect('/login');
         }
-        else{
-          return res.redirect('/login');
-        }    
-      }
-      catch{
+    } catch {
         return res.redirect('/login');
-      }
+    }
 }

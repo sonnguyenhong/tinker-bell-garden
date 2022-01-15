@@ -27,7 +27,10 @@ const khachhangvipSchema = new Schema({
     expiryDate: {
         type: Date,
         required: true,
-    }
+    },
+    expiryDateString: {
+        type: String,
+    },
 }, {
     timestamps: true
 })

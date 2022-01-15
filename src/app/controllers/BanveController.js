@@ -4,6 +4,7 @@ const VipCustomer = require('../models/khachhangvip')
 const DiscountCode = require('../models/makhuyenmai')
 const TicketOrder = require('../models/donhangve')
 const VipHistory = require('../models/lichsucapnhat')
+const OnlineOrder = require('../models/dangkyonline')
 
 class BanveController {
 
@@ -80,6 +81,48 @@ class BanveController {
                         .catch(err => next(err))
                 }
             })
+    }
+
+    // [POST] /admin/banve/banvedattruoc
+    postCheckOrderTicket(req, res, next) {
+        const phoneNumber = req.body.phoneNumber
+        OnlineOrder.findOne({ phoneNum: phoneNumber, status: true }).lean()
+            .then(order => {
+                console.log(order)
+                if (!order) {
+                    console.log('ok')
+                    Ticket.find({}).lean()
+                        .then(tickets => {
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    res.render('banve/ban-ve', {
+                                        tickets: tickets,
+                                        quantity: numberOfTickets,
+                                        error: true,
+                                        errorMessage: 'Số điện thoại không đúng hoặc bạn chưa đặt vé thành công'
+                                    })
+                                })
+                        })
+                } else {
+                    Ticket.find({}).lean()
+                        .then(tickets => {
+                            Ticket.countDocuments({ isPlaying: true }).lean()
+                                .then(numberOfTickets => {
+                                    OnlineOrder.findOneAndUpdate({ phoneNum: phoneNumber, status: true }, { status: false }).lean()
+                                        .then(result => {
+                                            res.render('banve/ban-ve', {
+                                                tickets: tickets,
+                                                quantity: numberOfTickets,
+                                                isOrder: true,
+                                                message: 'Bạn đã đặt vé. Thông tin chi tiết: ',
+                                                orderInfo: order
+                                            })
+                                        })
+                                })
+                        })
+                }
+            })
+            .catch(err => next(err))
     }
 
     // [POST] /admin/banve/ketthucchoi
@@ -165,7 +208,7 @@ class BanveController {
         console.log(ticketInfor)
         console.log(req.body.discountCode)
 
-        DiscountCode.findOne({ code: req.body.discountCode }).lean()
+        DiscountCode.findOne({ code: req.body.discountCode, status: true }).lean()
             .then(discountCode => {
                 console.log(discountCode)
                 if (!discountCode) {
@@ -198,16 +241,20 @@ class BanveController {
                                         })
                                     })
                             } else {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            error: true,
-                                            errorMessage: 'Không tồn tại mã giảm giá',
-                                            isVip: true,
-                                            vipInfo: vipCustomer
-                                        })
+                                let newPoints = vipCustomer.points + 10
+                                VipCustomer.findByIdAndUpdate(vipCustomer._id, { points: newPoints })
+                                    .then(result => {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    error: true,
+                                                    errorMessage: 'Không tồn tại mã giảm giá',
+                                                    isVip: true,
+                                                    vipInfo: vipCustomer
+                                                })
+                                            })
                                     })
                             }
                         })
@@ -241,65 +288,90 @@ class BanveController {
                                         })
                                     })
                             } else {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            error: true,
-                                            errorMessage: 'Mã giảm giá đã hết hạn',
-                                            isVip: true,
-                                            vipInfo: vipCustomer
-                                        })
+                                let newPoints = vipCustomer.points + 10
+                                VipCustomer.findByIdAndUpdate(vipCustomer._id, { points: newPoints })
+                                    .then(result => {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    error: true,
+                                                    errorMessage: 'Mã giảm giá đã hết hạn',
+                                                    isVip: true,
+                                                    vipInfo: vipCustomer
+                                                })
+                                            })
                                     })
                             }
                         })
                 } else {
                     console.log('Đã tìm thấy mã rồi nhé :3')
-                    VipCustomer.findOne({ phoneNumber: req.body.phoneNumber }).lean()
-                        .then(vipCustomer => {
-                            if (!vipCustomer) {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            hasDiscount: true,
-                                            discountInfo: discountCode,
-                                            isVipError: true,
-                                            vipErrorMessage: 'Không tồn tại khách hàng VIP'
-                                        })
-                                    })
-                            } else if (vipCustomer.expiryDate < Date.now()) {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            hasDiscount: true,
-                                            discountInfo: discountCode,
-                                            isVip: true,
-                                            isVipError: true,
-                                            vipErrorMessage: 'Khách hàng VIP đã hết hạn'
-                                        })
-                                    })
-                            } else {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            hasDiscount: true,
-                                            discountInfo: discountCode,
-                                            isVip: true,
-                                            vipInfo: vipCustomer
-                                        })
-                                    })
-                            }
+                    if (discountCode.quantity > 0) {
+                        console.log('quantity' + discountCode.quantity)
+                        discountCode.quantity = discountCode.quantity - 1
+                        if (discountCode.quantity === 0) {
+                            discountCode.status = false
+                        }
+                    }
+
+                    DiscountCode.findByIdAndUpdate(discountCode._id, { quantity: discountCode.quantity, status: discountCode.status })
+                        .then(result => {
+                            console.log('Saving')
+                            VipCustomer.findOne({ phoneNumber: req.body.phoneNumber }).lean()
+                                .then(vipCustomer => {
+                                    if (!vipCustomer) {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    hasDiscount: true,
+                                                    discountInfo: discountCode,
+                                                    isVipError: true,
+                                                    vipErrorMessage: 'Không tồn tại khách hàng VIP'
+                                                })
+                                            })
+                                    } else if (vipCustomer.expiryDate < Date.now()) {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    hasDiscount: true,
+                                                    discountInfo: discountCode,
+                                                    isVip: true,
+                                                    isVipError: true,
+                                                    vipErrorMessage: 'Khách hàng VIP đã hết hạn'
+                                                })
+                                            })
+                                    } else {
+                                        let newPoints = vipCustomer.points + 10
+                                        VipCustomer.findByIdAndUpdate(vipCustomer._id, { points: newPoints })
+                                            .then(result => {
+                                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                                    .then(ticket => {
+                                                        res.render('banve/thanh-toan', {
+                                                            ticket: ticket,
+                                                            endTime: req.body.endTime,
+                                                            hasDiscount: true,
+                                                            discountInfo: discountCode,
+                                                            isVip: true,
+                                                            vipInfo: vipCustomer
+                                                        })
+                                                    })
+                                            })
+                                    }
+                                })
                         })
+
+
                 }
             })
-            .catch(err => next(err))
+            .catch(err => {
+                console.log(err)
+                next(err)
+            })
     }
 
     postMakePayment(req, res, next) {
@@ -402,6 +474,8 @@ class BanveController {
                                             var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                                             const ls = new VipHistory({
                                                 updateAt: date,
+                                                phoneNumber: vipCustomer.phoneNumber,
+                                                email: vipCustomer.email,
                                                 oldName: vipCustomer.name,
                                                 newName: vipCustomer.name,
                                                 oldAddress: vipCustomer.address,
@@ -409,7 +483,7 @@ class BanveController {
                                                 oldPoints: vipCustomer.points,
                                                 newPoints: vipCustomer.points - parseInt(req.body.usePoints),
                                                 oldExpiryDate: vipCustomer.expiryDate,
-                                                newExpiryDate: vipCustomer.expiriDate,
+                                                newExpiryDate: vipCustomer.expiryDate,
                                                 describe: "Mua vé sử dụng " + req.body.usePoints + " điểm.",
                                                 khachhang: vipCustomer._id
                                             })
@@ -452,6 +526,8 @@ class BanveController {
                                             var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
                                             const ls = new VipHistory({
                                                 updateAt: date,
+                                                phoneNumber: vipCustomer.phoneNumber,
+                                                email: vipCustomer.email,
                                                 oldName: vipCustomer.name,
                                                 newName: vipCustomer.name,
                                                 oldAddress: vipCustomer.address,
@@ -459,7 +535,7 @@ class BanveController {
                                                 oldPoints: vipCustomer.points,
                                                 newPoints: vipCustomer.points - parseInt(req.body.usePoints),
                                                 oldExpiryDate: vipCustomer.expiryDate,
-                                                newExpiryDate: vipCustomer.expiriDate,
+                                                newExpiryDate: vipCustomer.expiryDate,
                                                 describe: "Mua vé sử dụng " + req.body.usePoints + " điểm.",
                                                 khachhang: vipCustomer._id
                                             })

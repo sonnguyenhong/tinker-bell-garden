@@ -39,12 +39,12 @@
         <tbody id="myTable">
             {{#each vips}}
             <tr>
-                <th scope="row">{{@index}}</th>
+                <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>{{this.phoneNumber}}</td>
                 <td>{{this.email}}</td>
                 <td>{{this.points}}</td>
-                <td>{{this.expiryDate}}</td>
+                <td>{{this.expiryDateString}}</td>
                 <td>
                     <a href="/admin/vip/{{this._id}}">
                         <span class="badge badge-success" style="width: 80%; height: 80%;">
