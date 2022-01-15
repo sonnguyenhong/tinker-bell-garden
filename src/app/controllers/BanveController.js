@@ -241,16 +241,20 @@ class BanveController {
                                         })
                                     })
                             } else {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            error: true,
-                                            errorMessage: 'Không tồn tại mã giảm giá',
-                                            isVip: true,
-                                            vipInfo: vipCustomer
-                                        })
+                                let newPoints = vipCustomer.points + 10
+                                VipCustomer.findByIdAndUpdate(vipCustomer._id, { points: newPoints })
+                                    .then(result => {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    error: true,
+                                                    errorMessage: 'Không tồn tại mã giảm giá',
+                                                    isVip: true,
+                                                    vipInfo: vipCustomer
+                                                })
+                                            })
                                     })
                             }
                         })
@@ -284,16 +288,20 @@ class BanveController {
                                         })
                                     })
                             } else {
-                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                    .then(ticket => {
-                                        res.render('banve/thanh-toan', {
-                                            ticket: ticket,
-                                            endTime: req.body.endTime,
-                                            error: true,
-                                            errorMessage: 'Mã giảm giá đã hết hạn',
-                                            isVip: true,
-                                            vipInfo: vipCustomer
-                                        })
+                                let newPoints = vipCustomer.points + 10
+                                VipCustomer.findByIdAndUpdate(vipCustomer._id, { points: newPoints })
+                                    .then(result => {
+                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                            .then(ticket => {
+                                                res.render('banve/thanh-toan', {
+                                                    ticket: ticket,
+                                                    endTime: req.body.endTime,
+                                                    error: true,
+                                                    errorMessage: 'Mã giảm giá đã hết hạn',
+                                                    isVip: true,
+                                                    vipInfo: vipCustomer
+                                                })
+                                            })
                                     })
                             }
                         })
@@ -338,16 +346,20 @@ class BanveController {
                                                 })
                                             })
                                     } else {
-                                        Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
-                                            .then(ticket => {
-                                                res.render('banve/thanh-toan', {
-                                                    ticket: ticket,
-                                                    endTime: req.body.endTime,
-                                                    hasDiscount: true,
-                                                    discountInfo: discountCode,
-                                                    isVip: true,
-                                                    vipInfo: vipCustomer
-                                                })
+                                        let newPoints = vipCustomer.points + 10
+                                        VipCustomer.findByIdAndUpdate(vipCustomer._id, { points: newPoints })
+                                            .then(result => {
+                                                Ticket.findOne({ _id: mongoose.Types.ObjectId(req.body.ticketId) }).lean()
+                                                    .then(ticket => {
+                                                        res.render('banve/thanh-toan', {
+                                                            ticket: ticket,
+                                                            endTime: req.body.endTime,
+                                                            hasDiscount: true,
+                                                            discountInfo: discountCode,
+                                                            isVip: true,
+                                                            vipInfo: vipCustomer
+                                                        })
+                                                    })
                                             })
                                     }
                                 })
