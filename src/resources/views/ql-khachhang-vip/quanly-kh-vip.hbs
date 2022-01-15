@@ -39,7 +39,7 @@
         <tbody id="myTable">
             {{#each vips}}
             <tr>
-                <th scope="row">{{@index}}</th>
+                <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>{{this.phoneNumber}}</td>
                 <td>{{this.email}}</td>

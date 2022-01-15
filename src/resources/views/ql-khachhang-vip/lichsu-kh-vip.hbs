@@ -31,7 +31,7 @@
         <tbody id="myTable">
             {{#each histories}}
             <tr>
-            <th scope="row">{{@index}}</th>
+            <th scope="row">{{sum @index 1}}</th>
             <td>{{this.email}}</td>
             <td>{{this.phoneNumber}}</td>
             <td>{{this.describe}}</td>

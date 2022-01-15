@@ -41,13 +41,13 @@ class vipController {
     store(req, res, next) {
         var d = new Date();
         d.setFullYear(d.getFullYear() + 1);
-        var dString=d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+        var dString = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
         const khvip = new Khachhangvip({
             name: req.body.name,
             phoneNumber: req.body.phoneNumber,
             address: req.body.address,
             email: req.body.email,
-            points: 0,
+            points: 100,
             expiryDate: d,
             expiryDateString: dString,
         })
@@ -61,7 +61,7 @@ class vipController {
                     email: req.body.email,
                     newName: req.body.name,
                     newAddress: req.body.address,
-                    newPoints: 0,
+                    newPoints: 100,
                     newExpiryDate: d,
                     describe: "Khách hàng VIP mới",
                     khachhang: khvip._id
@@ -77,7 +77,7 @@ class vipController {
                     khvip: transform.mongooseToObject(khvip)
                 })
             })
-            
+
     }
 
     vipInfo(req, res) {
@@ -116,11 +116,11 @@ class vipController {
                 if (ls.newAddress !== ls.oldAddress) ls.describe = ls.describe + " Địa chỉ mới: " + ls.newAddress + ". "
                 if (ls.newPoints !== ls.oldPoints) ls.describe = ls.describe + " Số điểm mới: " + ls.newPoints + ". "
 
-                var newDate=ls.newExpiryDate.getDate() + '-' + (ls.newExpiryDate.getMonth() + 1) + '-' + ls.newExpiryDate.getFullYear();
-                var oldDate=ls.oldExpiryDate.getDate() + '-' + (ls.oldExpiryDate.getMonth() + 1) + '-' + ls.oldExpiryDate.getFullYear();
-                if (newDate !== oldDate){
+                var newDate = ls.newExpiryDate.getDate() + '-' + (ls.newExpiryDate.getMonth() + 1) + '-' + ls.newExpiryDate.getFullYear();
+                var oldDate = ls.oldExpiryDate.getDate() + '-' + (ls.oldExpiryDate.getMonth() + 1) + '-' + ls.oldExpiryDate.getFullYear();
+                if (newDate !== oldDate) {
                     ls.describe = ls.describe + "Ngày hết hạn mới: " + newDate;
-                } 
+                }
 
                 ls.save();
 
@@ -128,7 +128,7 @@ class vipController {
                 khvip.address = req.body.address;
                 khvip.points = req.body.points;
                 khvip.expiryDate = Date.now() + req.body.remainTime * 86400000;
-                khvip.expiryDateString=khvip.expiryDate.getDate() + '-' + (khvip.expiryDate.getMonth() + 1) + '-' + khvip.expiryDate.getFullYear();
+                khvip.expiryDateString = khvip.expiryDate.getDate() + '-' + (khvip.expiryDate.getMonth() + 1) + '-' + khvip.expiryDate.getFullYear();
 
                 khvip.save()
                     .then(() => {
