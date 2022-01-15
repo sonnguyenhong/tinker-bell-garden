@@ -108,7 +108,7 @@ class BanveController {
                         .then(tickets => {
                             Ticket.countDocuments({ isPlaying: true }).lean()
                                 .then(numberOfTickets => {
-                                    OnlineOrder.findOneAndUpdate({ phoneNum: phoneNumber, status: true }, { status: false })
+                                    OnlineOrder.findOneAndUpdate({ phoneNum: phoneNumber, status: true }, { status: false }).lean()
                                         .then(result => {
                                             res.render('banve/ban-ve', {
                                                 tickets: tickets,
@@ -300,13 +300,14 @@ class BanveController {
                 } else {
                     console.log('Đã tìm thấy mã rồi nhé :3')
                     if (discountCode.quantity > 0) {
+                        console.log('quantity' + discountCode.quantity)
                         discountCode.quantity = discountCode.quantity - 1
                         if (discountCode.quantity === 0) {
                             discountCode.status = false
                         }
                     }
 
-                    DiscountCode.findByIdAndUpdate(discountCode._id, { discountCode })
+                    DiscountCode.findByIdAndUpdate(discountCode._id, { quantity: discountCode.quantity, status: discountCode.status })
                         .then(result => {
                             console.log('Saving')
                             VipCustomer.findOne({ phoneNumber: req.body.phoneNumber }).lean()
