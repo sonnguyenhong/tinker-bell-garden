@@ -37,8 +37,8 @@
 
     <div class="row">
         <div class="col-lg-2 col-1"></div>
-        <table class="table table-bordered col">
-            <thead class="thead table-danger text-dark text-lg-center">
+        <table class="table table-hover col">
+            <thead class="thead thead-dark text-lg-center">
               <tr>
                 <th scope="col">STT</th>
                 <th scope="col">Tên khu vui chơi</th>
@@ -46,7 +46,7 @@
                 <th scope="col">Chức năng</th>
               </tr>
             </thead>
-            <tbody class="tbody table-secondary text-md-center text-dark" id="danhSachCSVC">
+            <tbody class="text-md-center" id="danhSachCSVC">
                 <!-- Body hien gio khong co gi ca -->
 
                 {{#each KhuVuiChoiList}}
@@ -55,7 +55,7 @@
                         <td>{{this.name}}</td>
                         <td>{{this.description}}</td>
                         <td>
-                            <button class="btn btn-info "><a href="/admin/khuvuichoi/{{this._id}}" class="text-light">Detail</a> </button>
+                            <button class="btn btn-success "><a href="/admin/khuvuichoi/{{this._id}}" class="text-light">Chi tiết</a> </button>
                         </td>
                     </tr>
                 {{/each}}
@@ -85,8 +85,8 @@
     </div>
     <div class="row">
         <div class="col-lg-2 col-1"></div>
-        <table class="table table-bordered col">
-            <thead class="thead table-danger text-dark text-lg-center">
+        <table class="table table-hover col">
+            <thead class="thead thead-dark text-lg-center">
               <tr>
                 <th scope="col">STT</th>
                 <th scope="col">Mã dụng cụ</th>
@@ -96,7 +96,7 @@
                 <th scope="col">Chức năng</th>
               </tr>
             </thead>
-            <tbody class="tbody table-secondary text-md-center text-dark" id="danhSachCSVC">
+            <tbody  class="text-md-center" id="danhSachCSVC">
                 <!-- Body hien gio khong co gi ca -->
                 {{#each CSVCList}}
                     <tr class="csvcRow">
@@ -106,7 +106,7 @@
                         <td>{{this.status}}</td>
                         <td>{{this.khuvuichoi.name}}</td>
                         <td>
-                            <button class="btn btn-info" onclick="window.location.href = '/admin/khuvuichoi/{{this.khuvuichoi._id}}/{{this._id}}'">Detail</button>
+                            <button class="btn btn-success" onclick="window.location.href = '/admin/khuvuichoi/{{this.khuvuichoi._id}}/{{this._id}}'">Chi tiết</button>
                         </td>
                     </tr>
                 {{/each}}
