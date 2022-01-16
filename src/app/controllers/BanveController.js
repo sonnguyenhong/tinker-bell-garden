@@ -383,9 +383,9 @@ class BanveController {
                 let time = parseInt(req.body.endTime) - parseInt(Date.parse(ticket.startTime))
                 if (ticket.type === 0) {
                     if (time <= 7200000) {
-                        totalPrice = 50000 * time / 3600000
+                        totalPrice = 100000
                     } else {
-                        totalPrice = 50000 * 2 + 70000 * (time - 2 * 3600000) / 3600000
+                        totalPrice = 100000 + 150000 * (time - 2 * 3600000) / 3600000
                     }
                 } else {
                     totalPrice = 200000
