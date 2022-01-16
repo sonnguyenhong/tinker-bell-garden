@@ -34,59 +34,64 @@
         <div style="padding-bottom: 20px;">Thống kê bán vé</div>
         <div style="padding-bottom: 20px">Số vé vip: {{numberOfVipTicket}}</div>
         <div style="padding-bottom: 20px">Số vé thường: {{numberOfNormalTicket}}</div>
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="width: 5%">#</th>
-                    <th style="width: 10%">Loại vé</th>
-                    <th style="width: 10%">Số điện thoại</th>
-                    <th style="width: 15%">Mã giảm giá</th>
-                    <th style="width: 10%">Thành tiền</th>
+        <div style="max-height: 70vh;overflow-y: scroll;">
+                <table class="table table-hover" style="table {overflow-x: scroll;}">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 5%">#</th>
+                            <th style="width: 10%">Loại vé</th>
+                            <th style="width: 10%">Số điện thoại</th>
+                            <th style="width: 15%">Mã giảm giá</th>
+                            <th style="width: 10%">Thành tiền</th>
 
-                </tr>
-            </thead>
-            <tbody id="myTableTicket">
-                {{#each ticket}}
-                <tr>
-                    <th scope="row">{{sum @index 1}}</th>
-                    <td>
-                        {{#if (checkTicketType this.ticketType)}}
-                            <p>2h/lượt</p>
-                        {{else}}
-                            <p>Không giới hạn</p>
-                        {{/if}}
-                    </td>
-                    <td>{{this.phoneNum}}</td>
-                    <td>{{this.discountCode}}</td>
-                    <td>{{this.price}} VND</td>
-                
-                </tr>
-                {{/each}}
-        </table>
+                        </tr>
+                    </thead>
+
+                    <tbody id="myTableTicket">
+                        {{#each ticket}}
+                        <tr>
+                            <th scope="row">{{sum @index 1}}</th>
+                            <td>
+                                {{#if (checkTicketType this.ticketType)}}
+                                    <p>2h/lượt</p>
+                                {{else}}
+                                    <p>Không giới hạn</p>
+                                {{/if}}
+                            </td>
+                            <td>{{this.phoneNum}}</td>
+                            <td>{{this.discountCode}}</td>
+                            <td>{{this.price}} VND</td>
+                        
+                        </tr>
+                        {{/each}}
+                </table>
+        </div>
     </div>
 
     <div>
          <div style="padding-bottom: 20px;">Thống kê bán hàng:</div>
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="width: 5%">#</th>
-                    <th style="width: 15%">Tên mặt hàng</th>
-                    <th style="width: 5%">Số Lượng</th>
-                    <th style="width: 13%">Thành tiền</th>
-                </tr>
-            </thead>
-            <tbody id="myTableProduct">
-                {{#each product}}
-                <tr>
-                    <th scope="row">{{sum @index 1}}</th>
-                    <td>{{this.name}}</td>
-                    <td>{{this.number}}</td>
-                    <td>{{this.profit}} VND</td>
-                
-                </tr>
-                {{/each}}
-        </table>
+         <div"max-height: 70vh;overflow-y: scroll;">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width: 5%">#</th>
+                        <th style="width: 15%">Tên mặt hàng</th>
+                        <th style="width: 5%">Số Lượng</th>
+                        <th style="width: 13%">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody id="myTableProduct">
+                    {{#each product}}
+                    <tr>
+                        <th scope="row">{{sum @index 1}}</th>
+                        <td>{{this.name}}</td>
+                        <td>{{this.number}}</td>
+                        <td>{{this.profit}} VND</td>
+                    
+                    </tr>
+                    {{/each}}
+            </table>
+        </div>
     </div>
 
     
@@ -101,6 +106,13 @@
         });
     });
     });
+
+    $(document).ready(function(){
+    if($('#results tr').length >= 5 ) {
+        $('#myTable').addClass('add-scroll');
+    }
+    });
+
 </script>
 
 {{>footer}}
