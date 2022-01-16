@@ -13,9 +13,20 @@ Nhóm sinh viên:
 7. Đỗ Ngọc Tuân - MSSV: 20194398
 8. Bùi Long Vũ - MSSV: 20194410
 
+TinkerBellGarden là phần mềm dành cho người quản lý khu vui chơi để giúp số hóa các hoạt động trong khu trung tâm.
+
+Phần mềm có các chức năng: 
+
+1. Quản lý khu vui chơi, cơ sở vật chất của khu vui chơi
+2. Quản lý khách hàng VIP
+3. Quản lý sự kiện đặc biệt của khu vui chơi
+4. Bán hàng, quản lý các mặt hàng
+5. Bán vé vào khu vui chơi
+6. Thống kê doanh số của khu vui chơi
+
 ## Hướng dẫn sử dụng
 
-###### Cài đặt NodeJS
+#### Cài đặt NodeJS
 
 Truy cập địa chỉ [https://nodejs.org/en/download/](https://nodejs.org/en/download/) để download NodeJS
 
@@ -29,7 +40,7 @@ node -v
 npm -v
 ```
 
-###### Download Source code
+#### Download Source code
 
 Mở cửa sổ command line trên windows, nhập
 
