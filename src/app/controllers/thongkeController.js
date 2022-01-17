@@ -114,7 +114,7 @@ class thongkeController {
                 var quantity = donHangThongKe[i].products[j].quantity;
                 productsProfit[id] += productsPrice[id] * quantity;
                 productsNumber[id] += quantity;
-                totalProductProfit += productsProfit[id];
+                totalProductProfit += productsPrice[id] * quantity;
             }
         }
 
@@ -257,7 +257,7 @@ class thongkeController {
                 var quantity = donHangThongKe[i].products[j].quantity;
                 productsProfit[id] += productsPrice[id] * quantity;
                 productsNumber[id] += quantity;
-                totalProductProfit += productsProfit[id];
+                totalProductProfit += productsPrice[id] * quantity;
             }
         }
         
